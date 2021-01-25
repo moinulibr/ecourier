@@ -234,13 +234,10 @@ class OrderController extends Controller
         $creating_branch_parent_id  = $creating_branch->parent_id;
         $creating_branch_type_id    = $creating_branch->branch_type_id;
         $creating_area_id           = $creating_branch->area_id;
-        //10.01.2021
-        //$creating_branch_type_id    = getBranchByBranchId_HH($creating_branch_id)->branch_type_id;
-        //$creating_area_id           = getBranchByBranchId_HH($creating_branch_id)->area_id;
-        
-        
+        $creating_district_id       = $creating_branch->district_id;
+        //10.01.2021 
 
-      
+      /*====------======-------======This is not using for hawladar--======-------======----=======*/
         // destination area,branch,district
         $destination_area_id            =  $request->area_id;
         // destination_branch_id , search area_branch table, where area_id
@@ -249,23 +246,19 @@ class OrderController extends Controller
         $destination_branch_parent_id   =  $destination_branch['branch_parent_id'];  
         $destination_branch_type_id     =  $destination_branch['branch_type_id']; 
         $destination_city_id            =  $destination_branch['branch_city_id'];
-        //10.01.2021
-        //$destination_branch_type_id     =  getBranchByBranchId_HH($destination_branch_id)->branch_type_id;
-        //$destination_city_id            =  getBranchByBranchId_HH($destination_branch_id)->district_id;
-        
         if($request->g_c_area_id) // its for inserting general customer table
         {
             $g_destination_branch       =  getDestinationBranchByDestinationAreaId_HH($request->g_c_area_id);
             $g_destination_branch_id    =  $g_destination_branch['branch_id']; 
             $gen_customer_district_id   =  getBranchByBranchId_HH($g_destination_branch_id)->district_id;
         }
-        
         $findarea = getAreaByAreaId_HH($destination_area_id);
         $order_status_changing_current_branch_id = NULL;
         if($creating_branch_id == $destination_branch_id)
         {
             $order_status_changing_current_branch_id = $creating_branch_id;
         }
+        /*====------======-------======This is not using for hawladar--======-------======----=======*/
 
         //------------------
         $parcelAmountPayments = parcelAmountPaymentTypeCalculation_HH($request);
@@ -333,8 +326,7 @@ class OrderController extends Controller
                 $order->merchant_id             = $request->merchant_id;
                 $order->merchant_shop_id        = $request->merchant_shop_id;
                 $order->creating_branch_id      = $creating_branch_id;
-                //$order->creating_branch_id      = Auth::guard('web')->user()->branch_id;//$findmerchant_branch_id->branch_id;
-                //$order->creating_branch_type_id = getBranchByBranchId_HH(Auth::guard('web')->user()->branch_id)->branch_type_id;//$creating_branch_type_id;
+               
                 $order->creating_branch_type_id = $creating_branch_type_id;
                 $order->creating_area_id        = $creating_area_id;
                 $order->weight_id               = $request->weight_id;
@@ -346,27 +338,12 @@ class OrderController extends Controller
                 $order->service_charge                  = $request->charge;
                 $order->cod_charge                      = $request->cod_charge?$request->cod_charge:0.0;
                 $order->others_charge                   = 0;
-                /* if($service_cod_payment_status_id)
-                {
-                    $order->cod_received_by             = Auth::guard('web')->user()->id;
-                    $order->cod_received_at             = date('Y-m-d h:i:s');
-                    $order->cod_received_branch_id      = Auth::guard('web')->user()->branch_id;
-                } */
                 $order->service_cod_payment_status_id           = $service_cod_payment_status_id;
 
-                /* if($service_delivery_payment_status_id)
-                {
-                    $order->delivery_charge_received_by         = Auth::guard('web')->user()->id;
-                    $order->delivery_charge_received_at         = date('Y-m-d h:i:s');
-                    $order->delivery_charge_received_branch_id  = Auth::guard('web')->user()->branch_id;
-                } */
                 $order->service_delivery_payment_status_id      = $service_delivery_payment_status_id;
 
                 $order->product_amount                          = $request->product_amount;
                 $order->client_merchant_payable_amount          = $client_merchant_payable_amount;
-
-                //$order->net_product_amount      = $request->net_product_amount?$request->net_product_amount:0.0;
-                //$order->net_amount              = $request->total_payable_amount?$request->total_payable_amount:0.0;
 
                 $order->parcel_category_id      = $request->parcel_category_id;
                 $order->service_type_id         = $request->service_type_id;
@@ -403,19 +380,13 @@ class OrderController extends Controller
                 $setData['changed_branch_id']   = NULL;
                 insertOrderProcessingHistory_HH($setData);
 
-                // insert ..Order Auto Assign in order_assigns table
-                $setAssignData['order_id']                    = $order->id;
-                $setAssignData['areaId']                      = $creating_area_id;
-                $setAssignData['pickup']                      = 1; 
-                $setAssignData['order_processing_type_id']    = 1;
-                $setAssignData['assigner_id']                 = Auth::guard('web')->user()->id;
-                $setAssignData['order_assigning_status_id']   = 2;
-                $setAssignData['collection_status']           = 0;
-                $setAssignData['branch_id']                   = $creating_branch_id;
-                $setAssignData['created_by']                  = Auth::guard('web')->user()->id;
-                $setAssignData['status']                      = 1;
-                insertOrderAssign_HH($setAssignData);
 
+                /*---====---- Auto manpower Assign when order Creating---========----*/
+                $created_by         = Auth::guard('web')->user()->id;
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 2,$manpower_type_id=2,$created_by);
+                /*---====---- Auto manpower Assign when order Creating---========----*/
+ 
 
                 /*Order Branch Commission Amount insert*/
                 insertingBranchCommission_HH($order,$myBranchId=Auth::guard('web')->user()->branch_id);
@@ -473,7 +444,7 @@ class OrderController extends Controller
                 $validator = Validator::make($input,[
                     'name' => 'required',
                     'phone' => 'required',
-                    'g_c_address' => 'required',
+                    //'g_c_address' => 'required',
                     'charge' => 'required',
                     //'description.*' => 'nullable|max:100',
                 ]);
@@ -493,10 +464,10 @@ class OrderController extends Controller
                   }else{
                       $gcustomerData['name']            = $request->name;
                       $gcustomerData['phone']           = $request->phone;
-                      $gcustomerData['area_id']         = $request->g_c_area_id;
-                      $gcustomerData['district_id']     = $gen_customer_district_id;;
+                      $gcustomerData['area_id']         = $creating_area_id;
+                      $gcustomerData['district_id']     = $creating_district_id;
                       $gcustomerData['branch_id']       = $creating_branch_id;
-                      $gcustomerData['address']         = $request->g_c_address;
+                      $gcustomerData['address']         = "";//$request->g_c_address;
                       $customerG = insertGeneralCustomerAsMerchant_HH($gcustomerData);
                       $g_customer_id = $customerG?$customerG->id:NULL; 
                   }
@@ -532,14 +503,10 @@ class OrderController extends Controller
                 else{
                     $order->invoice_no           =  202100001;   
                 }
-
                 $order->merchant_invoice        = $request->merchant_invoice;
                 $order->parcel_owner_type_id    = $request->parcel_owner_type_id;
                 $order->general_customer_id    =  $g_customer_id;
-              
                 $order->creating_branch_id      = $creating_branch_id;
-                //$order->creating_branch_id      = Auth::user()->branch_id;//$findmerchant_branch_id->branch_id;
-                //$order->creating_branch_type_id = getBranchByBranchId_HH(Auth::user()->branch_id)->branch_type_id;//$creating_branch_type_id;
                 $order->creating_branch_type_id = $creating_branch_type_id;
                 $order->creating_area_id        = $creating_area_id;
                 $order->weight_id               = $request->weight_id;
@@ -552,21 +519,7 @@ class OrderController extends Controller
                 $order->cod_charge              = $request->cod_charge?$request->cod_charge:0.0;
                 $order->others_charge           = 0;
 
-               
-                /* if($service_cod_payment_status_id)
-                {
-                    $order->cod_received_by        = Auth::guard('web')->user()->id;
-                    $order->cod_received_at        = date('Y-m-d h:i:s');
-                    $order->cod_received_branch_id = Auth::guard('web')->user()->branch_id;
-                } */
                 $order->service_cod_payment_status_id      = $service_cod_payment_status_id;
-
-                /* if($service_delivery_payment_status_id)
-                {
-                    $order->delivery_charge_received_by        = Auth::guard('web')->user()->id;
-                    $order->delivery_charge_received_at        = date('Y-m-d h:i:s');
-                    $order->delivery_charge_received_branch_id = Auth::guard('web')->user()->branch_id;
-                } */
                 $order->service_delivery_payment_status_id = $service_delivery_payment_status_id;
 
                  // 1 == service charge , 2 = service  & cod  charge , 3 == cod charge  instant_all_charge_received_status_id
@@ -583,14 +536,8 @@ class OrderController extends Controller
                     $order->instant_all_charge_received_status_id = 3;
                 }
                 
-                
-                
-
                 $order->product_amount      = $request->product_amount;
                 $order->client_merchant_payable_amount = $client_merchant_payable_amount;
-
-                //$order->net_product_amount      = $request->net_product_amount?$request->net_product_amount:0.0;
-                //$order->net_amount              = $request->total_payable_amount?$request->total_payable_amount:0.0;
 
                 $order->parcel_category_id      = $request->parcel_category_id;
                 $order->service_type_id         = $request->service_type_id;
@@ -628,8 +575,13 @@ class OrderController extends Controller
                 $setData['changed_branch_id']   = NULL;
                 insertOrderProcessingHistory_HH($setData);
 
+                /*---====---- Auto manpower Assign when order Creating---========----*/
+                $created_by         = Auth::guard('web')->user()->id;
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 2,$manpower_type_id=2,$created_by);
+                /*---====---- Auto manpower Assign when order Creating---========----*/
 
-                
+
                 /*Order Branch Commission Amount insert*/
                 insertingBranchCommission_HH($order,$myBranchId=Auth::guard('web')->user()->branch_id);
                 /*Order Branch Commission Amount insert*/

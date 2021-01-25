@@ -537,96 +537,95 @@
     | Order, Admin, Merchant Agent and others order creating calcuation
     |----------------
     */
-    function parcelAmountPaymentTypeCalculation_HH($inputs)//parcel_amount_payment_type_id
-    {
-        $parcel_amount_payment_type_id      =  $inputs['parcel_amount_payment_type_id'];
-        $collect_amount                     =  $inputs['collect_amount'];
-        $charge                             =  $inputs['charge'];
-        $cod_charge                         =  $inputs['cod_charge'];
-        $total_charge                       =  $inputs['total_charge'];
-        $collectable_amount_from_customer   =  $inputs['collectable_amount_from_customer'];
-        $collectable_amount_from_merchant   =  $inputs['collectable_amount_from_merchant'];
-        $total_payable_amount               =  $inputs['total_payable_amount'];
-        $payment_status_id                  =  $inputs['payment_status_id'];
-
-        $client_merchant_payable_amount = 0;
-        $service_cod_payment_status_id = NULL;
-        $service_delivery_payment_status_id = NULL;
-        $collect_amount = $collect_amount ;
-        if($parcel_amount_payment_type_id == 1)// product, delivery charge customer dibe.  cod chage client dibe so payment
+        function parcelAmountPaymentTypeCalculation_HH($inputs)//parcel_amount_payment_type_id
         {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            $parcel_amount_payment_type_id      =  $inputs['parcel_amount_payment_type_id'];
+            $collect_amount                     =  $inputs['collect_amount'];
+            $charge                             =  $inputs['charge'];
+            $cod_charge                         =  $inputs['cod_charge'];
+            $total_charge                       =  $inputs['total_charge'];
+            $collectable_amount_from_customer   =  $inputs['collectable_amount_from_customer'];
+            $collectable_amount_from_merchant   =  $inputs['collectable_amount_from_merchant'];
+            $total_payable_amount               =  $inputs['total_payable_amount'];
+            $payment_status_id                  =  $inputs['payment_status_id'];
+
+            $client_merchant_payable_amount     = 0;
+            $service_cod_payment_status_id      = NULL;
+            $service_delivery_payment_status_id = NULL;
+            $collect_amount = $collect_amount ;
+            if($parcel_amount_payment_type_id == 1)// product, delivery charge customer dibe.  cod chage client dibe so payment
             {
-                $client_merchant_payable_amount = $collect_amount - $charge;
-                $service_cod_payment_status_id = 1;
-            }else{
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount - $charge;
+                    $service_cod_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }
+            }
+            else if($parcel_amount_payment_type_id == 2) // product, delivery , cod charge customer dibe. so baki
+            {
                 $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
             }
-        }
-        else if($parcel_amount_payment_type_id == 2) // product, delivery , cod charge customer dibe. so baki
-        {
-            $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
-        }
-        else if($parcel_amount_payment_type_id == 3) // product price customer dibe. delivery,cod charge so baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 3) // product price customer dibe. delivery,cod charge so baki
             {
-                $client_merchant_payable_amount = $collect_amount;
-                $service_cod_payment_status_id = 1;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount;
+                    $service_cod_payment_status_id = 1;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 4) // product price,cod customer dibe. delivery charge so baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 4) // product price,cod customer dibe. delivery charge so baki
             {
-                $client_merchant_payable_amount = $collect_amount - $cod_charge;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = $collect_amount -  ($charge + $cod_charge);
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount - $cod_charge;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount -  ($charge + $cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 5) // customer delivery charge so cod baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 5) // customer delivery charge so cod baki
             {
-                $client_merchant_payable_amount = 0;
-                $service_cod_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = 0;
+                    $service_cod_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - $cod_charge;
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 6) // delivery,cod charge customer dibe. nothing baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 6) // delivery,cod charge customer dibe. nothing baki
             {
-                $client_merchant_payable_amount = 0;
-            }else{
-                $client_merchant_payable_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = 0;
+                }else{
+                    $client_merchant_payable_amount = 0;
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 7) // customer kisuei dibe na. delivery charge ,cod so baki
-        {
-            $collect_amount = 0;
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 7) // customer kisuei dibe na. delivery charge ,cod so baki
             {
-                $client_merchant_payable_amount = 0;
-                $service_cod_payment_status_id = 1;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = 0;
+                $collect_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = 0;
+                    $service_cod_payment_status_id = 1;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }
             }
+            $data['service_cod_payment_status_id'] = $service_cod_payment_status_id;
+            $data['service_delivery_payment_status_id'] = $service_delivery_payment_status_id;
+            $data['client_merchant_payable_amount'] = $client_merchant_payable_amount;
+            $data['collect_amount'] = $collect_amount;
+            return $data;
+            return "COD = " .$service_cod_payment_status_id .", Delivery Charge = ".$service_delivery_payment_status_id .", payable amount = ".$client_merchant_payable_amount;
         }
-        $data['service_cod_payment_status_id'] = $service_cod_payment_status_id;
-        $data['service_delivery_payment_status_id'] = $service_delivery_payment_status_id;
-        $data['client_merchant_payable_amount'] = $client_merchant_payable_amount;
-        $data['collect_amount'] = $collect_amount;
-        return $data;
-        return "COD = " .$service_cod_payment_status_id .", Delivery Charge = ".$service_delivery_payment_status_id .", payable amount = ".$client_merchant_payable_amount;
-    }
-
     /*
     |---------------
     | Order, Admin, Merchant Agent and others order creating calcuation
@@ -634,27 +633,27 @@
     */
 
     //order_processing_histories
-    function insertOrderProcessingHistory_HH($getData)
-    {
-        $order_id                   = $getData['order_id'];
-        $order_status_id            = $getData['order_status_id'];
-        $branch_id                  = $getData['branch_id'];
-        $created_by                 = $getData['created_by'];
-        $status_changer_id          = $getData['status_changer_id'];
-        $status                     = $getData['status'];
-        $changing_status_branch_id  = $getData['changed_branch_id'];
+        function insertOrderProcessingHistory_HH($getData)
+        {
+            $order_id                   = $getData['order_id'];
+            $order_status_id            = $getData['order_status_id'];
+            $branch_id                  = $getData['branch_id'];
+            $created_by                 = $getData['created_by'];
+            $status_changer_id          = $getData['status_changer_id'];
+            $status                     = $getData['status'];
+            $changing_status_branch_id  = $getData['changed_branch_id'];
 
-        $data =  new Order_processing_history();
-        $data->order_id                     = $order_id;
-        $data->order_status_id              = $order_status_id;
-        $data->changing_status_branch_id    = $changing_status_branch_id;
-        $data->branch_id                    = $branch_id;
-        $data->created_by                   = $created_by;
-        $data->status_changer_id            = $status_changer_id;
-        $data->status                       = $status;
-        $data->save();
-        return $data;
-    }
+            $data =  new Order_processing_history();
+            $data->order_id                     = $order_id;
+            $data->order_status_id              = $order_status_id;
+            $data->changing_status_branch_id    = $changing_status_branch_id;
+            $data->branch_id                    = $branch_id;
+            $data->created_by                   = $created_by;
+            $data->status_changer_id            = $status_changer_id;
+            $data->status                       = $status;
+            $data->save();
+            return $data;
+        }
 
     function orderDestinationByOrderId_HH($order_id)
     {
@@ -706,64 +705,7 @@
             }
     }
 
-    function getManpowerAssignedAreaByManpowerId_HH($manpower_id)
-    {
-        $manpower = getManpowerByManpowerId_HH($manpower_id);
-
-    }
-
-    //manpower_assign_to_areas
-    function getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id)
-    {
-        $query = ManpowerAssignToArea::query();
-                    if($manpower_type_id < 3)
-                    {
-                        $query->where('manpower_type_id',$manpower_type_id);
-                    }
-                    $query->where('area_id',$area_id)
-                    ->first();
-    }
-
-    //order_assigns
-    function insertOrderAssign_HH($getData)
-    {
-        $order_id                   = $getData['order_id'];
-
-        $area_id                    = $getData['areaId'];
-        $manpower_type_id           = $getData['pickup'];
-        $assignedArea               = getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id);
-        $manpower_id                = $assignedArea?$assignedArea->manpower_id:NULL;
-
-        $order_processing_type_id   = $getData['order_processing_type_id'];
-        $assigner_id                = $getData['assigner_id'];
-        $order_assigning_status_id  = $getData['order_assigning_status_id'];
-        $collection_status          = $getData['collection_status'];
-        $branch_id                  = $getData['branch_id'];
-        $status                     = $getData['status'];
-        $created_by                 = $getData['created_by'];
-
-        if($manpower_id)
-        {
-            $data =  new Order_assign();
-            $data->manpower_id                  = $manpower_id;
-            $data->order_id                     = $order_id;
-            $data->order_processing_type_id     = $order_processing_type_id;
-            $data->assigner_id                  = $assigner_id;
-            $data->order_assigning_status_id    = $order_assigning_status_id;
-            $data->collection_status            = $collection_status;
-            $data->branch_id                    = $branch_id;
-            $data->status                       = $status;
-            $data->created_by                   = $created_by;
-            $data->status                       = $status;
-            $data->save();
-            return $data;
-        }
-        return true;
-    }
-
-
-
-
+   
 
 
     /*
@@ -969,33 +911,14 @@ Thanked By ".appUrl_HS();
             $customer->status        = 1;
             $customer->save();
             return $customer;
-            /*
-                $gen_customer = New General_customer();
-                $gen_customer->name = $request->name;
-                $gen_customer->phone= $request->phone;
-                $gen_customer->area_id       = $request->g_c_area_id;
-                $gen_customer->address       = $request->g_c_address;
-                $gen_customer->district_id   = $gen_customer_district_id;
-                $gen_customer->branch_id     = $creating_branch_id;
-                $gen_customer->status        = 1;
-                $gen_customer->save();
-            */
-            /*
-                $customerData['name']  = $request->name;
-                $customerData['phone'] = $request->phone;
-                $customerData['area_id']        = $request->g_c_area_id;
-                $customerData['district_id']    = $gen_customer_district_id;;
-                $customerData['branch_id']      = $creating_branch_id;
-                $customerData['address']        = $request->g_c_address;
-            */
         }
 
-
-
+        // Get Order By Order id, 
         function getOrderByOrderId_HH($order_id)
         {
             return Order::find($order_id);
         }
+
         function orderDetails_HH($order_id)
         {
             $order  =  getOrderByOrderId_HH($order_id);
@@ -1391,8 +1314,13 @@ Thanked By ".appUrl_HS();
             $order = getOrderByOrderId_HH($order_id);
             $service_charge = $order->service_charge;
             $cod_charge     = $order->cod_charge;
-            $others_charge  = $order->others_charge;
-            $total          = $service_charge + $cod_charge + $others_charge;
+            if(branchCommissionWithOrWithoutCodCharge_HS())
+            {
+                //$others_charge  = $order->others_charge;
+                $total  = $service_charge + $cod_charge ;//+ $others_charge; 
+            }else{
+                $total          = $service_charge ;
+            }
             return  $total;
         }
         //---------------======================------------------=====================--------------
@@ -1465,7 +1393,87 @@ Thanked By ".appUrl_HS();
         }
         //---------------======================------------------=====================--------------
         /**total Commission of a branch */
-      
+
+        function getManpowerAssignedAreaByManpowerId_HH($manpower_id)
+        {
+            $manpower = getManpowerByManpowerId_HH($manpower_id);
+    
+        }
+    
+        //manpower_assign_to_areas
+        //getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_not_id,$branch_id)
+        function getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id,$branch_id)
+        {
+            $result = ManpowerAssignToArea::where('manpower_type_id','!=',$manpower_type_id)
+                        ->where('area_id',$area_id)
+                        ->where('branch_id',$branch_id)
+                        ->first();
+            if($result)
+            {
+                return $result;
+            }else{
+                $result = ManpowerAssignToArea::where('manpower_type_id','!=',$manpower_type_id)
+                        //->where('area_id',$area_id)
+                        ->where('branch_id',$branch_id)
+                        ->first();
+                return  $result;
+            }
+            return false;
+        }
+    
+
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                                           Auto Assigning Manpower , when order creating                 |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/
+    /*|*/  function autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id,$manpower_type_id,$created_by)
+    /*|*/   {
+    /*|*/      //getOrderByOrderId_HH($orderId); 
+    /*|*/      $creating_branch_id          = $order->creating_branch_id;
+    /*|*/      $destination_branch_id       = $order->destination_branch_id;
+    /*|*/      $order_processing_type_id    = $processing_type_id; 
+    /*|*/      $order_assigning_status_id   = 1;
+    /*|*/      if($order_processing_type_id == 1)
+    /*|*/      {
+    /*|*/           $branch_id                  = $creating_branch_id;
+    /*|*/           $area_id                    = $order->creating_area_id;
+    /*|*/           $manpower_type_not_id       = 2;
+    /*|*/      }
+    /*|*/      else{
+    /*|*/            $branch_id                 = $destination_branch_id;
+    /*|*/            $area_id                   = $order->destination_area_id;
+    /*|*/            $manpower_type_not_id      = 1;
+    /*|*/      }
+    /*|*/      $assignedArea   = getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_not_id,$branch_id);
+    /*|*/      $manpower_id    = $assignedArea?$assignedArea->manpower_id:NULL;
+    /*|*/      if($manpower_id)
+    /*|*/      {
+    /*|*/          $data =  new Order_assign();
+    /*|*/          $data->manpower_id                  = $manpower_id;
+    /*|*/          $data->order_id                     = $order->id;
+    /*|*/          $data->order_processing_type_id     = $order_processing_type_id;
+    /*|*/          $data->assigner_id                  = NULL;
+    /*|*/          $data->order_assigning_status_id    = $order_assigning_status_id;
+    /*|*/          $data->collection_status            = 0;
+    /*|*/          $data->branch_id                    = $branch_id;
+    /*|*/          $data->status                       = 1;
+    /*|*/          $data->created_by                   = NULL;
+    /*|*/          $data->save();
+    /*|*/          return $data;
+    /*|*/      }
+    /*|*/      return true;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                                 Auto Assigning Manpower , when order creating                              |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
         /**Manpower Commission */
         function getManpowerAssignedData_HH($order_assigning_status_id,$order_id)
         {

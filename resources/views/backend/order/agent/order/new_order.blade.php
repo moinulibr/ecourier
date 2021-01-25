@@ -44,14 +44,14 @@
                     <form action="{{ route('agent.order.store') }}" method="post">
                         @csrf
 
-                            <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6" style="display:none;">
                                 <div class="form-group">
                                     <label style="margin-right:5px;">
-                                        <input type="radio" name="parcel_owner_type_id"  id="customer" value="2" class="bookInFrom">
+                                        <input type="radio" checked name="parcel_owner_type_id"  id="customer" value="2" class="bookInFrom">
                                         <span>From General Customer</span>
                                     </label>
                                     <label>
-                                    <input type="radio" checked name="parcel_owner_type_id" id="merchant" value="1" class="bookInFrom">
+                                    <input type="radio"  name="parcel_owner_type_id" id="merchant" value="1" class="bookInFrom">
                                         <span>From Merchant</span>
                                         </label>
                                 </div>
@@ -91,88 +91,92 @@
                                         <div style='color:red; padding: 0 5px;'>{{($errors->has('phone'))?($errors->first('phone')):''}}</div>
                                     </div>
                             </div>
-                            {{--  <div class="col-md-6">
-                                    <div class="form-group">
-                                    <textarea name="g_c_address" class="form-control" placeholder="Enter Sender Address"></textarea>
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_address'))?($errors->first('g_c_address')):''}}</div>
-                                    </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="g_c_area_id" id="" class="form-control select2">
-                                        <option value="">Select Area</option>
-                                        @foreach($districts as $district)
-                                            <optgroup label="{{ $district->name }}">
-                                            @foreach($district->area as $value)
-                                                <option {{ old('g_c_area_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
-                                            @endforeach
-                                            </optgroup>
-                                        @endforeach
-                                    </select>
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_area_id'))?($errors->first('g_c_area_id')):''}}</div>
+                            {{--  Not using for hawladar
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                        <textarea name="g_c_address" class="form-control" placeholder="Enter Sender Address"></textarea>
+                                        <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_address'))?($errors->first('g_c_address')):''}}</div>
+                                        </div>
                                 </div>
-                            </div>  --}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select name="g_c_area_id" id="" class="form-control select2">
+                                            <option value="">Select Area</option>
+                                            @foreach($districts as $district)
+                                                <optgroup label="{{ $district->name }}">
+                                                @foreach($district->area as $value)
+                                                    <option {{ old('g_c_area_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
+                                                @endforeach
+                                                </optgroup>
+                                            @endforeach
+                                        </select>
+                                        <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_area_id'))?($errors->first('g_c_area_id')):''}}</div>
+                                    </div>
+                                </div>  
+                            --}}
                         </div>
 
 
 
                         <hr>
                         <div class="row">
+                        <div class="col-xs-12 col-md-8 col-lg-8">
 
-                            <div class="col-xs-12 col-md-4 col-lg-4">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-lg-12">
-                                            <div class="form-group">
-                                                <input type="text" name="customer_name" value="{{ old('customer_name') }}" class="form-control" placeholder="Customer Name" >
-                                                <div style='color:red; padding: 0 5px;'>{{($errors->has('customer_name'))?($errors->first('customer_name')):''}}</div>
-                                            </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-12">
-                                        <div class="form-group">
-                                            <input type="text" name="customer_phone" class="form-control" placeholder="Customer Mobile Number" >
-                                            <div style='color:red; padding: 0 5px;'>{{($errors->has('customer_phone'))?($errors->first('customer_phone')):''}}</div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <input type="text" name="customer_name" value="{{ old('customer_name') }}" class="form-control" placeholder="Receiver Name" >
+                                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('customer_name'))?($errors->first('customer_name')):''}}</div>
+                                                </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-12">
-                                        <div class="form-group">
-                                            <textarea name="address"  class="form-control" placeholder="Customer Address"></textarea>
-                                            <div style='color:red; padding: 0 5px;'>{{($errors->has('address'))?($errors->first('address')):''}}</div>
-                                        </div>
-                                    </div>
                                         <div class="col-xs-12 col-sm-12 col-lg-12">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" value="{{ old('merchant_invoice') }}" name="merchant_invoice" placeholder="Customer Invoice ID">
-                                                <div style='color:red; padding: 0 5px;'>{{($errors->has('merchant_invoice'))?($errors->first('merchant_invoice')):''}}</div>
+                                                <input type="text" name="customer_phone" class="form-control" placeholder="Receiver Mobile Number" >
+                                                <div style='color:red; padding: 0 5px;'>{{($errors->has('customer_phone'))?($errors->first('customer_phone')):''}}</div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-lg-12" id="weight_div_id">
+                                        <div class="col-xs-12 col-sm-12 col-lg-12">
                                             <div class="form-group">
-                                                <select name="weight_id" id="weight_id_id" class="weight_id_class form-control">
-                                                <option value="">Select Weight</option>
-                                                @foreach($weights as $weight)
-                                                <option {{ old('weight_id') == $weight->id?'selected':'' }} value="{{ $weight->id }}">{{ $weight->name }}</option>
-                                                @endforeach
-                                                </select>
-                                                <div style='color:red; padding: 0 5px;'>{{($errors->has('weight_id'))?($errors->first('weight_id')):''}}</div>
+                                                <textarea name="address"  class="form-control" placeholder="Receiver Address"></textarea>
+                                                <div style='color:red; padding: 0 5px;'>{{($errors->has('address'))?($errors->first('address')):''}}</div>
                                             </div>
                                         </div>
+                                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" value="{{ old('merchant_invoice') }}" name="merchant_invoice" placeholder="Receiver Invoice ID">
+                                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('merchant_invoice'))?($errors->first('merchant_invoice')):''}}</div>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-xs-12 col-sm-12 col-lg-12" id="weight_div_id">
+                                                <div class="form-group" style="display:none;">
+                                                    <select name="weight_id" id="weight_id_id" class="weight_id_class form-control">
+                                                    {{--  <option value="">Select Weight</option>  --}}
+                                                    @foreach($weights as $weight)
+                                                    <option {{ old('weight_id') == $weight->id?'selected':'' }} value="{{ $weight->id }}">{{ $weight->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('weight_id'))?($errors->first('weight_id')):''}}</div>
+                                                </div>
+                                            </div>
 
-                                    {{--  <div class="col-xs-12 col-sm-12 col-lg-12">
-                                            <label for="">Product Category</label>
-                                            <div class="form-check mb-4">
-                                            @foreach($parcelcategories as $key => $category)
-                                            <input class="form-check-input parcel_category_id_class" type="radio" name="parcel_category_id"  value="{{ $category->id }}" {{ $key == 0 ? 'checked' : ''  }}>
-                                            <label class="form-check-label" for="" style="width:45%">
-                                                    {{ $category->name }}
-                                            </label>
-                                            @endforeach
-                                        </div>
-                                        </div>  --}}
+                                        {{--  <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                <label for="">Product Category</label>
+                                                <div class="form-check mb-4">
+                                                @foreach($parcelcategories as $key => $category)
+                                                <input class="form-check-input parcel_category_id_class" type="radio" name="parcel_category_id"  value="{{ $category->id }}" {{ $key == 0 ? 'checked' : ''  }}>
+                                                <label class="form-check-label" for="" style="width:45%">
+                                                        {{ $category->name }}
+                                                </label>
+                                                @endforeach
+                                            </div>
+                                            </div>  --}}
+                                    </div>
                                 </div>
-                            </div>
-
-
-                            <div class="col-xs-12 col-md-4 col-lg-4">
+                           
+                            <div class="col-xs-12 col-md-6 col-lg-6">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-lg-12">
                                         <div class="form-group">
@@ -181,7 +185,7 @@
                                                     @foreach($districts as $district)
                                                     <optgroup label="{{ $district->name }}">
                                                         @foreach($district->area as $value)
-                                                        <option  {{ old('area_id') == $weight->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
+                                                        <option  {{ old('area_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
                                                         @endforeach
                                                     </optgroup>
                                                     @endforeach
@@ -220,12 +224,12 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-lg-12">
                                         <div class="form-group">
-                                            <textarea name="parcel_description" class="form-control" placeholder="Enter Percel instructions"></textarea>
+                                            <textarea name="parcel_description" class="form-control" placeholder="Enter Percel description/instructions"></textarea>
                                             </div>
                                         <div style='color:red; padding: 0 5px;'>{{($errors->has('parcel_description'))?($errors->first('parcel_description')):''}}</div>
                                     </div>
 
-                                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                                    {{--  <div class="col-xs-12 col-sm-12 col-lg-12">
                                         <div class="form-group">
                                             <select name="parcel_amount_payment_type_id" id="parcel_amount_payment_type_id" required class="parcel_amount_payment_type_id_class form-control ">
                                                     @foreach($parcelAmountPaymentTypies as $value)
@@ -234,7 +238,7 @@
                                                 </select>
                                                 <div style='color:red; padding: 0 5px;'>{{($errors->has('parcel_amount_payment_type_id'))?($errors->first('parcel_amount_payment_type_id')):''}}</div>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     {{--  <div class="col-xs-12 col-sm-12 col-lg-12">
                                         <label for="">Parcel Type</label>
                                         <div class="form-check mb-3">
@@ -248,6 +252,21 @@
                                     </div>  --}}
                                 </div>
                             </div>
+                            </div>
+                         
+                            <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                <div class="form-group">
+                                    <select name="parcel_amount_payment_type_id" id="parcel_amount_payment_type_id" required class="parcel_amount_payment_type_id_class form-control ">
+                                        @foreach($parcelAmountPaymentTypies as $value)
+                                            <option  {{ old('parcel_amount_payment_type_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('parcel_amount_payment_type_id'))?($errors->first('parcel_amount_payment_type_id')):''}}</div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
 
 
                             <div class="col-xs-12 col-md-4 col-lg-4">
@@ -443,6 +462,16 @@
    
    
     //=============================================================================
+    {{--  $(document).ready(function(){
+         var parcelAmountPaymentTypeId =  getValueFromSelectOption('parcel_amount_payment_type_id_class');
+        paymentOptionShoHide(parcelAmountPaymentTypeId);
+
+        var delivery        = parseInt(nanCheck($('#deliveryCharge').val()));
+        var cod             = parseInt(nanCheck($('#codCharge').val()));
+        var collectAmount   = parseInt(nanCheck($('.collect_amount_class').val()));
+        calculationFormulaByParcelAmountPaymentTypeId(parcelAmountPaymentTypeId,delivery,cod,collectAmount);
+    });  --}}
+    //=============================================================================
     $(document).on('change keyup keydown','.parcel_amount_payment_type_id_class,.charge,.collect_amount_class',function(){
         var parcelAmountPaymentTypeId =  getValueFromSelectOption('parcel_amount_payment_type_id_class');
         paymentOptionShoHide(parcelAmountPaymentTypeId);
@@ -479,14 +508,14 @@
                 collectAmountFromCustomer = colAmount;
                 collectAmountFromMerchant = cod;
                 payableToMerchantOrClient = colAmount - delCharge;
-                  $('#payment_option_id').show(500);
+                  $('#payment_option_id').show();
             }
              collectAmountRemoveErrorMessage();
         }
         else if(checkByVariable == 2)
         {
             CollectAmountZeroErrorMessageAndRemove(colAmount);
-            $('#payment_option_id').hide(500);
+            $('#payment_option_id').hide();
             if(colAmount == 0)
             {
                 totalCharge = 0;
@@ -504,7 +533,7 @@
         else if(checkByVariable == 3)
         {
             CollectAmountZeroErrorMessageAndRemove(colAmount);
-            $('#payment_option_id').show(500);
+            $('#payment_option_id').show();
             if(colAmount == 0)
             {
                 totalCharge = 0;
@@ -521,7 +550,7 @@
         else if(checkByVariable == 4)
         {
             CollectAmountZeroErrorMessageAndRemove(colAmount);
-            $('#payment_option_id').show(500);
+            $('#payment_option_id').show();
             if(colAmount == 0)
             {
                 totalCharge = 0;
@@ -538,7 +567,7 @@
         else if(checkByVariable == 5)
         {
             CollectAmountZeroErrorMessageAndRemove(colAmount);
-            $('#payment_option_id').show(500);
+            $('#payment_option_id').show();
             if(colAmount == 0)
             {
                 totalCharge = 0;
@@ -555,7 +584,7 @@
         else if(checkByVariable == 6)
         {
             CollectAmountZeroErrorMessageAndRemove(colAmount);
-            $('#payment_option_id').hide(500);
+            $('#payment_option_id').hide();
             if(colAmount == 0)
             {
                 totalCharge = 0;
@@ -573,7 +602,7 @@
         }else if(checkByVariable == 7)
         {
             $('.collect_amount_class').val(0);
-           $('#payment_option_id').show(500);
+           $('#payment_option_id').show();
             totalCharge = totalCharge;
             collectAmountFromCustomer = 0;
             payableToMerchantOrClient = 0;
@@ -635,9 +664,9 @@
     {
         if(checkByVariable == 7)
         {
-            $('#payment_option_id').show(500);
+            $('#payment_option_id').show();
         }else{
-            $('#payment_option_id').hide(500);
+            $('#payment_option_id').hide();
         }
     }
 

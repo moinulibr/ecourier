@@ -341,19 +341,6 @@ class OrderController extends Controller
             $setData['status']              = 1;
             $setData['changed_branch_id']   = NULL;
             insertOrderProcessingHistory_HH($setData);
-
-            // insert ..Order Auto Assign in order_assigns table
-            $setAssignData['order_id']                    = $order->id;
-            $setAssignData['areaId']                      = $creating_area_id;
-            $setAssignData['pickup']                      = 1; 
-            $setAssignData['order_processing_type_id']    = 1;
-            $setAssignData['assigner_id']                 = Auth::guard('web')->user()->id;
-            $setAssignData['order_assigning_status_id']   = 2;
-            $setAssignData['collection_status']           = 0;
-            $setAssignData['branch_id']                   = $creating_branch_id;
-            $setAssignData['created_by']                  = Auth::guard('web')->user()->id;
-            $setAssignData['status']                      = 1;
-            insertOrderAssign_HH($setAssignData);
             
 
             
