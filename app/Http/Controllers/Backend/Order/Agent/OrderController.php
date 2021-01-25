@@ -216,7 +216,7 @@ class OrderController extends Controller
     {
         $input = $request->except('_token');
         $validator = Validator::make($input,[
-            'parcel_owner_type_id' => 'required',
+            //'parcel_owner_type_id' => 'required',
             'charge' => 'required',
             'area_id' => 'required',
             //'description.*' => 'nullable|max:100',
@@ -234,7 +234,7 @@ class OrderController extends Controller
         $creating_branch_parent_id  = $creating_branch->parent_id;
         $creating_branch_type_id    = $creating_branch->branch_type_id;
         $creating_area_id           = $creating_branch->area_id;
-            //10.01.2021
+        //10.01.2021
         //$creating_branch_type_id    = getBranchByBranchId_HH($creating_branch_id)->branch_type_id;
         //$creating_area_id           = getBranchByBranchId_HH($creating_branch_id)->area_id;
         
@@ -242,14 +242,14 @@ class OrderController extends Controller
 
       
         // destination area,branch,district
-        $destination_area_id    =  $request->area_id;
+        $destination_area_id            =  $request->area_id;
         // destination_branch_id , search area_branch table, where area_id
         $destination_branch             =  getDestinationBranchByDestinationAreaId_HH($destination_area_id);
         $destination_branch_id          =  $destination_branch['branch_id'];  
         $destination_branch_parent_id   =  $destination_branch['branch_parent_id'];  
         $destination_branch_type_id     =  $destination_branch['branch_type_id']; 
         $destination_city_id            =  $destination_branch['branch_city_id'];
-         //10.01.2021
+        //10.01.2021
         //$destination_branch_type_id     =  getBranchByBranchId_HH($destination_branch_id)->branch_type_id;
         //$destination_city_id            =  getBranchByBranchId_HH($destination_branch_id)->district_id;
         

@@ -91,27 +91,27 @@
                                         <div style='color:red; padding: 0 5px;'>{{($errors->has('phone'))?($errors->first('phone')):''}}</div>
                                     </div>
                             </div>
-                            <div class="col-md-6">
+                            {{--  <div class="col-md-6">
                                     <div class="form-group">
                                     <textarea name="g_c_address" class="form-control" placeholder="Enter Sender Address"></textarea>
                                     <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_address'))?($errors->first('g_c_address')):''}}</div>
                                     </div>
                             </div>
                             <div class="col-md-6">
-                                    <div class="form-group">
-                                        <select name="g_c_area_id" id="" class="form-control select2">
-                                            <option value="">Select Area</option>
-                                            @foreach($districts as $district)
-                                                <optgroup label="{{ $district->name }}">
-                                                @foreach($district->area as $value)
-                                                    <option {{ old('g_c_area_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
-                                                @endforeach
-                                                </optgroup>
+                                <div class="form-group">
+                                    <select name="g_c_area_id" id="" class="form-control select2">
+                                        <option value="">Select Area</option>
+                                        @foreach($districts as $district)
+                                            <optgroup label="{{ $district->name }}">
+                                            @foreach($district->area as $value)
+                                                <option {{ old('g_c_area_id') == $value->id?'selected':'' }} value="{{ $value->id }}">{{ $value->area_name }}</option>
                                             @endforeach
-                                        </select>
-                                        <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_area_id'))?($errors->first('g_c_area_id')):''}}</div>
-                                    </div>
-                            </div>
+                                            </optgroup>
+                                        @endforeach
+                                    </select>
+                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('g_c_area_id'))?($errors->first('g_c_area_id')):''}}</div>
+                                </div>
+                            </div>  --}}
                         </div>
 
 
