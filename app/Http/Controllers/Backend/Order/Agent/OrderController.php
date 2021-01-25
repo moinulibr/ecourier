@@ -627,7 +627,7 @@ class OrderController extends Controller
                     );
 
                 DB::commit();
-                return redirect()->back()->with($notification);
+                return redirect()->route('agent.order.success',$order->invoice_no)->with($notification);
 
             }
             catch(\Exception $e)
@@ -754,6 +754,29 @@ class OrderController extends Controller
         $data['order'] = Order::find($id);
         return view('backend.order.agent.order_ajax_view.show',$data);
     }
+
+    
+
+
+
+    public function ordersuccess(Request $request,$id)
+    {
+        $data['order'] = Order::where('invoice_no',$id)->first();
+        return view('backend.order.agent.order.success',$data);
+    }
+
+    public function showinvoice($id)
+    {
+        $data['order'] = Order::where('invoice_no',$id)->first();
+        return view('backend.order.agent.order.invoices.invoice',$data);
+    }
+
+    public function paymentinvoice()
+    {
+       return view('backend.agent.invoices.view');
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -524,11 +524,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
             Route::get('order/invoice/print/{id}','OrderController@printinvoice')->name('print.order.invoice');
 
-             //assigned Parcel Print
-             Route::get('assigned/manpower','OrderAssignController@index')->name('manpowerAssignedOrder');
-             Route::get('show/manpower/assigned/order/list','OrderAssignController@showManpowerOrderAssingedList')->name('showManpowerOrderAssingedList');
-             Route::get('print/manpower/assigned/order/list','OrderAssignController@printManpowerOrderAssingedList')->name('printManpowerOrderAssingedList');
-             Route::get('pdf/manpower/assigned/order/list','OrderAssignController@pdfDownloadManpowerOrderAssingedList')->name('pdfDownloadManpowerOrderAssingedList');
+            //assigned Parcel Print
+            Route::get('assigned/manpower','OrderAssignController@index')->name('manpowerAssignedOrder');
+            Route::get('show/manpower/assigned/order/list','OrderAssignController@showManpowerOrderAssingedList')->name('showManpowerOrderAssingedList');
+            Route::get('print/manpower/assigned/order/list','OrderAssignController@printManpowerOrderAssingedList')->name('printManpowerOrderAssingedList');
+            Route::get('pdf/manpower/assigned/order/list','OrderAssignController@pdfDownloadManpowerOrderAssingedList')->name('pdfDownloadManpowerOrderAssingedList');
             
             //Assign Parcel
             Route::get('assign/parcel','OrderAssigningStatusController@index')->name('assign.parcel');
@@ -542,6 +542,10 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('quick/assign/remove/cart','OrderAssigningStatusController@quickAssignParcelRemoveCart')->name('quickAssignParcelRemoveCart');
             Route::post('quick/assign/order/store','OrderAssigningStatusController@quickAssignParcelStoreFromCart')->name('quickAssignParcelStoreFromCart');
             
+            //order success and invoice
+            Route::get('success/{id}','OrderController@ordersuccess')->name('order.success');
+            Route::get('show/invoice/{id}','OrderController@showinvoice')->name('order.show.invoice');
+
             /**
              * About Bar code
             */

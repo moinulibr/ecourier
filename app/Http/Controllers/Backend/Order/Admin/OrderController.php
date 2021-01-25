@@ -227,20 +227,17 @@ class OrderController extends Controller
         $creating_branch_parent_id  = $creating_branch->parent_id;
         $creating_branch_type_id    = $creating_branch->branch_type_id;
         $creating_area_id           = $creating_branch->area_id;
-            //10.01.2021
-        //$creating_branch_type_id    = getBranchByBranchId_HH($creating_branch_id)->branch_type_id;
-        //$creating_area_id           = getBranchByBranchId_HH($creating_branch_id)->area_id;
         
         
         // destination area,branch,district
-        $destination_area_id    =  $request->area_id;
+        $destination_area_id            =  $request->area_id;
         // destination_branch_id , search area_branch table, where area_id
         $destination_branch             =  getDestinationBranchByDestinationAreaId_HH($destination_area_id);
         $destination_branch_id          =  $destination_branch['branch_id'];  
         $destination_branch_parent_id   =  $destination_branch['branch_parent_id'];  
         $destination_branch_type_id     =  $destination_branch['branch_type_id']; 
         $destination_city_id            =  $destination_branch['branch_city_id'];
-         //10.01.2021
+        //10.01.2021
         //$findarea = getAreaByAreaId_HH($destination_area_id);
 
         $order_status_changing_current_branch_id = NULL;
@@ -303,9 +300,6 @@ class OrderController extends Controller
             $order->product_amount      = $request->product_amount;
             $order->client_merchant_payable_amount = $client_merchant_payable_amount;
 
-                //$order->net_product_amount      = $request->net_product_amount?$request->net_product_amount:0.0;
-                //$order->net_amount              = $request->total_payable_amount?$request->total_payable_amount:0.0;
-
             $order->parcel_category_id      = $request->parcel_category_id;
             $order->service_type_id         = $request->service_type_id;
             $order->parcel_type_id          = $parcel_type_id;
@@ -313,7 +307,7 @@ class OrderController extends Controller
             $order->destination_branch_id   = $destination_branch_id;
             $order->destination_city_id     = $destination_city_id;
             $order->destination_area_id     = $request->area_id;
-            $order->order_status_id         = 1;
+            $order->order_status_id         = 2;
             $order->order_status_changing_current_branch_id = $order_status_changing_current_branch_id;
             $order->partial                 = 0;
             $order->parcel_quantity         = 1;
@@ -334,7 +328,7 @@ class OrderController extends Controller
 
             //order Processing History; order_processing_histories
             $setData['order_id']            = $order->id;
-            $setData['order_status_id']     = 1;
+            $setData['order_status_id']     = 2;
             $setData['branch_id']           = $creating_branch_id;
             $setData['created_by']          = Auth::guard('web')->user()->id;
             $setData['status_changer_id']   = Auth::guard('web')->user()->id;;
@@ -343,7 +337,6 @@ class OrderController extends Controller
             insertOrderProcessingHistory_HH($setData);
             
 
-            
             /*Order Branch Commission Amount insert*/
             insertingBranchCommission_HH($order,$myBranchId=Auth::guard('web')->user()->branch_id);
             /*Order Branch Commission Amount insert*/
@@ -464,6 +457,7 @@ class OrderController extends Controller
         return true;
     }
 
+    
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id,$amount,$manpower_id)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
