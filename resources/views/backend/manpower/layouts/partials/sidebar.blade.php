@@ -54,10 +54,22 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="icon nav-icon" data-feather="layout"></i>
-                                <span class="menu-item" key="t-layouts">Parcel Management</span>
+                                <span class="menu-item" key="t-layouts"><small>Parcel Pickup Management</small></span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="#">All Parcel</a></li>
+                                <li><a href="{{route('manpower.pendingOrderPickupRequestList')}}">Pending Pickup Request</a></li>
+                                <li><a href="{{route('manpower.orderPickupRequestAcceptedList')}}">Accepted Pickup Request</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="icon nav-icon" data-feather="layout"></i>
+                                <span class="menu-item" key="t-layouts"><small>Parcel Delivery Management</small></span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{route('manpower.pendingOrderDeliveryRequestList')}}">Pending Request</a></li>
+                                <li><a href="{{route('manpower.orderDeliveryRequestAcceptedList')}}">Accepted Request</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -299,7 +299,7 @@ Route::get('/home', 'HomeController@index')->name('home');
         });
 
 
-         // Man Power // Delivery Man
+        // Man Power // Delivery Man
         Route::group(['prefix' => 'deliveryman','namespace'=>'Backend\Admin\User'],function(){
             Route::get('view','DeliveryManController@index')->name('deliveryman.index');
             Route::post('store','DeliveryManController@store')->name('deliveryman.store');
@@ -708,9 +708,6 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('show/single/view/by/ajax/from/list','OrderController@showSingleViewByAjax')->name('showSingleViewByAjax');
 
 
-
-
-
             //ajax
             Route::get('geting/merchantShopAjax','OrderController@getmerchantshopajax')->name('getMerchantShopAjax');
             Route::get('if/order/existing','OrderController@ifOrderExisting')->name('ifOrderExisting');
@@ -722,16 +719,42 @@ Route::get('/home', 'HomeController@index')->name('home');
         });
 
 
-
-
-
-
-
 /* ===================== END order Management  ================================*/
 
 
-/*
-        Merchant Shop Setting*/
+
+
+/* ===================== Order Management For Manpower ================================*/
+    // Man Power // Delivery Man
+    Route::group(['as'=>'manpower.','prefix' => 'manpower','namespace'=>'Backend\Order\Manpower'],function(){
+        Route::get('pending/order/request/list','OrderController@pendingOrderPickupRequestList')->name('pendingOrderPickupRequestList');
+        Route::post('accepting/pending/order/request','OrderController@acceptingPendingOrderPickupRequest')->name('acceptingPendingOrderPickupRequest');
+        Route::post('canceling/pending/order/request','OrderController@cancelingWithOptonPendingOrderPickupRequest')->name('cancelingWithOptonPendingOrderPickupRequest');
+
+        //pickup accepted list and details
+        Route::get('order/request/accepted/list','OrderController@orderPickupRequestAcceptedList')->name('orderPickupRequestAcceptedList');
+        Route::post('order/picking/parcel','OrderController@OrderPickingParcel')->name('OrderPickingParcel');
+        Route::post('order/holding/parcel','OrderController@OrderPickingTimeHoldingParcel')->name('OrderPickingTimeHoldingParcel');
+        Route::post('order/canceling/parcel','OrderController@OrderPickingTimeCancelingParcel')->name('OrderPickingTimeCancelingParcel');
+        
+        /**Order Delivery Request */
+        Route::get('delivery/pending/order/request/list','OrderController@pendingOrderDeliveryRequestList')->name('pendingOrderDeliveryRequestList');
+        Route::post('delivery/accepting/pending/order/request','OrderController@acceptingPendingOrderDeliveryRequest')->name('acceptingPendingOrderDeliveryRequest');
+        Route::post('delivery/canceling/pending/order/request','OrderController@cancelingWithOptonPendingOrderDeliveryRequest')->name('cancelingWithOptonPendingOrderDeliveryRequest');
+
+        //delivery accepted list and details
+        Route::get('delivery/order/request/accepted/list','OrderController@orderDeliveryRequestAcceptedList')->name('orderDeliveryRequestAcceptedList');
+        Route::post('delivery/order/picking/parcel','OrderController@OrderDeliveryingParcel')->name('OrderDeliveryingParcel');
+        Route::post('delivery/order/holding/parcel','OrderController@OrderDeliveryingTimeHoldingParcel')->name('OrderDeliveryingTimeHoldingParcel');
+        Route::post('delivery/order/canceling/parcel','OrderController@OrderDeliveryingTimeCancelingParcel')->name('OrderDeliveryingTimeCancelingParcel');
+    
+    });
+/* ===================== Order Management For Manpower  ================================*/
+
+
+
+
+    /*Merchant Shop Setting*/
 
 
        Route::group(['as'=>'merchant.','prefix' => 'merchant/shops','namespace'=>'Backend\Merchant\Setting','middleware'=>['merchant']],function(){
@@ -752,8 +775,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 /* = ================ Agent management ==================== */
-
-
 
          Route::group(['as'=>'agent.','prefix' => 'agent/stuff','namespace'=>'Backend\Agent','middleware'=>['agentadmin']],function(){
 

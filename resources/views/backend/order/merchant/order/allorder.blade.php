@@ -108,8 +108,7 @@
                                 </td>
                                
                                 <td>
-                                    
-                                     {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
+                                    {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
                                 </td>
                                 <td>
                                     {{ $order->customer->customer_name }} <br>
