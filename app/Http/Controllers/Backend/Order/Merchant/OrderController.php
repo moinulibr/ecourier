@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoice;
 use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoiceDetail;
+use PDF;
 class OrderController extends Controller
 {
     /**
@@ -522,12 +523,28 @@ class OrderController extends Controller
                                         ->where('pay_to_merchant_client_id',$myAuthId)
                                         ->latest()
                                         ->get();
-        $data['invoiceDetails'] = BranchPayToMerchantClientInvoiceDetail::where('parcel_owner_type_id',1)
+        /* $data['invoiceDetails'] = BranchPayToMerchantClientInvoiceDetail::where('parcel_owner_type_id',1)
                                     ->where('pay_to_merchant_client_id',$myAuthId)
                                     ->latest()
-                                    ->get();
+                                    ->get(); */
        return view('backend.merchant.invoices.view',$data);
     }
+
+
+
+    public function paymentinvoiceDetails($id)
+    {
+        $myAuthId = Auth::guard('merchant')->user()->id;
+        $data['invoices'] = BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$id)
+                                        ->where('pay_to_merchant_client_id',$myAuthId)
+                                        ->latest()
+                                        ->get();
+       $pdf =  PDF::loadView('backend.merchant.invoices.invoice_print',$data);
+       //$p = $pdf->stream();
+       return $pdf->download('invoice.pdf');
+    }
+
+
 
 
     public function showSingleViewByAjax(Request $request)

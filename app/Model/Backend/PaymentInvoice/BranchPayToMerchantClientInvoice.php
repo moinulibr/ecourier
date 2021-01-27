@@ -11,10 +11,10 @@ class BranchPayToMerchantClientInvoice extends Model
     public function collectAmount()
     {
         return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
-        ->join('orders','orders.id','=','branch_pay_to_merchant_client_invoices.order_id')
+        ->join('orders','orders.id','=','branch_pay_to_merchant_client_invoice_details.order_id')
         ->select('orders.collect_amount'
         )
-        ->get();//,DB::raw('sum(orders.collect_amount) as total_amount')
+        ->sum('collect_amount');//,DB::raw('sum(orders.collect_amount) as total_amount')
     }
 
     public function totalInvoiceAmount()

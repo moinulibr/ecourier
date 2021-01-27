@@ -716,7 +716,9 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('if/order/existing','OrderController@ifOrderExisting')->name('ifOrderExisting');
             Route::get('making/delivery/charge','OrderController@makingDeliveryCharge')->name('makingDeliveryCharge');
 
+            //merchant payment invoice
             Route::get('payment/index','OrderController@paymentinvoice')->name('payments');
+            Route::get('payment/invoice/details/download/{id}','OrderController@paymentinvoiceDetails')->name('paymentinvoiceDetails');
         });
 
 
