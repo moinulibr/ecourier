@@ -121,7 +121,7 @@
     <!-- Modal -->
     <div id="acceptWithPickParcel" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            <form action="{{route('manpower.acceptingPendingOrderPickupRequest')}}" method="POST" >
+            <form action="{{route('manpower.acceptingPendingOrderDeliveryRequest')}}" method="POST" >
                 @csrf
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -133,8 +133,8 @@
                         <h6>Accept  Order Pending Request </h6> <hr/>
                         <div class="form-group">
                             <select name="accept_value" class="form-control">
-                                <option value="1">Accept Only Order Request </option>
-                                <option value="9">Accept Order With Parcel</option>
+                                <option value="2">Accept Only Order Request </option>
+                                <option value="12">Accept Order With Parcel</option>
                             </select>
                         </div>
                         <input type="hidden" value="" name="order_id" id="accept_id" />
@@ -152,7 +152,7 @@
     <div id="requestcancelWithOption" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
-            <form action="{{route('manpower.cancelingWithOptonPendingOrderPickupRequest')}}" method="POST" >
+            <form action="{{route('manpower.cancelingWithOptonPendingOrderDeliveryRequest')}}" method="POST" >
                 @csrf
                 <!-- Modal content-->
                 <div class="modal-content">

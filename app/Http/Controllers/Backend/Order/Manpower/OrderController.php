@@ -87,11 +87,11 @@ class OrderController extends Controller
                                         ->where('order_processing_type_id',1)
                                         ->where('order_assigning_status_id',1)
                                         ->first();
-            $order->order_assigning_status_id = $accept_value == 1 ? 2 : 9;
+            $order->order_assigning_status_id = $accept_value == 2 ? 2 : 9;
             $order->save();
         
             DB::commit();
-            if($accept_value == 1)
+            if($accept_value == 2)
             {
                 //$this->changeOrderStatus($order_id,$order_status_id = 2);
                 return back()->with('success','Pickup Request Accepted Successfully');
@@ -153,7 +153,7 @@ class OrderController extends Controller
         $branch_id = Auth::guard('manpower')->user()->branch_id;
         $data['orders'] = Order_assign::where('manpower_id',$myUserId)
                                     ->where('order_processing_type_id',1)
-                                    ->where('order_assigning_status_id',2)
+                                    ->whereIn('order_assigning_status_id',[2])
                                     ->get();
         //$assigningStatus = [3,4,5];
         $assigningStatus = [3,4,5];
@@ -176,7 +176,7 @@ class OrderController extends Controller
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
                                         ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->whereIn('order_assigning_status_id',[2])
                                         ->first();
             $order->order_assigning_status_id = $accept_value;
             $order->save();
@@ -209,7 +209,7 @@ class OrderController extends Controller
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
                                         ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->whereIn('order_assigning_status_id',[2])
                                         ->first();
             $order->order_assigning_status_id = 6;
             $order->save();
@@ -244,7 +244,7 @@ class OrderController extends Controller
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
                                         ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->whereIn('order_assigning_status_id',[2])
                                         ->first();
             $order->order_assigning_status_id = 8;
             $order->save();
@@ -314,24 +314,7 @@ class OrderController extends Controller
         return $data; 
     }
 
-    /**Change order status */
-    public function changeOrderStatus($order_id,$order_status_id)
-    {
-        $order = Order::find($order_id);
-        $order->order_status_id = $order_status_id;
-        $order->save();
-       
-        $tData['order_id']          = $order_id;
-        $tData['order_status_id']   = $order_status_id;
-        $tData['branch_id']         = Auth::guard('manpower')->user()->branch_id;
-        $tData['created_by']        = Auth::guard('manpower')->user()->id;
-        $tData['status_changer_id'] = Auth::guard('manpower')->user()->id;
-        $tData['status']            = 1;
-        $tData['changed_branch_id'] = NULL;
-        $history = insertOrderProcessingHistory_HH($tData);
-        return $order; 
-    }
-
+ 
     //=========================================================================================================
     //=========================================================================================================
 
@@ -344,7 +327,7 @@ class OrderController extends Controller
     {
         $myUserId = Auth::guard('manpower')->user()->id;
         $data['orders'] = Order_assign::where('manpower_id',$myUserId)
-                                    ->where('order_processing_type_id',1)
+                                    ->where('order_processing_type_id',2)
                                     ->where('order_assigning_status_id',1)
                                     ->get();
         //$assigningStatus = [3,4,5];
@@ -353,7 +336,7 @@ class OrderController extends Controller
        return view('backend.order.manpower.delivery.pending_order_delivery_request',$data);
     }
 
-    //Pending Order Pickup Request , : Accept
+    //Pending Order Delivery Request , : Accept
     public function acceptingPendingOrderDeliveryRequest(Request $request)
     {
         $order_id       = $request->order_id;
@@ -365,21 +348,21 @@ class OrderController extends Controller
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
-                                        ->where('order_processing_type_id',1)
+                                        ->where('order_processing_type_id',2)
                                         ->where('order_assigning_status_id',1)
                                         ->first();
-            $order->order_assigning_status_id = $accept_value == 1 ? 2 : 9;
+            $order->order_assigning_status_id = $accept_value == 2 ? 2 : 12;
             $order->save();
         
             DB::commit();
-            if($accept_value == 1)
+            if($accept_value == 2)
             {
-                //$this->changeOrderStatus($order_id,$order_status_id = 2);
-                return back()->with('success','Pickup Request Accepted Successfully');
+                $this->changeOrderStatus($order_id,$order_status_id = 15);
+                return back()->with('success','Delivery Request Accepted Successfully');
             }
             else{
-                $this->changeOrderStatus($order_id,$order_status_id = 4);
-                return back()->with('success','Received Accepted & Parcel Pickup Successfully');  
+                $this->changeOrderStatus($order_id,$order_status_id = 15);
+                return back()->with('success','Received Accepted & Parcel Pickup From Office Successfully');  
             }
         }
         catch(\Exception $e)
@@ -403,7 +386,7 @@ class OrderController extends Controller
         $myUserId = Auth::guard('manpower')->user()->id;
         $order = Order_assign::where('manpower_id',$myUserId)
                                     ->where('order_id',$order_id)
-                                    ->where('order_processing_type_id',1)
+                                    ->where('order_processing_type_id',2)
                                     ->where('order_assigning_status_id',1)
                                     ->first();
         $order->order_assigning_status_id = $cancel_value;
@@ -432,7 +415,7 @@ class OrderController extends Controller
         $myUserId = Auth::guard('manpower')->user()->id;
         $branch_id = Auth::guard('manpower')->user()->branch_id;
         $data['orders'] = Order_assign::where('manpower_id',$myUserId)
-                                    ->where('order_processing_type_id',1)
+                                    ->where('order_processing_type_id',2)
                                     ->where('order_assigning_status_id',2)
                                     ->get();
         //$assigningStatus = [3,4,5];
@@ -455,14 +438,14 @@ class OrderController extends Controller
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
-                                        ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->where('order_processing_type_id',2)
+                                        ->whereIn('order_assigning_status_id',[2,12])
                                         ->first();
             $order->order_assigning_status_id = $accept_value;
             $order->save();
-            $this->changeOrderStatus($order_id,$order_status_id = 4);
+            $this->changeOrderStatus($order_id,$order_status_id = 17);
             DB::commit();
-            return back()->with('success','Parcel Pickup Successfully');  
+            return back()->with('success','Parcel Delivery Successfully');  
         }
         catch(\Exception $e)
         {
@@ -488,14 +471,14 @@ class OrderController extends Controller
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
-                                        ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->where('order_processing_type_id',2)
+                                        ->whereIn('order_assigning_status_id',[2,12])
                                         ->first();
             $order->order_assigning_status_id = 6;
             $order->save();
             //$this->changeOrderStatus($order_id,$order_status_id = 4);
             $this->rescheduleHoldingDeliveryParcel($order_id,$holding_value,$next_schedule);
-            $this->changeOrderStatus($order_id,$order_status_id=44);
+            $this->changeOrderStatus($order_id,$order_status_id=19);
             DB::commit();
             return back()->with('success','Parcel Hold Successfully');  
         }
@@ -523,13 +506,13 @@ class OrderController extends Controller
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
-                                        ->where('order_processing_type_id',1)
-                                        ->where('order_assigning_status_id',2)
+                                        ->where('order_processing_type_id',2)
+                                        ->whereIn('order_assigning_status_id',[2,12])
                                         ->first();
             $order->order_assigning_status_id = 8;
             $order->save();
             $this->orderFinalCancelingWhenDeliveryParcel($order_id,$cancel_value);
-            $this->changeOrderStatus($order_id,$order_status_id=43);
+            $this->changeOrderStatus($order_id,$order_status_id=27);
             DB::commit();
             return back()->with('success','Parcel Cancel Successfully');  
         }
@@ -593,6 +576,25 @@ class OrderController extends Controller
     }
 
 
+    //=========================================================================================================
+       /**Change order status */
+       public function changeOrderStatus($order_id,$order_status_id)
+       {
+           $order = Order::find($order_id);
+           $order->order_status_id = $order_status_id;
+           $order->save();
+          
+           $tData['order_id']          = $order_id;
+           $tData['order_status_id']   = $order_status_id;
+           $tData['branch_id']         = Auth::guard('manpower')->user()->branch_id;
+           $tData['created_by']        = Auth::guard('manpower')->user()->id;
+           $tData['status_changer_id'] = Auth::guard('manpower')->user()->id;
+           $tData['status']            = 1;
+           $tData['changed_branch_id'] = NULL;
+           $history = insertOrderProcessingHistory_HH($tData);
+           return $order; 
+       }
+   
     //=========================================================================================================
 
     /**

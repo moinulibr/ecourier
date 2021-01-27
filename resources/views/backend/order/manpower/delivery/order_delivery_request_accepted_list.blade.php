@@ -122,7 +122,7 @@
     <!-- Modal Picking up-->
     <div id="pickingupParcel" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            <form action="{{route('manpower.OrderPickingParcel')}}" method="POST" >
+            <form action="{{route('manpower.OrderDeliveryingParcel')}}" method="POST" >
                 @csrf
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -134,7 +134,7 @@
                         <h6>Pickup Parcel </h6> <hr/>
                         <div class="form-group">
                             <select name="accept_value" class="form-control">
-                                <option value="9">Receive Parcel (From Merchant)</option>
+                                <option value="7">Receive Parcel (From Office)</option>
                             </select>
                         </div>
                         <input type="hidden" value="" name="order_id" id="accept_id" />
@@ -153,7 +153,7 @@
     <div id="parcelPickingTimeOrderHold" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
-            <form action="{{route('manpower.OrderPickingTimeHoldingParcel')}}" method="POST" >
+            <form action="{{route('manpower.OrderDeliveryingTimeHoldingParcel')}}" method="POST" >
                 @csrf
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -190,7 +190,7 @@
     <div id="parcelPickingTimeOrderCancel" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
-            <form action="{{route('manpower.OrderPickingTimeCancelingParcel')}}" method="POST" >
+            <form action="{{route('manpower.OrderDeliveryingTimeCancelingParcel')}}" method="POST" >
                 @csrf
                 <!-- Modal content-->
                 <div class="modal-content">

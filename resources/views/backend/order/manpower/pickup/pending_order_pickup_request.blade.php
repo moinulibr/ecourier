@@ -133,7 +133,7 @@
                         <h6>Accept  Order Pending Request </h6> <hr/>
                         <div class="form-group">
                             <select name="accept_value" class="form-control">
-                                <option value="1">Accept Only Order Request </option>
+                                <option value="2">Accept Only Order Request </option>
                                 <option value="9">Accept Order With Parcel</option>
                             </select>
                         </div>
