@@ -1508,9 +1508,9 @@ Thanked By ".appUrl_HS();
             $data->manpower_id              = $order->manpower_id;
             $data->order_processing_type_id = $order->order_processing_type_id;
             $data->amount                   = $totalAmount;
-            $data->branch_id                = $branch_id;
+            $data->branch_id                = $order->branch_id;
             $data->payment_status_id        = NULL;
-            $data->created_by               = $created_by;
+            //$data->created_by               = $created_by;
             $data->save();
             return $data; 
         }

@@ -134,6 +134,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         /*order manpower income commission */
         $created_by     = Auth::guard('web')->user()->id;
         $branch_id      = Auth::guard('web')->user()->branch_id;
+        
         manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(7,$orderId),$branch_id,$created_by);
         manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(9,$orderId),$branch_id,$created_by);
         /*order manpower income commission */

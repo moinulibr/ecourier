@@ -4,53 +4,32 @@ namespace App\Http\Controllers\Backend\Order\Manpower;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
 use App\Model\Backend\Order\Order;
-use App\Model\Backend\Order\Order_destination;
 use App\Model\Backend\Order\Delivery_otp;
 use App\Model\Backend\Order\Order_assign;
 use App\Model\Backend\Order\Order_assigning_status;
-use App\Model\Backend\Order\Order_description;
-use App\Model\Backend\Order\Order_note;
+
 use App\Model\Backend\Order\Order_processing_history;
 use App\Model\Backend\Order\Order_processing_type;
-use App\Model\Backend\Order\Order_receiving_sending_history;
-use App\Model\Backend\Order\Order_sms_sending;
-use App\Model\Backend\Order\Order_status;
+
 
 use App\Model\Backend\Order\OrderPickupDeliveryHoldingReason;
 use App\Model\Backend\Order\OrderPickupDeliveryReschedule;
 use App\Model\Backend\Order\OrderPickupDeliveryCancel;
 use App\Model\Backend\Order\OrderPickupDeliveryCancelingReason;
 
-use App\Model\Backend\Order\Order_third_party;
-use App\Model\Backend\Merchant\Shop\Merchant_shop;
-use App\Model\Backend\Merchant\Setting\Merchant_Setting;
+
 use App\Model\Backend\Customer\Customer;
-use App\Model\Backend\Customer\General_customer;
+
 use Validator;
 use Session;
-use App\Model\Backend\Manpower\ManpowerType;
-use App\Model\Backend\Branch\Branch_type;
-use App\Model\Backend\Manpower\ManpowerCommissionSetting;
-use App\Model\Backend\Admin\Parcel\Delivery_charge_type;
-use App\Model\Backend\Admin\Parcel\Delivery_parcel_amount_type;
-use App\Model\Backend\Admin\Parcel\Parcel_category;
-use App\Model\Backend\Admin\Parcel\Parcel_owner_type;
-use App\Model\Backend\Admin\Parcel\Parcel_type;
-use App\Model\Backend\Admin\Parcel\ParcelAmountPaymentType;
-use App\Model\Backend\Admin\Service\Service_type;
-use App\Model\Backend\Admin\Service\Service_city_type;
-use App\Model\Backend\Admin\Service\Service_charge_setting;
-use App\Model\Backend\Admin\Weight;
+
 use Carbon\Carbon;
 use App\Model\Backend\Area\Area;
-use App\Model\Backend\Area\District;
-use App\Model\Backend\Branch\Area_branch;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Model\Backend\Admin\Setting;
-use App\Model\Backend\ReceiveAmount\ReceiveAmountHistory;
+
 class OrderController extends Controller
 {
     /**
@@ -69,7 +48,7 @@ class OrderController extends Controller
         //$assigningStatus = [3,4,5];
         $assigningStatus = [3,4,5];
         $data['assigning_statuses'] = Order_assigning_status::whereIn('id',$assigningStatus)->get();
-       return view('backend.order.manpower.pickup.pending_order_pickup_request',$data);
+        return view('backend.order.manpower.pickup.pending_order_pickup_request',$data);
     }
 
     //Pending Order Pickup Request , : Accept
@@ -80,7 +59,7 @@ class OrderController extends Controller
         $myUserId = Auth::guard('manpower')->user()->id;
         // Start transaction!
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -89,7 +68,7 @@ class OrderController extends Controller
                                         ->first();
             $order->order_assigning_status_id = $accept_value == 2 ? 2 : 9;
             $order->save();
-        
+
             DB::commit();
             if($accept_value == 2)
             {
@@ -98,7 +77,7 @@ class OrderController extends Controller
             }
             else{
                 $this->changeOrderStatus($order_id,$order_status_id = 4);
-                return back()->with('success','Received Accepted & Parcel Pickup Successfully');  
+                return back()->with('success','Received Accepted & Parcel Pickup Successfully');
             }
         }
         catch(\Exception $e)
@@ -135,8 +114,8 @@ class OrderController extends Controller
             }
             else{
                 $this->changeOrderStatus($order_id,$order_status_id = 4);
-                return back()->with('success','Received Accepted & Parcel Pickup Successfully');  
-            } 
+                return back()->with('success','Received Accepted & Parcel Pickup Successfully');
+            }
         */
     }
     //==========================================================================================
@@ -160,7 +139,7 @@ class OrderController extends Controller
         $data['holdingReasons']     = OrderPickupDeliveryHoldingReason::whereNull('deleted_at')->get();
         $data['cancelingReasons']   = OrderPickupDeliveryCancelingReason::whereNull('deleted_at')->get();
         //$data['assigning_statuses'] = OrderPickupDeliveryReschedule::where('branch_id',$branch_id)->whereNull('deleted_at')->get();
-       return view('backend.order.manpower.pickup.order_pickup_request_accepted_list',$data);
+        return view('backend.order.manpower.pickup.order_pickup_request_accepted_list',$data);
     }
 
 
@@ -171,7 +150,7 @@ class OrderController extends Controller
         $accept_value   = $request->accept_value;
         $myUserId = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -182,7 +161,7 @@ class OrderController extends Controller
             $order->save();
             $this->changeOrderStatus($order_id,$order_status_id = 4);
             DB::commit();
-            return back()->with('success','Parcel Pickup Successfully');  
+            return back()->with('success','Parcel Pickup Successfully');
         }
         catch(\Exception $e)
         {
@@ -204,7 +183,7 @@ class OrderController extends Controller
         $next_schedule   = $request->next_schedule;
         $myUserId       = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -217,7 +196,7 @@ class OrderController extends Controller
             $this->rescheduleHoldingPickupParcel($order_id,$holding_value,$next_schedule);
             $this->changeOrderStatus($order_id,$order_status_id=44);
             DB::commit();
-            return back()->with('success','Parcel Hold Successfully');  
+            return back()->with('success','Parcel Hold Successfully');
         }
         catch(\Exception $e)
         {
@@ -239,7 +218,7 @@ class OrderController extends Controller
         $cancel_value       = $request->cancel_value;
         $myUserId           = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -251,7 +230,7 @@ class OrderController extends Controller
             $this->orderFinalCancelingWhenPickupParcel($order_id,$cancel_value);
             $this->changeOrderStatus($order_id,$order_status_id=43);
             DB::commit();
-            return back()->with('success','Parcel Cancel Successfully');  
+            return back()->with('success','Parcel Cancel Successfully');
         }
         catch(\Exception $e)
         {
@@ -286,7 +265,7 @@ class OrderController extends Controller
         $data->branch_id                                = Auth::guard('manpower')->user()->branch_id;
         $data->created_by                               = Auth::guard('manpower')->user()->id;
         $data->save();
-        return $data; 
+        return $data;
     }
 
 
@@ -311,10 +290,10 @@ class OrderController extends Controller
         $data->next_schedule                            = $next_schedule;
         $data->created_by                               = Auth::guard('manpower')->user()->id;
         $data->save();
-        return $data; 
+        return $data;
     }
 
- 
+
     //=========================================================================================================
     //=========================================================================================================
 
@@ -344,7 +323,7 @@ class OrderController extends Controller
         $myUserId = Auth::guard('manpower')->user()->id;
         // Start transaction!
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -353,7 +332,7 @@ class OrderController extends Controller
                                         ->first();
             $order->order_assigning_status_id = $accept_value == 2 ? 2 : 12;
             $order->save();
-        
+
             DB::commit();
             if($accept_value == 2)
             {
@@ -362,7 +341,7 @@ class OrderController extends Controller
             }
             else{
                 $this->changeOrderStatus($order_id,$order_status_id = 15);
-                return back()->with('success','Received Accepted & Parcel Pickup From Office Successfully');  
+                return back()->with('success','Received Accepted & Parcel Pickup From Office Successfully');
             }
         }
         catch(\Exception $e)
@@ -378,7 +357,7 @@ class OrderController extends Controller
     }
 
 
-    //Pending Order Pickup Request , : Cancel
+    //Pending Order Delivery Request , : Cancel
     public function cancelingWithOptonPendingOrderDeliveryRequest(Request $request)
     {
         $order_id       = $request->order_id;
@@ -399,8 +378,8 @@ class OrderController extends Controller
             }
             else{
                 $this->changeOrderStatus($order_id,$order_status_id = 4);
-                return back()->with('success','Received Accepted & Parcel Pickup Successfully');  
-            } 
+                return back()->with('success','Received Accepted & Parcel Pickup Successfully');
+            }
         */
     }
     //==========================================================================================
@@ -434,7 +413,7 @@ class OrderController extends Controller
         $accept_value   = $request->accept_value;
         $myUserId = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -445,7 +424,7 @@ class OrderController extends Controller
             $order->save();
             $this->changeOrderStatus($order_id,$order_status_id = 17);
             DB::commit();
-            return back()->with('success','Parcel Delivery Successfully');  
+            return back()->with('success','Parcel Delivery Successfully');
         }
         catch(\Exception $e)
         {
@@ -467,7 +446,7 @@ class OrderController extends Controller
         $next_schedule   = $request->next_schedule;
         $myUserId       = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -480,7 +459,7 @@ class OrderController extends Controller
             $this->rescheduleHoldingDeliveryParcel($order_id,$holding_value,$next_schedule);
             $this->changeOrderStatus($order_id,$order_status_id=19);
             DB::commit();
-            return back()->with('success','Parcel Hold Successfully');  
+            return back()->with('success','Parcel Hold Successfully');
         }
         catch(\Exception $e)
         {
@@ -502,7 +481,7 @@ class OrderController extends Controller
         $cancel_value       = $request->cancel_value;
         $myUserId           = Auth::guard('manpower')->user()->id;
         DB::beginTransaction();
-        try 
+        try
         {
             $order = Order_assign::where('manpower_id',$myUserId)
                                         ->where('order_id',$order_id)
@@ -514,7 +493,7 @@ class OrderController extends Controller
             $this->orderFinalCancelingWhenDeliveryParcel($order_id,$cancel_value);
             $this->changeOrderStatus($order_id,$order_status_id=27);
             DB::commit();
-            return back()->with('success','Parcel Cancel Successfully');  
+            return back()->with('success','Parcel Cancel Successfully');
         }
         catch(\Exception $e)
         {
@@ -549,7 +528,7 @@ class OrderController extends Controller
         $data->branch_id                                = Auth::guard('manpower')->user()->branch_id;
         $data->created_by                               = Auth::guard('manpower')->user()->id;
         $data->save();
-        return $data; 
+        return $data;
     }
     /**reschedule parcel */
     public function rescheduleHoldingDeliveryParcel($order_id,$reason_id,$next_schedule)
@@ -572,7 +551,7 @@ class OrderController extends Controller
         $data->next_schedule                            = $next_schedule;
         $data->created_by                               = Auth::guard('manpower')->user()->id;
         $data->save();
-        return $data; 
+        return $data;
     }
 
 
@@ -583,7 +562,7 @@ class OrderController extends Controller
            $order = Order::find($order_id);
            $order->order_status_id = $order_status_id;
            $order->save();
-          
+
            $tData['order_id']          = $order_id;
            $tData['order_status_id']   = $order_status_id;
            $tData['branch_id']         = Auth::guard('manpower')->user()->branch_id;
@@ -592,9 +571,9 @@ class OrderController extends Controller
            $tData['status']            = 1;
            $tData['changed_branch_id'] = NULL;
            $history = insertOrderProcessingHistory_HH($tData);
-           return $order; 
+           return $order;
        }
-   
+
     //=========================================================================================================
 
     /**
