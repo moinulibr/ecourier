@@ -79,7 +79,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
     public function storeParcelAmountOrderList(Request $request)
     {
-        $branch_id = Auth::guard('web')->user()->branch_id;
+        $branch_id                  = Auth::guard('web')->user()->branch_id;
         $manpower_id                = $request->manpower_id;
         $order_assigning_status_id  = $request->order_assigning_status_id;
         $order_ids                  = $request->order_id;
@@ -92,6 +92,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
             //change order_assigning_status_id ,branch_id in the order_assign table
             foreach ($order_ids as $key => $order_id) {
                $this->parcelAmountReceiveOrderStatusIdAndInsertProcessingHistoryTable($order_id,$order_assigning_status_id,$manpower_id);
+               updateActiveStatusWhenReceivingAmount_HH($order_id,$active_status=1);
             }
             //change status id in the order table
             //order insert data in the processing table
@@ -185,6 +186,9 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         }
         return true;
     }
+
+
+
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id,$amount,$manpower_id)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
@@ -229,6 +233,8 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
 
 
+
+
     //not using this
     public function insertOrderProcessingHistoryTable($order_id,$changing_status_id)
     {
@@ -241,6 +247,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         $orderProcessing->save();
         return $orderProcessing;
     }
+
     /**
      * Show the form for creating a new resource.
      *

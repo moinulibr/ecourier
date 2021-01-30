@@ -92,6 +92,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
             //change order_assigning_status_id ,branch_id in the order_assign table
             foreach ($order_ids as $key => $order_id) {
                $this->parcelAmountReceiveOrderStatusIdAndInsertProcessingHistoryTable($order_id,$order_assigning_status_id,$manpower_id);
+               updateActiveStatusWhenReceivingAmount_HH($order_id,$active_status=1);
             }
             //change status id in the order table
             //order insert data in the processing table
