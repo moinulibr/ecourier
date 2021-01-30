@@ -18,18 +18,7 @@
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
-                            <div class="pickup-info">
-                                <div class="title-wrapper">
-                                    <h4 class="title">Pickup Shop Address</h4>
-                                </div>
-                                <div class="subtitle-wrapper">
-                                    <p class="title">
-                                        {{--  {{ $order->merchantshop?$order->merchantshop->shop_name: '' }}  <br>
-                                        {{ $order->merchantshop?$order->merchantshop->pickup_address: '' }}   --}}
-
-                                    </p>
-                                </div>
-                            </div>
+                            
                             <div class="shipment-info">
                                 <div class="title-wrapper">
                                     <h4 class="title">Customer / Shipment Details</h4>
@@ -41,26 +30,29 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="track-button-wrapper">
-                                <br>
-                               
-                                <a href="" class="btn btn-primary" ><i class="fa fa-map-pin"></i> Tracking Your Order</a>
-                               
-                                <br><br><br>
-                            </div>
+                            
                             <div class="parcel-create-button-wrapper">
                                 <a  href="{{ route('agent.order.create') }}" class="btn  btn-info"><i class="fa fa-plus"></i> Create Order</a>
                                 <br><br><br>
 
                             </div>
                                 <div class="print-label-button-wrapper">
-                                       <a  class="btn btn-secondary btn-round btn-background-ghost" href="{{ route('agent.order.show.invoice',$order->invoice_no) }}">
+                                      
+                                        <a  class="customerCopy btn btn-secondary btn-round btn-background-ghost" data-invoice_no="{{$order->invoice_no}}" data-url="{{ route('agent.order.successInvoicePrintCustomerCopyByAjaxPrintJs') }}">
                                             <span>
                                                 <i class="fa fa-print"></i> 
-                                                Print Label
+                                                Customer Copy
                                             </span>
                                        </a>
-                                        <br><br><br>
+                                       
+                                       <a  class="labelPrint btn btn-secondary btn-round btn-background-ghost" data-invoice_no="{{$order->invoice_no}}" data-url="{{ route('agent.order.successInvoicePrintSlipByAjaxPrintJs') }}">
+                                        <span>
+                                            <i class="fa fa-print"></i> 
+                                            Print Label
+                                        </span>
+                                   </a>
+
+                                   <br><br><br><br> <br><br><br><br> <br><br><br><br> <br><br><br><br>
                                 </div>
                             </div> 
 
@@ -72,5 +64,42 @@
     </div> <!-- end row -->
 
 
+    @section('ajaxdropdown')
+    <script>
+
+        // Customer Copy Print
+        $(document).on('click','.customerCopy',function(e){
+        e.preventDefault();
+            var invoice_no = $(this).data('invoice_no');
+            var url = $(this).data('url');
+            //console.log("invoice - No : " + invoice_no +" , URL : "+ url);
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: {invoice_no:invoice_no},
+                success: function(response)
+                {
+                    $.print(response);
+                },
+            });
+        });
+
+         // Label Print
+         $(document).on('click','.labelPrint',function(e){
+        e.preventDefault();
+            var invoice_no = $(this).data('invoice_no');
+            var url = $(this).data('url');
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: {invoice_no:invoice_no},
+                success: function(response)
+                {
+                    $.print(response);
+                },
+            });
+        });
+    </script>
+    @endsection
 
 @endsection

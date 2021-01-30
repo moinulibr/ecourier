@@ -189,6 +189,42 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
+
+         /*
+        |-----------------------------------
+        profile Management 
+        |-----------------------------------
+        */
+        
+        
+        Route::group(['prefix' => 'users/profile','namespace'=>'Backend\Profile'],function(){
+
+
+            Route::get('/show', "ProfileController@index")->name('user.profile');
+            Route::get('/edit','ProfileController@edit')->name('profile.edit');
+            Route::post('/update/{id}','ProfileController@update')->name('profile.update');
+
+
+            Route::get('/setting','ProfileController@setting')->name('user.setting');
+            Route::post('/password/{id}','ProfileController@changepassword')->name('user.password');
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         Route::group(['as' => 'admin','prefix' => 'division','namespace'=>'Area'],function(){
             Route::get('view','DivisionController@index')->name('division.index');
             Route::get('edit/{id}','DivisionController@edit')->name('division.edit');
@@ -544,6 +580,10 @@ Route::get('/home', 'HomeController@index')->name('home');
             
             //order success and invoice
             Route::get('success/{id}','OrderController@ordersuccess')->name('order.success');
+
+            Route::get('success/invoice/customer/copy/print','OrderController@successInvoicePrintCustomerCopyByAjaxPrintJs')->name('order.successInvoicePrintCustomerCopyByAjaxPrintJs');
+            Route::get('success/invoice/slip/print','OrderController@successInvoicePrintSlipByAjaxPrintJs')->name('order.successInvoicePrintSlipByAjaxPrintJs');
+
             Route::get('show/invoice/{id}','OrderController@showinvoice')->name('order.show.invoice');
 
             /**
@@ -563,6 +603,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
              //Send To Another Branch 
             Route::get('send/parcel','OrderParcelSendController@index')->name('send.parcel');
+            Route::get('sending/parcel/list','OrderParcelSendController@sendingParcelList')->name('sending.parcelList');
+            Route::get('sending/parcel/list/ajax','OrderParcelSendController@sendingParcelListAjaxList')->name('sending.parcelListAjaxList');
+            Route::get('sending/parcel/list/view/by/ajax','OrderParcelSendController@sendingParcelListViewAjaxList')->name('sending.parcelListViewAjaxList');
 
             Route::get('send/quick/assign/order','OrderParcelSendController@quickAssignParcelAddCart')->name('send_quickAssignParcelAddCart');
             Route::get('send/quick/assign/exist/cart','OrderParcelSendController@quickAssignParcelExistCart')->name('send_quickAssignParcelExistCart');

@@ -131,75 +131,7 @@ class OrderController extends Controller
         }
         //-------------------------------------------------------------------------------------------------
 
-        // no need
-        /*
-            $merchant_id = $request->merchantId;
-            $merchant_shop_id = $request->merchantShopId;
-            $weight_id = $request->weightId;
-            $customer_area_id = $request->areaId;
-            $parcel_category_id = $request->parcelCategoryId;
-            $parcel_type_id = $request->parcelTypeId;
-            $service_type_id = $request->serviceTypeId;
-            $collect_amount = $request->collectAmount;
-
-            $merchant_shop = getMerchantShopByMerchantId_HH($merchant_id,$merchant_shop_id);
-            $merchant_pickup_area_id =  $merchant_shop?$merchant_shop->pickup_area_id:NULL;
-            $data['merchant_pickup_area_id'] = $merchant_pickup_area_id;
-        
-            $customerSingleAreaDetail       = getAreaByAreaId_HH($customer_area_id);
-            $merchantSingleAreaDetail       = getAreaByAreaId_HH($merchant_pickup_area_id);
-
-            $customer_district_id           = $customerSingleAreaDetail?$customerSingleAreaDetail->district_id:NULL;
-            $merchant_district_id           = $merchantSingleAreaDetail?$merchantSingleAreaDetail->district_id:NULL;
-            $data['merchant_district_id']   = $merchant_district_id;
-            $data['customer_district_id']   = $customer_district_id;
-            
-            $data['merchant_branch_id']     = getMerchantByMerchantId_HH($merchant_id)?getMerchantByMerchantId_HH($merchant_id)->branch_id:1;
-
-            $merchantdistrictservicecitytype =  $merchantSingleAreaDetail?$merchantSingleAreaDetail->service_city_type_id:"NULL";
-
-                //========================================================================
-                if($customer_area_id == NULL)
-                {
-                    $merchant_district_service_city_type = 1;
-                }
-                else if($merchant_district_id == $customer_district_id)
-                {
-                    $merchant_district_service_city_type = $merchantdistrictservicecitytype;
-                }
-                else{
-                    $merchant_district_service_city_type = 3;
-                }
-                //====================================================================
-            
-                $query = Service_charge_setting::query();
-                    $query->where('service_type_id',$service_type_id);
-                    $query->where('parcel_category_id',$parcel_category_id);
-                    $query->where('parcel_type_id',$parcel_type_id);
-                    $query->where('weight_id',$weight_id);
-                if($merchant_district_service_city_type)
-                {
-                    $query->where('service_city_type_id',$merchant_district_service_city_type);
-                }
-                
-            $service_charge = $query->first();
-            $data['charge'] =  deliveryChargeCalculationAmountForEachMerchant_HH($merchant_id,$merchant_district_service_city_type=1,$service_charge?$service_charge->charge:00.00);
-            $data['collect_amount'] =   $collect_amount;
-            $data['service_charge_setting_id'] =   $service_charge?$service_charge->id:NULL;
-
-            $data['cod_charge'] =   codChargeCalculationAmountForEachMerchant_HH($merchant_id,$merchant_district_service_city_type=1,$collect_amount);
-        
-            $data['total_payable_amount'] =   $collect_amount - ($data['cod_charge'] + $data['charge']);
-        
-
-            if($request->parcel_owner_type_id == 1)
-            {
-                return view('backend.order.agent.order.ajax.delivery_charge.calculation_charge',$data);
-            }else{
-                return view('backend.order.agent.order.ajax.delivery_charge.general_customer_charge',$data);
-            } 
-        */
-
+      
     }
 
 
@@ -627,6 +559,8 @@ class OrderController extends Controller
                     );
 
                 DB::commit();
+
+                //
                 return redirect()->route('agent.order.success',$order->invoice_no)->with($notification);
 
             }
@@ -758,12 +692,40 @@ class OrderController extends Controller
     
 
 
-
+    
     public function ordersuccess(Request $request,$id)
     {
         $data['order'] = Order::where('invoice_no',$id)->first();
         return view('backend.order.agent.order.success',$data);
     }
+
+
+    /**Print Customer Copy */
+    public function successInvoicePrintCustomerCopyByAjaxPrintJs(Request $request)
+    {
+        $invoice_no =  $request->invoice_no;
+        $data['order'] = Order::where('invoice_no',$invoice_no)->first();
+
+        $data['setting'] = Setting::find(1);
+        return view('backend.order.agent.order.print.parcelinvoice',$data);
+    }
+    /**Print Customer Copy */
+
+    /**Print Slip */
+    public function successInvoicePrintSlipByAjaxPrintJs(Request $request)
+    {
+        $invoice_no =  $request->invoice_no;
+        $data['order'] = Order::where('invoice_no',$invoice_no)->first();
+    
+        $data['setting'] = Setting::find(1);
+        return view('backend.order.agent.order.print.label',$data);
+    }
+    /**Print Slip */
+
+
+
+
+
 
     public function showinvoice($id)
     {

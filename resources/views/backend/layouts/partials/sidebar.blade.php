@@ -200,13 +200,24 @@
                                     <li><a href="{{ route('agent.order.create') }}">New Parcel</a></li>
                                     <li><a href="{{ route('agent.order.index') }}">All Parcel</a></li>
                                     <li><a href="{{ route('agent.assign.parcel') }}">Assign Parcel</a></li>
-                                    <li><a href="{{ route('agent.send.parcel') }}">Send Other Branch</a></li>
                                     <li><a href="{{ route('agent.receive.parcel') }}">Receive From Other</a></li>
                                     <li><a href="{{ route('agent.manpowerAssignedOrder') }}">Print Assigned Parcel </a></li>
                                     <li><a href="{{ route('agent.manPowerOrderDeliveredAmount') }}">Receive Delivered Amount </a></li>
                                     <li><a href="{{ route('agent.manPowerOrderCancelHoldParcel') }}">Receive<small> Cancel/Hold</small> Parcel </a></li>
                                 </ul>
                             </li>
+
+                            <li>
+                                <a href="javascript: void(0);"  >
+                                    <i data-feather="shopping-cart"></i>
+                                    <span class="menu-item" key="t-layouts"><small>Sending Parcel  Management</small></span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('agent.send.parcel') }}">Send Other Branch</a></li>
+                                    <li><a href="{{ route('agent.sending.parcelList') }}">Sending Parcel List</a></li>
+                                </ul>
+                            </li>
+
                              <li>
                                 <a href="javascript: void(0);"  >
                                     <i data-feather="dollar-sign"></i>
