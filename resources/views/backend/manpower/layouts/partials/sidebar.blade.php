@@ -68,8 +68,9 @@
                                 <span class="menu-item" key="t-layouts"><small>Parcel Delivery Management</small></span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{route('manpower.pendingOrderDeliveryRequestList')}}">Pending Request</a></li>
-                                <li><a href="{{route('manpower.orderDeliveryRequestAcceptedList')}}">Accepted Request</a></li>
+                                <li><a href="{{route('manpower.pendingOrderDeliveryRequestList')}}">Pending Request & Pick</a></li>
+                                {{--  <li><a href="{{route('manpower.orderDeliveryRequestAcceptedList')}}">Accepted Request</a></li>  --}}
+                                <li><a href="{{route('manpower.orderDeliveryRequestAcceptedList')}}">On The Way To Delivery</a></li>
                             </ul>
                         </li>
                     </ul>

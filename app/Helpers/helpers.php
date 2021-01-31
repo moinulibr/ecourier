@@ -571,8 +571,8 @@
             {
                 if($payment_status_id == 2)//paid , 1=unpaid
                 {
-                    $client_merchant_payable_amount = $collect_amount;
-                    $service_cod_payment_status_id = 1;
+                    $client_merchant_payable_amount     = $collect_amount;
+                    $service_cod_payment_status_id      = 1;
                     $service_delivery_payment_status_id = 1;
                 }else{
                     $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
@@ -595,16 +595,16 @@
                     $client_merchant_payable_amount = 0;
                     $service_cod_payment_status_id = 1;
                 }else{
-                    $client_merchant_payable_amount = $collect_amount - $cod_charge;
+                    $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
                 }
             }
             else if($parcel_amount_payment_type_id == 6) // delivery,cod charge customer dibe. nothing baki
             {
                 if($payment_status_id == 2)//paid , 1=unpaid
                 {
-                    $client_merchant_payable_amount = 0;
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
                 }else{
-                    $client_merchant_payable_amount = 0;
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
                 }
             }
             else if($parcel_amount_payment_type_id == 7) // customer kisuei dibe na. delivery charge ,cod so baki
@@ -1175,7 +1175,7 @@ Thanked By ".appUrl_HS();
     */
         function whereInCurrentStatusWhenAssigningParcelForAdmin_HH()
         {
-            return [1,2,3,4,5,42,12,13,16,17,27,28];
+            return [1,2,3,4,5,15,42,12,13,16,17,27,28];
         }
         function whereInChangingStatusWhenAssigningParcelForAdmin_HH()
         {
@@ -1184,7 +1184,7 @@ Thanked By ".appUrl_HS();
 
         function whereInCurrentStatusWhenAssigningParcelForAgent_HH()
         {
-            return [2,3,4,5,11,12,13,16,17,27,28];
+            return [2,3,4,5,15,11,12,13,16,17,27,28];
         }
         function whereInChangingStatusWhenAssigningParcelForAgent_HH()
         {
@@ -1483,24 +1483,24 @@ Thanked By ".appUrl_HS();
                             ->whereNull('deleted_at')
                             ->first();
         }
-        function manpowerCommissionAmountInsert_HH($order,$branch_id,$created_by = NULL)
+        function manpowerCommissionAmountInsert_HH($order)//,$branch_id,$created_by = NULL
         {
-            $amount = 0;
+            $getAmount = 0;
             $totalAmount = 0;
             if($order->branch_id == 1)
             {
-                $amount = getOrderTotalServiceCharge_HH($order->order_id);
+                $getAmount = getOrderTotalServiceCharge_HH($order->order_id);
             }
             else{
-                $amount = specificOrderCommissionByBranchId_HH($order->order_id,$order->branch_id);  
+                $getAmount = specificOrderCommissionByBranchId_HH($order->order_id,$order->branch_id);  
             }
             if($order->order_processing_type_id == 1)
             {
-                $totalAmount = manpowerPickupCommissionAmount_HH($order->manpower_id,$order->branch_id,$amount);
+                $totalAmount = manpowerPickupCommissionAmount_HH($order->manpower_id,$order->branch_id,$getAmount);
             }
             else if($order->order_processing_type_id == 2)
             {
-                $totalAmount = manpowerDeliveryCommissionAmount_HH($order->manpower_id,$order->branch_id,$amount);
+                $totalAmount = manpowerDeliveryCommissionAmount_HH($order->manpower_id,$order->branch_id,$getAmount);
             }
 
             $data  =  new ManpowerIncomeHistory();
@@ -1773,3 +1773,134 @@ Thanked By ".appUrl_HS();
         
 
 
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                           Payment Status     Service All Charge, Customer Payment or not status         |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/   //<strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}</strong>
+    /*|*/   function orderServiceChargeStatusByOrderId_HH($orderId)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($orderId);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/           $data['style'] =  "style=color:yellow;font-size:13px;background-color:red;";
+    /*|*/           $data['status'] =  "Un-paid";
+    /*|*/          if($service_cod_payment_status_id && $service_delivery_payment_status_id )
+    /*|*/          {
+    /*|*/            $data['style'] =  "style=color:yellow;font-size:14px;background-color:green;padding:2%";
+    /*|*/            $data['status'] =  "Paid";
+    /*|*/               //{
+    /*|*/                   //$value->active_status = $active_status;
+    /*|*/                   //$value->save();
+    /*|*/               //}
+    /*|*/          }
+    /*|*/         return $data;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Payment Status     Service All Charge, Customer Payment or not status End       |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                           Payment Status     Service All Charge, Customer Payment or not status         |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/   //<strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}</strong>
+    /*|*/   function orderParcelAmountPaymentStatusByOrderId_HH($orderId)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($orderId);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/           $data['style'] =  "style=color:yellow;font-size:9px;background-color:red;";
+    /*|*/           $data['status'] =  "Not Payable";
+    /*|*/          if($parcel_amount_payment_type_id < 5 )
+    /*|*/          {
+    /*|*/               if($parcel_amount_payment_status_id)
+    /*|*/               {
+    /*|*/                   $data['style'] =  "style=color:yellow;font-size:14px;background-color:green;padding:2%";
+    /*|*/                   $data['status'] =  "Paid";
+    /*|*/               }
+    /*|*/               else{
+    /*|*/                       $data['style'] =  "style=color:yellow;font-size:9px;background-color:red;";
+    /*|*/                       $data['status'] =  "Un-paid";
+    /*|*/                   }
+    /*|*/          }
+    /*|*/         return $data;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Payment Status     Service All Charge, Customer Payment or not status End       |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
+
+    
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                            Delivery Charge Bearer                                                       |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/
+    /*|*/   function deliveryChargeBearerByOrderId_HH($order_id)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($order_id);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/          if($parcel_amount_payment_type_id == 1)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 2)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 3)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 4)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 5)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 6)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 7)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/           return $order;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Delivery Charge Bearer End                                                        |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */

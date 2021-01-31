@@ -98,7 +98,7 @@
                                     {{date('Y-m-d h:i:s',strtotime($item->created_at))}}
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-sm order_id_class" data-order_type="accepting" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#pickingupParcel"><i class="fa fa-eye"></i> Accept</a>
+                                    <a href="" class="btn btn-primary btn-sm order_id_class" data-order_type="accepting" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#deliveryingToCustomer"><i class="fa fa-eye"></i> Deliverying</a>
                                     <a href="" class="btn btn-danger btn-sm order_id_class" data-order_type="holding" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#parcelPickingTimeOrderHold"><i class="fa fa-trash"></i>Hold </a>
                                     <a href="" class="btn btn-danger btn-sm order_id_class" data-order_type="canceling" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#parcelPickingTimeOrderCancel"><i class="fa fa-trash"></i>Cancel</a>
                             </tr>
@@ -120,7 +120,7 @@
 
  
     <!-- Modal Picking up-->
-    <div id="pickingupParcel" class="modal fade" role="dialog">
+    <div id="deliveryingToCustomer" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <form action="{{route('manpower.OrderDeliveryingParcel')}}" method="POST" >
                 @csrf
@@ -128,13 +128,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Pickup Parcel </h4>
+                        <h4 class="modal-title">Delivery Preparing To Customer </h4>
                     </div>
                     <div class="modal-body">
-                        <h6>Pickup Parcel </h6> <hr/>
+                        <h6>Delivery Preparing To Customer </h6> <hr/>
                         <div class="form-group">
                             <select name="accept_value" class="form-control">
-                                <option value="7">Receive Parcel (From Office)</option>
+                                <option value="7">Deliverying To Customer</option>
                             </select>
                         </div>
                         <input type="hidden" value="" name="order_id" id="accept_id" />

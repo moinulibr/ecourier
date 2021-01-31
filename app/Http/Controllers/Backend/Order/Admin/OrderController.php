@@ -461,6 +461,38 @@ class OrderController extends Controller
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id,$amount,$manpower_id)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
+        $parcel_amount_payment_status_id =  NULL;
+        $service_delivery_payment_status_id = NULL;
+        $service_cod_payment_status_id = NULL;
+        if($receive_amount_type_id == 1)
+        {
+            $service_delivery_payment_status_id = 1;
+        }
+        else if($receive_amount_type_id == 2)
+        {
+            $service_cod_payment_status_id = 1;
+        }
+        else if($receive_amount_type_id == 4)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $parcel_amount_payment_status_id = 5;//8
+            }else{
+                 //Branch received from delivery man
+                 $parcel_amount_payment_status_id = 3;
+            }
+        }
+
+
         $orderProcessing =  new ReceiveAmountHistory();
         $orderProcessing->order_id                          = $order_id->id;
         $orderProcessing->parcel_owner_type_id              = $order_id->parcel_owner_type_id;
@@ -475,8 +507,9 @@ class OrderController extends Controller
         $orderProcessing->destination_branch_id             = $order_id->destination_branch_id;
         $orderProcessing->received_branch_type_id           = getBranchByBranchId_HH($branch_id)?getBranchByBranchId_HH($branch_id)->branch_type_id:NULL;
         
-        $orderProcessing->service_cod_payment_status_id      = $order_id->service_cod_payment_status_id;
-        $orderProcessing->service_delivery_payment_status_id = $order_id->service_delivery_payment_status_id;
+        $orderProcessing->service_cod_payment_status_id      = $service_cod_payment_status_id;
+        $orderProcessing->service_delivery_payment_status_id = $service_delivery_payment_status_id;
+        $orderProcessing->parcel_amount_payment_status_id    = $parcel_amount_payment_status_id;
         $orderProcessing->created_by                         = Auth::guard('web')->user()->id;
         $orderProcessing->save();
         return $orderProcessing;

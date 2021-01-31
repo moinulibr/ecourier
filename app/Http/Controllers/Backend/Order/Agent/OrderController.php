@@ -468,7 +468,7 @@ class OrderController extends Controller
                     $order->instant_all_charge_received_status_id = 3;
                 }
                 
-                $order->product_amount      = $request->product_amount;
+                $order->product_amount          = $request->product_amount;
                 $order->client_merchant_payable_amount = $client_merchant_payable_amount;
 
                 $order->parcel_category_id      = $request->parcel_category_id;
@@ -509,7 +509,10 @@ class OrderController extends Controller
 
                 /*---====---- Auto manpower Assign when order Creating---========----*/
                 $created_by         = Auth::guard('web')->user()->id;
-                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
+                if($order->order_status_id != 5)
+                {
+                    autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
+                }
                 autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 2,$manpower_type_id=2,$created_by);
                 /*---====---- Auto manpower Assign when order Creating---========----*/
 
@@ -626,6 +629,37 @@ class OrderController extends Controller
 
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id ,$amount,$created_by)
     {
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
+        $parcel_amount_payment_status_id =  NULL;
+        $service_delivery_payment_status_id = NULL;
+        $service_cod_payment_status_id = NULL;
+        if($receive_amount_type_id == 1)
+        {
+            $service_delivery_payment_status_id = 1;
+        }
+        else if($receive_amount_type_id == 2)
+        {
+            $service_cod_payment_status_id = 1;
+        }
+        else if($receive_amount_type_id == 4)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $parcel_amount_payment_status_id = 5;//8
+            }else{
+                 //Branch received from delivery man
+                 $parcel_amount_payment_status_id = 3;
+            }
+        }
+
         $branch_id = Auth::guard('web')->user()->branch_id;
         $owner = $order_id->parcel_owner_type_id;
         if($owner == 1)
@@ -648,8 +682,9 @@ class OrderController extends Controller
         $orderProcessing->destination_branch_id             = $order_id->destination_branch_id;
         $orderProcessing->received_branch_type_id           = getBranchByBranchId_HH($branch_id)?getBranchByBranchId_HH($branch_id)->branch_type_id:NULL;
         
-        $orderProcessing->service_cod_payment_status_id      = $order_id->service_cod_payment_status_id;
-        $orderProcessing->service_delivery_payment_status_id = $order_id->service_delivery_payment_status_id;
+        $orderProcessing->parcel_amount_payment_status_id    = $parcel_amount_payment_status_id;
+        $orderProcessing->service_cod_payment_status_id      = $service_cod_payment_status_id;
+        $orderProcessing->service_delivery_payment_status_id = $service_delivery_payment_status_id;
         $orderProcessing->created_by                         = $created_by;
         $orderProcessing->save();
         return $orderProcessing;

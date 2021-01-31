@@ -21,10 +21,10 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->order_id}}" name="order_id[]"  data-amount="{{$order->client_merchant_payable_amount}}" value="{{$order->order_id}}"  />
-                <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->order_id}}"  name="order_id_amount[]" value="" />
+                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->id}}" name="order_id[]"  data-amount="{{$order->client_merchant_payable_amount}}" value="{{$order->id}}"  />
+                <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->id}}"  name="order_id_amount[]" value="" />
             </td>
-            <td>{{$order->orders?$order->orders->invoice_no:NULL}}</td>
+            <td>{{$order->id}}</td>
             {{--  <td>
                 @php
                     echo receivedAmountTypeAmount_HH($order->order_id,$branch_id,1);
@@ -44,7 +44,7 @@
                 {{$order->client_merchant_payable_amount}}
             </td>  --}}
             <td>
-                <span id="del_order_id_{{$order->order_id}}">
+                <span id="del_order_id_{{$order->id}}">
                     <span id="" class="total_before_action" >
                     {{$order->client_merchant_payable_amount}}
                     </span>

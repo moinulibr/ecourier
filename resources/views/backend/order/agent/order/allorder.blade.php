@@ -42,6 +42,12 @@
                                 <th>Area</th>
                                 <th>Service <br/>Charge</th>
                                 <th>Status</th>
+                                <th>Customer <br/>
+                                    Service <br/>Charge<br/>Payment Status
+                                </th>
+                                <th>
+                                    Parcel <br/>Amount<br/>Payment Status
+                                </th>
                                 <th>Branch</th>
                                 <th>Action</th>
                             </tr>
@@ -83,6 +89,17 @@
                                     <span style="{{ orderStatusStyle_HH($order->order_status_id) }}">
                                         {{ $order->orderStatus?$order->orderStatus->order_status:'' }}
                                     </span>
+                                </td>
+
+                                <td>
+                                    <strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    <strong {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
                                 </td>
 
                                 <td>

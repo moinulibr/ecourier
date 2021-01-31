@@ -395,7 +395,7 @@ class OrderController extends Controller
         $branch_id = Auth::guard('manpower')->user()->branch_id;
         $data['orders'] = Order_assign::where('manpower_id',$myUserId)
                                     ->where('order_processing_type_id',2)
-                                    ->where('order_assigning_status_id',2)
+                                    ->whereIn('order_assigning_status_id',[12])
                                     ->get();
         //$assigningStatus = [3,4,5];
         $assigningStatus = [3,4,5];

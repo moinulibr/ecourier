@@ -39,7 +39,6 @@ class PayToHeadOfficeInvoiceController extends Controller
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
         $data['invoice'] = PayToHeadOfficeInvoice::find($id)->payment_invoice_no;
-
         $data['invoices'] = PayToHeadOfficeInvoiceDetail::where('pay_to_head_office_invoice_id',$id)
                             ->whereNull('deleted_at')
                             ->get();
@@ -145,7 +144,7 @@ class PayToHeadOfficeInvoiceController extends Controller
                     DB::raw('(select sum(amount) where receive_amount_type_id = 2 AND activate_status_id = 1) as cod_charge'),
                     DB::raw('(select sum(amount) where receive_amount_type_id = 3 AND activate_status_id = 1) as others_charge'),
                     DB::raw('(select sum(amount) where receive_amount_type_id = 4 AND activate_status_id = 1) as parcel_amount'),
-                    DB::raw('(select sum(amount) where activate_status_id = 1) as total_amount')
+                    DB::raw('(select sum(amount) where activate_status_id = 1 AND received_amount_branch_id = '.$branch_id.') as total_amount')
                     //DB::raw('sum(amount) as total_amount')
                     )
                     //->where('destination_branch_id','!=',$branch_id)
@@ -154,7 +153,11 @@ class PayToHeadOfficeInvoiceController extends Controller
                     ->orWhere(function ($query) use($branch_id)
                         {
                             return $query->orWhere('service_cod_payment_status_id',1)
-                            ->orWhere('service_delivery_payment_status_id',1)
+                            ->where('received_amount_branch_id',$branch_id);
+                        })
+                    ->orWhere(function ($query) use($branch_id)
+                        {
+                            return $query->orWhere('service_delivery_payment_status_id',1)
                             ->where('received_amount_branch_id',$branch_id);
                         })
                     /* ->where('parcel_amount_payment_status_id',3)
@@ -165,7 +168,6 @@ class PayToHeadOfficeInvoiceController extends Controller
                     ->groupBy('order_id')
                     ->whereBetween('created_at',[$startDate,$endDate])
                     ->get();
-
 
         return view('backend.payment_invoice.agent.send_to_head_office.ajax.list',$data);
     }
@@ -245,7 +247,7 @@ class PayToHeadOfficeInvoiceController extends Controller
         return $payment;
     }
 
-         /*processing method Pay to head office invoice details table*/
+        /*processing method Pay to head office invoice details table*/
     public function payToHeadOfficeInvoiceDetailsInsertData($invoice,$order_id)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;

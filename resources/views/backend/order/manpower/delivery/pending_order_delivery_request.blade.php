@@ -98,7 +98,7 @@
                                     {{date('Y-m-d h:i:s',strtotime($item->created_at))}}
                                 </td>
                                 <td>
-                                     <a href="" class="btn btn-primary btn-sm order_id_class" data-order_type="accepting" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#acceptWithPickParcel"><i class="fa fa-eye"></i> Accept</a>
+                                     <a href="" class="btn btn-primary btn-sm order_id_class" data-order_type="accepting" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#acceptWithPickParcel"><i class="fa fa-eye"></i> Accept With Parcel</a>
                                      <a href="" class="btn btn-danger btn-sm order_id_class" data-order_type="canceling" data-order_id="{{$item->order_id}}" data-toggle="modal" data-target="#requestcancelWithOption"><i class="fa fa-trash"></i> Cancel</a>
                                 </td>
                             </tr>
@@ -133,7 +133,7 @@
                         <h6>Accept  Order Pending Request </h6> <hr/>
                         <div class="form-group">
                             <select name="accept_value" class="form-control">
-                                <option value="2">Accept Only Order Request </option>
+                                {{--  <option value="2">Accept Only Order Request </option>  --}} 
                                 <option value="12">Accept Order With Parcel</option>
                             </select>
                         </div>

@@ -42,6 +42,7 @@ class ReceiveFromHeadOfficeController extends Controller
 
     public function headOfficeSendInvoiceListDetails($id)
     {
+
         $branch_id = Auth::guard('web')->user()->branch_id;
         $data['invoice'] = HeadOfficePayToBranchInvoice::find($id)->payment_invoice_no;
         $data['invoices'] = HeadOfficePayToBranchInvoiceDetail::where('head_office_pay_to_branch_invoice_id',$id)

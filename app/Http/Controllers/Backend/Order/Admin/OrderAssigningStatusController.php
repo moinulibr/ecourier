@@ -246,13 +246,17 @@ class OrderAssigningStatusController extends Controller
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // pickup
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                        ->whereIn('order_assigning_status_id',[1])
+                        ->where('order_processing_type_id',$order_processing_type_id)
+                        ->first();
                 if($assignedAlready)
                 {
                      // cancel
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 3,$order_processing_type_id);
                 }
-                $this->insertAssingedManpower($manpower_id,$order_id,$order_assigning_status_id,$order_processing_type_id);
+                $this->insertAssingedManpower($manpower_id,$order_id,$order_assigning_status_id=1,$order_processing_type_id);
                 
 
                  //===sms permission and setting===
@@ -288,7 +292,11 @@ class OrderAssigningStatusController extends Controller
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // Delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 { 
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 7,$order_processing_type_id);
@@ -307,7 +315,11 @@ class OrderAssigningStatusController extends Controller
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 6,$order_processing_type_id);
@@ -324,14 +336,35 @@ class OrderAssigningStatusController extends Controller
             // Delviery Canceling
             else if($changing_status_id == 27)
             {
-    
+                $order_assigning_status_id = 2; // received/Accept
+                $order_processing_type_id  = 2; // delivery
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
+                if($assignedAlready)
+                {
+                    $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 8 ,$order_processing_type_id);
+                }
+                 //===sms permission and setting===
+                if(smsToMerchantWhenParcelHoldDeliveryActivateStatus_HS())
+                {
+                    //Sending SMS
+                    $note = "when Delivery Hold";
+                    insertSmsWhenOrderProcessing_HH($order_id,"smsToMerchantWhenParcelHoldDelivery_HH","company_name,invoice_no",$note);
+                } 
             }
              // Delviery cancel
             else if($changing_status_id == 28)
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 {
                      // cancel
@@ -381,7 +414,7 @@ class OrderAssigningStatusController extends Controller
     public  function existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id)
     {
         return $assign =  Order_assign::where('order_id',$order_id)
-                    ->where('order_assigning_status_id',$order_assigning_status_id)    
+                    //->where('order_assigning_status_id',$order_assigning_status_id)    
                     ->where('order_processing_type_id',$order_processing_type_id)    
                     ->first();
     }

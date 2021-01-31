@@ -217,7 +217,7 @@
         function submit(amount)
         {
             var manpower_id = getValueFromSelectOption('manpower_id_class');
-            if(amount > 0 && manpower_id)
+            if(manpower_id)
             {
                 $('#submit').removeAttr('disabled','disabled');
             }else{

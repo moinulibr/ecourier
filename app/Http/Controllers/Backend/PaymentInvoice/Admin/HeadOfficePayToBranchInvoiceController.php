@@ -73,19 +73,21 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         }
 
 
-        $data['orders'] = PayToHeadOfficeInvoiceDetail::join('orders','orders.id','=','pay_to_head_office_invoice_details.order_id')
+        $data['orders'] =       Order::where('orders.creating_branch_id',$send_branch_id)
+                                ->where('orders.creating_branch_id','!=',$branch_id)
+                                ->where('orders.parcel_amount_payment_status_id',5)
+                                //->where('pay_to_head_office_invoice_details.payment_status_id',1)
+                                //->where('pay_to_head_office_invoice_details.receive_amount_type_id',4)
+                                //->groupBy('pay_to_head_office_invoice_details.order_id')
+                                //->whereBetween('pay_to_head_office_invoice_details.created_at',[$startDate,$endDate])
+                                ->get();
+                                /*
+                                PayToHeadOfficeInvoiceDetail::join('orders','orders.id','=','pay_to_head_office_invoice_details.order_id')
                                 ->select('pay_to_head_office_invoice_details.*','orders.creating_branch_id','orders.destination_branch_id',
                                     'orders.client_merchant_payable_amount',
                                    // DB::raw('sum(orders.client_merchant_payable_amount) as total_amount')
                                 )
-                                ->where('orders.creating_branch_id',$send_branch_id)
-                                ->where('orders.creating_branch_id','!=',$branch_id)
-                                ->where('orders.parcel_amount_payment_status_id',5)
-                                ->where('pay_to_head_office_invoice_details.payment_status_id',1)
-                                ->where('pay_to_head_office_invoice_details.receive_amount_type_id',4)
-                                //->groupBy('pay_to_head_office_invoice_details.order_id')
-                                ->whereBetween('pay_to_head_office_invoice_details.created_at',[$startDate,$endDate])
-                                ->get();
+                                */
             /* 
                 $data['orders'] = ReceiveAmountHistory::where('received_amount_branch_id',$branch_id)
                 ->select('id','order_id','receive_amount_type_id','amount',

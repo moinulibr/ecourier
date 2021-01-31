@@ -82,16 +82,23 @@
                                 <div class="table-responsive dt-responsive" id="showResult">
                                     <table  class="table table-striped table-bordered nowrap">
                                         <thead>
-                                            <tr>
+                                           <tr>
                                                 <th>Sl.</th>
                                                 <th></th>
+                                                <th>Customer <br/> Name</th>
+                                                <th>Customer<br/>Phone</th>
+                                                <th>Customer<br/>Address</th>
+                                                <th>Condition<br/>Amount</th>
                                                 <th>Order No</th>
-                                                <th>Service <br/> Charge</th>
-                                                <th>COD <br/> Charge</th>
-                                                <th>Other <br/> Charge</th>
-                                                <th>Parcel <br/> Amount</th>
-                                                <th>Sub Total</th>
-                                                <th style="width:5%;"></th>
+                                                <th>Service <br/>Charge</th>
+                                                <th>COD <br/>Charge</th>
+                                                <th>Total <br/>Charge</th>
+                                                <th>Receiver <br/>Amount</th>
+                                                <th>Delivery <br/>Charge<br/>Bearer</th>
+                                                <th>Cash <br/> Collection</th>
+                                                <th style="width:5%;">Status</th>
+                                                <th>Condition<br/>Payment<br/>Status</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -180,12 +187,12 @@
         }
         function submit(amount)
         {
-            if(amount > 0 )
-            {
+            //if(amount > 0 )
+            //{
                 $('#submit').removeAttr('disabled','disabled');
-            }else{
-                $('#submit').attr('disabled','disabled');
-            }
+            //}else{
+                //$('#submit').attr('disabled','disabled');
+            //}
         }
         function tt()
         {
