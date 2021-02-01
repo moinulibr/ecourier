@@ -102,7 +102,7 @@
                                                     <td>{{date('Y-m-d h:i:s',strtotime($item->payment_at))}}</td>
                                                    
                                                     <td>
-                                                       Send
+                                                      Success
                                                     </td>
                                                     <td style="width:10%;">
                                                         <a href="{{route('agent.payToMerchantClientViewDetails',$item->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>View</a>

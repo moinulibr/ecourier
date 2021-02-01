@@ -112,6 +112,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li>
                                         <a href="{{route('admin.currentBalanchOfMyBranch')}}">Current Balanch<small></small></a>
+                                         <a href="{{route('admin.branchCommissionOfMyBranch')}}">Branch Commission<small></small></a>
                                     </li>
                                     
                                 </ul>
@@ -229,6 +230,19 @@
                                     <li><a href="{{route('agent.headOfficeSendInvoiceList')}}">Receive From<small> Head Office</small></a></li>
                                       <li><a href="{{route('agent.payToMerchantClientIndex')}}">Merchant Paid Invoices</a></li>
                                     <li><a href="{{route('agent.payToMerchantClientCreate')}}">Pay To Merchant</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);"  >
+                                    <i data-feather="dollar-sign"></i>
+                                    <span class="menu-item" key="t-layouts">Balanch Management</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="{{route('agent.currentBalanchOfMyBranch')}}">Current Balanch<small></small></a>
+                                        <a href="{{route('agent.branchCommissionOfMyBranch')}}">Branch Commission<small></small></a>
+                                    </li>
+                                    
                                 </ul>
                             </li>
                             <li>

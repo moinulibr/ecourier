@@ -291,7 +291,7 @@ class OrderController extends Controller
             $order->collect_amount          = $request->collect_amount?$request->collect_amount:0;
 
             $order->delivery_charge_type_id = 1;  //delivey_charge_typies 1=include 2.exclude
-            $order->parcel_amount_payment_type_id = 1; //
+            $order->parcel_amount_payment_type_id = 2; //
             $order->service_charge_setting_id   = $request->service_charge_setting_id;
             $order->service_charge              = $request->charge?$request->charge:0;
             $order->cod_charge                  = $request->cod_charge?$request->cod_charge:0;
@@ -419,27 +419,27 @@ class OrderController extends Controller
     {
         $cod_charge     = $order_id->cod_charge;
         $service_charge = $order_id->service_charge;
-        $product_amount = $order_id->product_amount;
+        $client_merchant_payable_amount = $order_id->client_merchant_payable_amount;
 
         if($order_id->parcel_amount_payment_type_id == 1)
         {
             $this->OrderPaymentReceivingHistory($order_id,1,$service_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
         }
         else if($order_id->parcel_amount_payment_type_id == 2)
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
         }
         else if($order_id->parcel_amount_payment_type_id == 3)
         {
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
         }
         else if($order_id->parcel_amount_payment_type_id == 4)
         {
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
         }
         else if($order_id->parcel_amount_payment_type_id == 5)
         {

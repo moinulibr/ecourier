@@ -148,21 +148,23 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         $order_id =  Order::where('id',$orderId)->first();
         $cod_charge     = $order_id->cod_charge;
         $service_charge = $order_id->service_charge;
-        $product_amount = $order_id->product_amount;
+        $client_merchant_payable_amount = $order_id->client_merchant_payable_amount;
 
         if($order_id->parcel_amount_payment_type_id == 1)
         {
             $this->OrderPaymentReceivingHistory($order_id,1,$service_charge,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,2,$cod_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,4,$product_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 2)
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
@@ -170,14 +172,14 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         }
         else if($order_id->parcel_amount_payment_type_id == 3)
         {
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 4)
         {
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
@@ -213,11 +215,39 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         $service_cod_payment_status_id = NULL;
         if($receive_amount_type_id == 1)
         {
-            $service_delivery_payment_status_id = 3;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $service_delivery_payment_status_id = 6;//Head Office Receive commission of his own branch
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $service_delivery_payment_status_id = 3;
+            }else{
+                //Branch received from delivery man
+                $service_delivery_payment_status_id = 3;
+            }
         }
         else if($receive_amount_type_id == 2)
         {
-            $service_cod_payment_status_id = 3;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $service_cod_payment_status_id = 6;//Head Office Receive commission of his own branch
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $service_cod_payment_status_id = 3;
+            }else{
+                //Branch received from delivery man
+                $service_cod_payment_status_id = 3;
+            }
         }
 
         else if($receive_amount_type_id == 4)
@@ -235,7 +265,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
                 $parcel_amount_payment_status_id = 5;//8
             }else{
                  //Branch received from delivery man
-                 $parcel_amount_payment_status_id = 3;
+                $parcel_amount_payment_status_id = 3;
             }
         }
         $orderProcessing =  new ReceiveAmountHistory();
@@ -268,17 +298,47 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         $parcel_amount_payment_status_id =  NULL;
         $service_delivery_payment_status_id = NULL;
         $service_cod_payment_status_id = NULL;
-       
+
         $order_id =  Order::where('id',$orderId)->first();
         $order_id->office_collect_amount_from_delivery_man =  1;
 
         if($receive_amount_type_id == 1)
         {
-            $order_id->service_delivery_payment_status_id =  3;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )
+            {
+                $order_id->service_delivery_payment_status_id =  6;
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                //Branch received Amount And Preparing
+                $order_id->service_delivery_payment_status_id =  3;//
+            }else{
+                //Branch received from delivery man
+                $order_id->service_delivery_payment_status_id =  3;
+            }
         }
         else if($receive_amount_type_id == 2)
         {
-            $order_id->service_cod_payment_status_id =  3;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )
+            {
+                $order_id->service_cod_payment_status_id =  6;//8
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                //Branch received Amount And Preparing
+                $order_id->service_cod_payment_status_id =  3;//8
+            }else{
+                 //Branch received from delivery man
+                $order_id->service_cod_payment_status_id =  3;
+            }
         }
 
         else if($receive_amount_type_id == 4)

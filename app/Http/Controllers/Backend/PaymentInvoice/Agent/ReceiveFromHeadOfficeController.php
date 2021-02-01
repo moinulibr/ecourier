@@ -42,11 +42,10 @@ class ReceiveFromHeadOfficeController extends Controller
 
     public function headOfficeSendInvoiceListDetails($id)
     {
-
-        $branch_id = Auth::guard('web')->user()->branch_id;
-        $data['invoice'] = HeadOfficePayToBranchInvoice::find($id)->payment_invoice_no;
+        $branch_id        = Auth::guard('web')->user()->branch_id;
+        $data['invoice']  = HeadOfficePayToBranchInvoice::find($id)->payment_invoice_no;
         $data['invoices'] = HeadOfficePayToBranchInvoiceDetail::where('head_office_pay_to_branch_invoice_id',$id)
-                                    ->get();
+                                            ->get();
         return view('backend.payment_invoice.agent.receive_from_head_office.view_list',$data);
     }
     /**
@@ -56,7 +55,7 @@ class ReceiveFromHeadOfficeController extends Controller
      */
     public function receiveInvoiceFromheadOfficeSend($id)
     {
-         // Start transaction!
+        // Start transaction!
          DB::beginTransaction();
          try
          {
@@ -69,7 +68,10 @@ class ReceiveFromHeadOfficeController extends Controller
              $alls = HeadOfficePayToBranchInvoiceDetail::where('head_office_pay_to_branch_invoice_id',$id)->get();
              foreach ($alls as $key => $value)
              {
-                 $this->updateDataReceiveAmountHistory($value->receive_amount_history_id,$value->receive_amount_type_id,$value->order_id);
+                $updt = HeadOfficePayToBranchInvoiceDetail::find($value->id);
+                $updt->parcel_amount_payment_status_id = 7;
+                $updt->save();
+                $this->updateDataReceiveAmountHistory($value->receive_amount_history_id,$value->receive_amount_type_id,$value->order_id);
              }
              DB::commit();
              Session::flash('success','Invoice Amount Received Successfully!');
@@ -94,27 +96,29 @@ class ReceiveFromHeadOfficeController extends Controller
         $branch_id = Auth::guard('web')->user()->branch_id;
         $update = ReceiveAmountHistory::find($id);
         $update->parcel_amount_payment_status_id  = 7;
+        $update->save();
         $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
-        $update->save();
         return $update;
-       /*  $order_id = $update->order_id;
-        if($receiveAmoutTypeId == 1)
-        {
-            $update->service_delivery_payment_status_id  = 3;
-            $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
-        }
-        else if($receiveAmoutTypeId == 2)
-        {
-            $update->service_cod_payment_status_id = 3;
-            $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
-        }
-        else if($receiveAmoutTypeId == 4)
-        {
-            $update->parcel_amount_payment_status_id  = 7;
-            $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
-        }
-        $update->save();
-        return $update; */
+        /*  
+            $order_id = $update->order_id;
+            if($receiveAmoutTypeId == 1)
+            {
+                $update->service_delivery_payment_status_id  = 3;
+                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
+            }
+            else if($receiveAmoutTypeId == 2)
+            {
+                $update->service_cod_payment_status_id = 3;
+                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
+            }
+            else if($receiveAmoutTypeId == 4)
+            {
+                $update->parcel_amount_payment_status_id  = 7;
+                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
+            }
+            $update->save();
+            return $update; 
+        */
     }
 
 
@@ -124,26 +128,6 @@ class ReceiveFromHeadOfficeController extends Controller
         $order->parcel_amount_payment_status_id = 7;
         $order->save();
         return $order;
-        /* $branch_id = Auth::guard('web')->user()->branch_id;
-        if($receiveAmoutTypeId == 1)
-        {
-            $order->service_delivery_payment_status_id  = 3;
-        }
-        else if($receiveAmoutTypeId == 2)
-        {
-            $order->service_cod_payment_status_id = 3;
-        }
-        else if($receiveAmoutTypeId == 4)
-        {
-            if($order->destination_branch_id == $branch_id)
-            {
-                $order->parcel_amount_payment_status_id = 8;
-            }else{
-                $order->parcel_amount_payment_status_id = 5;
-            }
-        }
-        $order->save();
-        return $order; */
     }
 
 

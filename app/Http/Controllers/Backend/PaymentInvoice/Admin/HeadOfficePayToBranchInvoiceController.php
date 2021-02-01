@@ -71,9 +71,7 @@ class HeadOfficePayToBranchInvoiceController extends Controller
             $end= date('d-m-Y');
             $endDate = date("Y-m-d",strtotime($end."+1 day"));
         }
-
-
-        $data['orders'] =       Order::where('orders.creating_branch_id',$send_branch_id)
+        $data['orders'] =  Order::where('orders.creating_branch_id',$send_branch_id)
                                 ->where('orders.creating_branch_id','!=',$branch_id)
                                 ->where('orders.parcel_amount_payment_status_id',5)
                                 //->where('pay_to_head_office_invoice_details.payment_status_id',1)
@@ -168,12 +166,13 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         $receive = $this->OrderPaymentReceivingHistory($order_id,$receive_amount_type_id=4,$amount,$send_branch_id);
         $data = new HeadOfficePayToBranchInvoiceDetail(); 
         $data->head_office_pay_to_branch_invoice_id = $head_office_pay_to_branch_invoice_id; 
-        $data->receive_amount_history_id            = $receive->id; 
+        $data->receive_amount_history_id            = $receive?$receive->id:NULL; 
         $data->order_id                             = $order_id; 
         $data->receive_amount_type_id               = 4; 
         $data->amount                               = $amount; 
         $data->received_branch_id                   = $send_branch_id; 
         $data->payment_by                           = $created_by; 
+        $data->parcel_amount_payment_status_id      = 6; 
         $data->created_by                           = $created_by; 
         $data->save();
         return $data;
@@ -185,8 +184,23 @@ class HeadOfficePayToBranchInvoiceController extends Controller
     {   
         $branch_id = Auth::guard('web')->user()->branch_id;
         $created_by = Auth::guard('web')->user()->branch_id;
-        $created_by_role_id = Auth::guard('web')->user()->role_id;
+        
+        $data = ReceiveAmountHistory::where('order_id',$orderId)
+                            ->where('receive_amount_type_id',$receive_amount_type_id)
+                            ->where('activate_status_id',1)
+                            ->where('parcel_amount_payment_status_id',5)
+                            ->first();
+        if($data)
+        {   $data->parcel_amount_payment_status_id = 6;
+            $data->save();
+            return $data;
+        }
+        else{
+            return false;
+        }
 
+
+        $created_by_role_id = Auth::guard('web')->user()->role_id;
         $order       = Order::find($orderId);
         $order->parcel_amount_payment_status_id = 6;
         $order->save();
@@ -195,10 +209,8 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         $parcel_amount_payment_status_id =  NULL;
         $service_delivery_payment_status_id = NULL;
         $service_cod_payment_status_id = NULL;
-      
         $parcel_amount_payment_status_id = 6;
-       
-        //-------------------------------------------
+        //----------------------------------------
         if($receive_amount_type_id == 1)
         {
             $service_delivery_payment_status_id = 1;

@@ -147,12 +147,12 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         $order_id =  Order::where('id',$orderId)->first();
         $cod_charge     = $order_id->cod_charge;
         $service_charge = $order_id->service_charge;
-        $product_amount = $order_id->product_amount;
+        $client_merchant_payable_amount = $order_id->client_merchant_payable_amount;
         
         if($order_id->parcel_amount_payment_type_id == 1) //($order_id,$receive_amount_type_id,$amount,$manpower_id)
         {
             $this->OrderPaymentReceivingHistory($order_id,1,$service_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
@@ -161,7 +161,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
@@ -169,14 +169,14 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         }
         else if($order_id->parcel_amount_payment_type_id == 3)//($order_id,$receive_amount_type_id,$amount,$manpower_id)
         {
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 4)//($order_id,$receive_amount_type_id,$amount,$manpower_id)
         {
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
             
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);

@@ -281,7 +281,15 @@ class OrderAssigningStatusController extends Controller
             //Delivery Processing
             else if($changing_status_id == 17)
             {
-
+                $order_processing_type_id  = 2;
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                    ->whereIn('order_assigning_status_id',[1])
+                    ->where('order_processing_type_id',$order_processing_type_id)
+                    ->first();
+                if($assignedAlready)
+                {
+                    $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 12,$order_processing_type_id);
+                }
             }
 
             // Delivery Success

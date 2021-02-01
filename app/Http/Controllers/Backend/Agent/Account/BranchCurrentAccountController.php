@@ -5,6 +5,27 @@ namespace App\Http\Controllers\Backend\Agent\Account;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Model\Backend\Order\Order_processing_type;
+use App\Model\Backend\Order\Order_assigning_status;
+use App\Model\Backend\Order\Order_processing_history;
+use App\Model\Backend\Order\Order_assign;
+use App\Model\Backend\Order\Order;
+use App\Model\Backend\ReceiveAmount\ReceiveAmountHistory;
+use App\Model\Backend\PaymentInvoice\PayToHeadOfficeInvoice;
+use App\Model\Backend\PaymentInvoice\PayToHeadOfficeInvoiceDetail;
+use App\Model\Backend\PaymentInvoice\HeadOfficePayToBranchInvoice;
+use App\Model\Backend\PaymentInvoice\HeadOfficePayToBranchInvoiceDetail;
+use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoice;
+use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoiceDetail;
+use App\Model\Backend\Branch\Branch;
+use Carbon\Carbon;
+use App\User;
+use App\Model\Backend\Customer\General_customer;
+use Auth;
+use PDF;
+use DB;
+use Session;;
+use App\Model\Backend\Commission\Branch_commission;
 class BranchCurrentAccountController extends Controller
 {
     /**
@@ -12,6 +33,77 @@ class BranchCurrentAccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function currentBalanchOfMyBranch(Request $request)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+
+        $created_by = Auth::guard('web')->user()->branch_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+
+        if($request->from_date)
+        {
+            $startDate  = date("Y-m-d",strtotime($from_date));
+        }else{
+            $startDate = date('Y-m-d');
+        }
+        if($request->to_date)
+        {
+            $endDate = date("Y-m-d",strtotime($to_date."+1 day"));
+        }else{
+            $end= date('d-m-Y');
+            $endDate = date("Y-m-d",strtotime($end."+1 day"));
+        }
+       /*  Order_processing_history::where('rece')
+        ->whereBetween('orders.created_at',[$startDate,$endDate])
+        ->get(); */
+
+        $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[3,7])
+                                    ->where('activate_status_id',1)
+                                    //->where('receive_amount_type_id',$receive_amount_type_id)
+                                    //->where('received_amount_branch_id',$branch_id)
+                                    ->orWhere(function ($query) use($branch_id)
+                                        {
+                                            return $query->orWhereIn('service_cod_payment_status_id',[1]);
+                                            //->where('received_amount_branch_id',$branch_id);
+                                        })
+                                    ->orWhere(function ($query) use($branch_id)
+                                        {
+                                            return $query->orWhereIn('service_delivery_payment_status_id',[1]);
+                                            //->where('received_amount_branch_id',$branch_id);
+                                        })
+                                    //->where('service_delivery_payment_status_id',3)
+                                    //->where('service_cod_payment_status_id',3)
+                                    //->whereBetween('created_at',[$startDate,$endDate])
+                                    ->get();
+        $data['total_amount'] = $getData->sum('amount');
+        $data['data'] = $getData;
+
+        $data['total_merchant_payable'] =  HeadOfficePayToBranchInvoiceDetail::where('received_branch_id',$branch_id)
+                                            ->where('parcel_amount_payment_status_id',7)
+                                            ->sum('amount');
+        return view('backend.agent.account.branch_current_balance.index',$data);
+    }
+
+
+
+    public function branchCommissionOfMyBranch()
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $data['bcommission'] = Branch_commission::where('branch_id',$branch_id)
+                        ->where('active_status',1)
+                        ->get();
+
+        $data['paidbcommission'] = Branch_commission::where('branch_id',$branch_id)
+                        ->where('active_status',2)
+                        ->get();
+        $data['total_amount'] = $data['bcommission']->sum('commission');
+        $data['total_paid_amount'] = $data['paidbcommission']->sum('commission');
+
+        return view('backend.agent.account.branch_commission.index',$data);
+    }
+
+
     public function index()
     {
         //

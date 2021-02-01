@@ -34,7 +34,11 @@ class BranchPayToMerchantClientController extends Controller
      */
     public function payToMerchantClientIndex()
     {
-        $data['invoices'] = BranchPayToMerchantClientInvoice::whereNull('deleted_at')->latest()->get();
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $data['invoices'] = BranchPayToMerchantClientInvoice::whereNull('deleted_at')
+                                                                ->where('from_branch_id',$branch_id)
+                                                                ->latest()
+                                                                ->get();
         return view('backend.payment_invoice.admin.pay_to_merchant_client.send_invoice_list',$data); 
     }
 
@@ -108,13 +112,13 @@ class BranchPayToMerchantClientController extends Controller
         }
 
         $data['orders'] = ReceiveAmountHistory::join('orders','orders.id','=','receive_amount_histories.order_id')
-        ->select('receive_amount_histories.*','orders.collect_amount','orders.client_merchant_payable_amount','orders.cod_charge',
-        'orders.service_charge','orders.product_amount','orders.others_charge','orders.parcel_amount_payment_type_id','orders.merchant_id',
-        'orders.general_customer_id','orders.order_status_id',
-        'orders.creating_branch_id','orders.destination_branch_id',
-            'orders.client_merchant_payable_amount',
-           // DB::raw('sum(orders.client_merchant_payable_amount) as total_amount')
-        )
+            ->select('receive_amount_histories.*','orders.collect_amount','orders.client_merchant_payable_amount','orders.cod_charge',
+            'orders.service_charge','orders.product_amount','orders.others_charge','orders.parcel_amount_payment_type_id','orders.merchant_id',
+            'orders.general_customer_id','orders.order_status_id',
+            'orders.creating_branch_id','orders.destination_branch_id',
+                'orders.client_merchant_payable_amount','orders.id as orderId','orders.parcel_owner_type_id'
+            // DB::raw('sum(orders.client_merchant_payable_amount) as total_amount')
+            )
         ->where('orders.creating_branch_id',$branch_id)
         ->where(function($query)use($parcel_owner_type_id,$merchant_client_id)
         {
@@ -134,7 +138,6 @@ class BranchPayToMerchantClientController extends Controller
         //->where('receive_amount_histories.received_amount_branch_id',$branch_id)
         ->whereBetween('orders.created_at',[$startDate,$endDate])
         ->get();
-
         return view('backend.payment_invoice.admin.pay_to_merchant_client.ajax.list',$data); 
     }
 

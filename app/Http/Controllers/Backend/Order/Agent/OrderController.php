@@ -589,7 +589,7 @@ class OrderController extends Controller
     {
         $cod_charge     = $order_id->cod_charge;
         $service_charge = $order_id->service_charge;
-        $product_amount = $order_id->product_amount;
+        $client_merchant_payable_amount = $order_id->client_merchant_payable_amount;
         $created_by     = Auth::guard('web')->user()->id;
         if($order_id->parcel_amount_payment_type_id == 1)
         {

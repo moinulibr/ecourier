@@ -34,7 +34,11 @@ class BranchPayToMerchantClientInvoiceController extends Controller
      */
     public function payToMerchantClientIndex()
     {
-        $data['invoices'] = BranchPayToMerchantClientInvoice::whereNull('deleted_at')->latest()->get();
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $data['invoices'] = BranchPayToMerchantClientInvoice::whereNull('deleted_at')
+                                                                ->where('from_branch_id',$branch_id)
+                                                                ->latest()
+                                                                ->get();
         return view('backend.payment_invoice.agent.pay_to_merchant_client.send_invoice_list',$data);
     }
 
@@ -107,14 +111,17 @@ class BranchPayToMerchantClientInvoiceController extends Controller
             $endDate = date("Y-m-d",strtotime($end."+1 day"));
         }
 
-        $data['orders'] = ReceiveAmountHistory::join('orders','orders.id','=','receive_amount_histories.order_id')
+        /* $data['orders'] = ReceiveAmountHistory::join('orders','orders.id','=','receive_amount_histories.order_id')
         ->select('receive_amount_histories.*','orders.collect_amount','orders.client_merchant_payable_amount','orders.cod_charge',
         'orders.service_charge','orders.product_amount','orders.others_charge','orders.parcel_amount_payment_type_id','orders.merchant_id',
         'orders.general_customer_id','orders.order_status_id',
         'orders.creating_branch_id','orders.destination_branch_id',
             'orders.client_merchant_payable_amount',
            // DB::raw('sum(orders.client_merchant_payable_amount) as total_amount')
-        )
+        ) */
+
+        $data['orders'] = Order::join('head_office_pay_to_branch_invoice_details as hoptbid','hoptbid.order_id','=','orders.id')
+        ->whereIn('orders.parcel_amount_payment_status_id',[7])
         ->where('orders.creating_branch_id',$branch_id)
         ->where(function($query)use($parcel_owner_type_id,$merchant_client_id)
         {
@@ -128,13 +135,12 @@ class BranchPayToMerchantClientInvoiceController extends Controller
             }
         })
         //->where('orders.merchant_id',$merchant_client_id)
-        ->whereIn('receive_amount_histories.parcel_amount_payment_status_id',[7,8])
+        ->whereIn('hoptbid.parcel_amount_payment_status_id',[7])
 
-        ->where('receive_amount_histories.receive_amount_type_id',4)
+        ->where('hoptbid.receive_amount_type_id',4)
         //->where('receive_amount_histories.received_amount_branch_id',$branch_id)
-        ->whereBetween('orders.created_at',[$startDate,$endDate])
+        ->whereBetween('hoptbid.created_at',[$startDate,$endDate])
         ->get();
-
         return view('backend.payment_invoice.agent.pay_to_merchant_client.ajax.list',$data);
     }
 
@@ -205,6 +211,7 @@ class BranchPayToMerchantClientInvoiceController extends Controller
         $this->insertOrderProcessingHistoryData($order_id,$changing_status_id=24);
 
         $receive = $this->OrderPaymentReceivingHistory($order_id,$receive_amount_type_id=4);
+        $this->headOfficePayToBranchInvoiceDetail($order_id,$receive?$receive->id:NULL);
 
         $paytoBranch = new BranchPayToMerchantClientInvoiceDetail();
         $paytoBranch->branch_pay_to_merchant_client_invoice_id  = $branch_pay_to_merchant_client_invoice_id;
@@ -229,6 +236,22 @@ class BranchPayToMerchantClientInvoiceController extends Controller
     }
 
 
+    public function headOfficePayToBranchInvoiceDetail($orderId,$receive_amount_history_id)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $data = HeadOfficePayToBranchInvoiceDetail::where('order_id',$orderId)
+                                            ->where('receive_amount_history_id',$receive_amount_history_id)
+                                            ->where('receive_amount_type_id',4)
+                                            ->where('received_branch_id',$branch_id)
+                                            ->where('parcel_amount_payment_status_id',7)
+                                            ->first();
+        if($data )
+        {
+            $data->parcel_amount_payment_status_id = 9;
+            $data->save();
+        }
+        return $data ;
+    }
 
     public function OrderPaymentReceivingHistory($orderId,$receive_amount_type_id=4)
     {
@@ -238,8 +261,8 @@ class BranchPayToMerchantClientInvoiceController extends Controller
 
         $data = ReceiveAmountHistory::where('order_id',$orderId)
                                     ->where('receive_amount_type_id',$receive_amount_type_id)
-                                    ->whereIn('parcel_amount_payment_status_id',[7,8])
-                                    ->where('received_amount_branch_id',$branch_id)
+                                    ->whereIn('parcel_amount_payment_status_id',[7])
+                                    ///->where('received_amount_branch_id',$branch_id)
                                     ->first();
         $data->parcel_amount_payment_status_id = 9;
         $data->save();

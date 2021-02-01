@@ -638,7 +638,6 @@ Route::get('/home', 'HomeController@index')->name('home');
         |-----------------------------------------------------------
         */
 
-
         /*
         |-----------------------------------------------------------
         |  Receive From Another branch : Admin
@@ -677,6 +676,9 @@ Route::get('/home', 'HomeController@index')->name('home');
                 /*======= Admin Branch Total Amount ==========*/
                 Route::get('current/balanch/account/of/my/branch','BranchCurrentAccountController@currentBalanchOfMyBranch')->name('currentBalanchOfMyBranch');
                 /*======= Admin Branch Total Amount ==========*/
+                /*======= Admin All Branch  Total Commission Amount ==========*/
+                Route::get('branch/commission/of/all/branch','BranchCurrentAccountController@branchCommissionOfMyBranch')->name('branchCommissionOfMyBranch');
+                /*======= Admin All Branch  Total Commission Amount ==========*/
             });
         /*
         |-----------------------------------------------------------
@@ -723,6 +725,16 @@ Route::get('/home', 'HomeController@index')->name('home');
         |   Pay to HeadOffice Invoice From Agent
         |-----------------------------------------------------------
         */
+
+        Route::group(['as' => 'agent.','prefix' => 'agent','namespace'=>'Backend\Agent\Account'],function(){
+            /*======= Agent Branch Total Amount ==========*/
+            Route::get('current/balanch/account/of/my/branch','BranchCurrentAccountController@currentBalanchOfMyBranch')->name('currentBalanchOfMyBranch');
+            /*======= Agent Branch Total Amount ==========*/
+            /*======= Agent Branch  Total Commission Amount ==========*/
+            Route::get('branch/commission/of/my/branch','BranchCurrentAccountController@branchCommissionOfMyBranch')->name('branchCommissionOfMyBranch');
+            /*======= Agent Branch  Total Commission Amount ==========*/
+        });
+
 
 
 
