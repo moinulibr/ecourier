@@ -65,21 +65,21 @@ class OrderController extends Controller
     public function getmerchantshopajax(Request $request){
         $unionHtmlOption = "<option value=''>Select Merchant Shop</option>";
         $merchant_id = $request->merchant_id;
-   
+
         $merchantshops = Merchant_shop::where('merchant_id',$merchant_id)->get();
         foreach ($merchantshops as $merchantshop) {
           $unionHtmlOption .= "<option value='$merchantshop->id'>$merchantshop->shop_name</option>";
         }
         // echo $cityHtmlOption;
         return ($unionHtmlOption);
-      } 
+      }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
        /* $processing_type_id = 2;
         $order_id = 8;
         return sendingOrderProcessingSmsWhichIsNotDelivered_HH($order_id,$processing_type_id = 2); */
@@ -101,7 +101,7 @@ class OrderController extends Controller
 
 
     public function ifOrderExisting(Request $request)
-    {  
+    {
         $data['collect_amount'] = 0;
         if($request->parcel_owner_type_id == 1)
         {
@@ -131,11 +131,11 @@ class OrderController extends Controller
         }
         //-------------------------------------------------------------------------------------------------
 
-      
+
     }
 
 
-  
+
 
 
     /**
@@ -167,21 +167,21 @@ class OrderController extends Controller
         $creating_branch_type_id    = $creating_branch->branch_type_id;
         $creating_area_id           = $creating_branch->area_id;
         $creating_district_id       = $creating_branch->district_id;
-        //10.01.2021 
+        //10.01.2021
 
       /*====------======-------======This is not using for hawladar--======-------======----=======*/
         // destination area,branch,district
         $destination_area_id            =  $request->area_id;
         // destination_branch_id , search area_branch table, where area_id
         $destination_branch             =  getDestinationBranchByDestinationAreaId_HH($destination_area_id);
-        $destination_branch_id          =  $destination_branch['branch_id'];  
-        $destination_branch_parent_id   =  $destination_branch['branch_parent_id'];  
-        $destination_branch_type_id     =  $destination_branch['branch_type_id']; 
+        $destination_branch_id          =  $destination_branch['branch_id'];
+        $destination_branch_parent_id   =  $destination_branch['branch_parent_id'];
+        $destination_branch_type_id     =  $destination_branch['branch_type_id'];
         $destination_city_id            =  $destination_branch['branch_city_id'];
         if($request->g_c_area_id) // its for inserting general customer table
         {
             $g_destination_branch       =  getDestinationBranchByDestinationAreaId_HH($request->g_c_area_id);
-            $g_destination_branch_id    =  $g_destination_branch['branch_id']; 
+            $g_destination_branch_id    =  $g_destination_branch['branch_id'];
             $gen_customer_district_id   =  getBranchByBranchId_HH($g_destination_branch_id)->district_id;
         }
         $findarea = getAreaByAreaId_HH($destination_area_id);
@@ -201,7 +201,7 @@ class OrderController extends Controller
         //--------------------
 
         if($request->parcel_owner_type_id == 1)
-        {        
+        {
             $validator = Validator::make($input,[
                 'merchant_id' => 'required',
                 'merchant_shop_id' => 'required',
@@ -225,12 +225,12 @@ class OrderController extends Controller
 
             // Start transaction!
             DB::beginTransaction();
-            try 
+            try
             {
                 $customer_id = NULL;
                 if($customer = getCustomerByCustomerPhone_HH($request->customer_phone))
                 {
-                    $customer_id = $customer?$customer->id:NULL; 
+                    $customer_id = $customer?$customer->id:NULL;
                 }else{
                     $customerData['customer_name']  = $request->customer_name;
                     $customerData['customer_phone'] = $request->customer_phone;
@@ -239,7 +239,7 @@ class OrderController extends Controller
                     $customerData['branch_id']      = $destination_branch_id;
                     $customerData['address']        = $request->address;
                     $customer = insertCustomer_HH($customerData);
-                    $customer_id = $customer?$customer->id:NULL; 
+                    $customer_id = $customer?$customer->id:NULL;
                 }
 
                 $checkordercount    = Order::count();
@@ -250,7 +250,7 @@ class OrderController extends Controller
                     $order->invoice_no           =  $checkorder->invoice_no+1;
                 }
                 else{
-                    $order->invoice_no           =  202100001;   
+                    $order->invoice_no           =  202100001;
                 }
 
                 $order->merchant_invoice        = $request->merchant_invoice;
@@ -258,7 +258,7 @@ class OrderController extends Controller
                 $order->merchant_id             = $request->merchant_id;
                 $order->merchant_shop_id        = $request->merchant_shop_id;
                 $order->creating_branch_id      = $creating_branch_id;
-               
+
                 $order->creating_branch_type_id = $creating_branch_type_id;
                 $order->creating_area_id        = $creating_area_id;
                 $order->weight_id               = $request->weight_id;
@@ -318,7 +318,7 @@ class OrderController extends Controller
                 autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
                 autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 2,$manpower_type_id=2,$created_by);
                 /*---====---- Auto manpower Assign when order Creating---========----*/
- 
+
 
                 /*Order Branch Commission Amount insert*/
                 insertingBranchCommission_HH($order,$myBranchId=Auth::guard('web')->user()->branch_id);
@@ -331,7 +331,7 @@ class OrderController extends Controller
                 }
                 /*Order Amount Receive amount*/
 
-                // destination branch is 
+                // destination branch is
                 if($creating_branch_id != $destination_branch_id)
                 {
                     if($creating_branch_id != $creating_branch_parent_id)
@@ -339,7 +339,7 @@ class OrderController extends Controller
                         //insert here by parent id
                         $this->insertingOrderDestinationTable($order->id,$creating_branch_parent_id,$creating_branch_type_id);
                     }
-                    if(($destination_branch_id != $destination_branch_parent_id) && 
+                    if(($destination_branch_id != $destination_branch_parent_id) &&
                         ($destination_branch_parent_id != $creating_branch_parent_id)
                     )
                     {//insert here by parent id
@@ -386,13 +386,13 @@ class OrderController extends Controller
                 }
                 // Start transaction!
                 DB::beginTransaction();
-                try 
+                try
                 {
                     //=================General Customer======================
                   $g_customer_id = NULL;
                   if($gCustomer = getGeneralCustomerByGeneralCustomerPhone_HH($request->phone))
                   {
-                      $g_customer_id = $gCustomer?$gCustomer->id:NULL; 
+                      $g_customer_id = $gCustomer?$gCustomer->id:NULL;
                   }else{
                       $gcustomerData['name']            = $request->name;
                       $gcustomerData['phone']           = $request->phone;
@@ -401,7 +401,7 @@ class OrderController extends Controller
                       $gcustomerData['branch_id']       = $creating_branch_id;
                       $gcustomerData['address']         = "";//$request->g_c_address;
                       $customerG = insertGeneralCustomerAsMerchant_HH($gcustomerData);
-                      $g_customer_id = $customerG?$customerG->id:NULL; 
+                      $g_customer_id = $customerG?$customerG->id:NULL;
                   }
                    // Sending customerss
                   //=================General Customer======================
@@ -411,7 +411,7 @@ class OrderController extends Controller
                 $customer_id = NULL;
                 if($customer = getCustomerByCustomerPhone_HH($request->customer_phone))
                 {
-                    $customer_id = $customer?$customer->id:NULL; 
+                    $customer_id = $customer?$customer->id:NULL;
                 }else{
                     $customerData['customer_name']  = $request->customer_name;
                     $customerData['customer_phone'] = $request->customer_phone;
@@ -420,7 +420,7 @@ class OrderController extends Controller
                     $customerData['branch_id']      = $destination_branch_id;
                     $customerData['address']        = $request->address;
                     $customer = insertCustomer_HH($customerData);
-                    $customer_id = $customer?$customer->id:NULL; 
+                    $customer_id = $customer?$customer->id:NULL;
                 }
                 //===============customer===============
 
@@ -433,7 +433,7 @@ class OrderController extends Controller
                     $order->invoice_no           =  $checkorder->invoice_no+1;
                 }
                 else{
-                    $order->invoice_no           =  202100001;   
+                    $order->invoice_no           =  202100001;
                 }
                 $order->merchant_invoice        = $request->merchant_invoice;
                 $order->parcel_owner_type_id    = $request->parcel_owner_type_id;
@@ -467,7 +467,7 @@ class OrderController extends Controller
                 {
                     $order->instant_all_charge_received_status_id = 3;
                 }
-                
+
                 $order->product_amount          = $request->product_amount;
                 $order->client_merchant_payable_amount = $client_merchant_payable_amount;
 
@@ -495,8 +495,8 @@ class OrderController extends Controller
                     $order_description->status = 1;
                     $order_description->save();
                 }
-                
-               
+
+
                 //order Processing History; order_processing_histories
                 $setData['order_id']            = $order->id;
                 $setData['order_status_id']     = 5;
@@ -536,7 +536,7 @@ class OrderController extends Controller
                         //insert here by parent id
                         $this->insertingOrderDestinationTable($order->id,$creating_branch_parent_id,$creating_branch_type_id);
                     }
-                    if(($destination_branch_id != $destination_branch_parent_id) && 
+                    if(($destination_branch_id != $destination_branch_parent_id) &&
                         ($destination_branch_parent_id != $creating_branch_parent_id)
                     )
                     {//insert here by parent id
@@ -546,7 +546,7 @@ class OrderController extends Controller
                     $this->insertingOrderDestinationTable($order->id,$destination_branch_id,$destination_branch_type_id);
                 }
 
-             
+
                  //===sms permission and setting===
                  if(smsToCustomerWhenParcelBookedFromMerchantActivateStatus_HS())
                  {
@@ -681,7 +681,7 @@ class OrderController extends Controller
         $orderProcessing->creating_branch_type_id           = $order_id->creating_branch_type_id;
         $orderProcessing->destination_branch_id             = $order_id->destination_branch_id;
         $orderProcessing->received_branch_type_id           = getBranchByBranchId_HH($branch_id)?getBranchByBranchId_HH($branch_id)->branch_type_id:NULL;
-        
+
         $orderProcessing->parcel_amount_payment_status_id    = $parcel_amount_payment_status_id;
         $orderProcessing->service_cod_payment_status_id      = $service_cod_payment_status_id;
         $orderProcessing->service_delivery_payment_status_id = $service_delivery_payment_status_id;
@@ -724,10 +724,10 @@ class OrderController extends Controller
         return view('backend.order.agent.order_ajax_view.show',$data);
     }
 
-    
 
 
-    
+
+
     public function ordersuccess(Request $request,$id)
     {
         $data['order'] = Order::where('invoice_no',$id)->first();
@@ -751,7 +751,7 @@ class OrderController extends Controller
     {
         $invoice_no =  $request->invoice_no;
         $data['order'] = Order::where('invoice_no',$invoice_no)->first();
-    
+
         $data['setting'] = Setting::find(1);
         return view('backend.order.agent.order.print.label',$data);
     }
@@ -770,7 +770,7 @@ class OrderController extends Controller
 
     public function paymentinvoice()
     {
-       return view('backend.agent.invoices.view');
+        return view('backend.agent.invoices.view');
     }
 
 
@@ -806,7 +806,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 
 

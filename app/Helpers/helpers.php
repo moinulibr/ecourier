@@ -1170,7 +1170,7 @@ Thanked By ".appUrl_HS();
 
     /*
     |------------------------------------------------------------------------------------------------------------------------
-    |   Order Status WhereIn
+    |   Order Status WhereIn , order assigning status, current status, changing status currentStatus
     |-------------------------------------------------------------------------------
     */
         function whereInCurrentStatusWhenAssigningParcelForAdmin_HH()
@@ -1179,7 +1179,7 @@ Thanked By ".appUrl_HS();
         }
         function whereInChangingStatusWhenAssigningParcelForAdmin_HH()
         {
-            return [3,5,12,13,16,18,19,27,28,29];
+            return [3,5,12,13,16,17,18,19,27,28,29];
         }
 
         function whereInCurrentStatusWhenAssigningParcelForAgent_HH()
@@ -1188,7 +1188,7 @@ Thanked By ".appUrl_HS();
         }
         function whereInChangingStatusWhenAssigningParcelForAgent_HH()
         {
-            return [3,5,12,13,16,18,19,27,28,29];
+            return [3,5,12,13,16,17,18,19,27,28,29];
         }
     /*
     |---------------------------------------------------------------------------------------

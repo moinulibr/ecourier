@@ -239,7 +239,7 @@ class OrderController extends Controller
             'weight_id' => 'required',
             'collect_amount' => 'required',
             'charge' => 'required',
-            //'description.*' => 'nullable|max:100',
+            //'description.*' => 'nullable|max:100', 
         ]);
      
         if($validator->fails())
@@ -247,12 +247,14 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
-        if($request->collect_amount > 0)
-        {
-            $client_merchant_payable_amount = $request->collect_amount;
-        }else{
-            $client_merchant_payable_amount = 0;
-        }
+        //------------------
+        $parcelAmountPayments = parcelAmountPaymentTypeCalculation_HH($request);
+        $service_cod_payment_status_id      = $parcelAmountPayments['service_cod_payment_status_id'];
+        $service_delivery_payment_status_id = $parcelAmountPayments['service_delivery_payment_status_id'];
+        $client_merchant_payable_amount     = $parcelAmountPayments['client_merchant_payable_amount'];
+        $collect_amount     = $parcelAmountPayments['collect_amount'];
+
+        
         $parcel_type_id             = $request->parcel_type_id;
         $creating_branch_id         = Auth::guard('merchant')->user()->branch_id;
         $creating_branch            = getBranchByBranchId_HH($creating_branch_id);
@@ -327,7 +329,7 @@ class OrderController extends Controller
             $order->collect_amount          = $request->collect_amount?$request->collect_amount:0.0;
 
             $order->delivery_charge_type_id = 1;  //delivey_charge_typies 1=include 2.exclude
-            $order->parcel_amount_payment_type_id = 1; //
+            $order->parcel_amount_payment_type_id = 2; //
             $order->service_charge_setting_id = $request->service_charge_setting_id;
             $order->service_charge          = $request->charge;
             $order->cod_charge              = $request->cod_charge?$request->cod_charge:0.0;

@@ -119,6 +119,7 @@
                             </div>
                           </div>
 
+                          <input type="hidden" name="parcel_amount_payment_type_id" value="2" />
 
                             <div class="col-xs-12 col-md-4 col-lg-4">
                                 <div class="row">

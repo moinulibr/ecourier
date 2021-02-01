@@ -212,12 +212,12 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
-        if($request->collect_amount > 0)
-        {
-            $client_merchant_payable_amount = $request->collect_amount;
-        }else{
-            $client_merchant_payable_amount = 0;
-        }
+        $parcelAmountPayments = parcelAmountPaymentTypeCalculation_HH($request);
+        $service_cod_payment_status_id      = $parcelAmountPayments['service_cod_payment_status_id'];
+        $service_delivery_payment_status_id = $parcelAmountPayments['service_delivery_payment_status_id'];
+        $client_merchant_payable_amount     = $parcelAmountPayments['client_merchant_payable_amount'];
+        $collect_amount     = $parcelAmountPayments['collect_amount'];
+
         
         $parcel_category_id         = $request->parcel_category_id;
         $service_type_id            = $request->service_type_id;

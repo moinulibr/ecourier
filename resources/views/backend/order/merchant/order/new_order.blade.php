@@ -121,7 +121,7 @@
                                           <div style='color:red; padding: 0 5px;'>{{($errors->has('weight_id'))?($errors->first('weight_id')):''}}</div>
                                       </div>
                                   </div>
-
+ <input type="hidden" name="parcel_amount_payment_type_id" value="2" />
                                 {{--  <div class="col-xs-12 col-sm-12 col-lg-12">
                                       <label for="">Product Category</label>
                                       <div class="form-check mb-4">
