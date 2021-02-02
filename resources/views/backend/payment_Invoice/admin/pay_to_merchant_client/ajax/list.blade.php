@@ -35,7 +35,7 @@
                 @if ($order->parcel_owner_type_id == 2)
                     {{ $order->orders->generalCustomer?$order->orders->generalCustomer->name:'' }}
                 @endif
-               
+
             </td>
             <td>
                 @if ($order->parcel_owner_type_id == 1)
@@ -65,8 +65,8 @@
             <td>
                 <span id="del_order_id_{{$order->order_id}}">
                     <span id="" class="total_before_action" >
-                    {{totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}
-                        {{---$order->client_merchant_payable_amount--}}
+                    {{--  {{totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}  --}}
+                    {{ $order->client_merchant_payable_amount }}
                     </span>
                 </span>
             </td>

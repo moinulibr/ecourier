@@ -1,19 +1,17 @@
 @extends('backend.layouts.master')
-@section('title','Receive From Head Office')
+@section('title','Pay To Branch Commission Invoice Details')
 @section('content')
 
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Receive From Head Office  <small>(Agent)</small></h4>
+            <h4 class="mb-0">Pay To Branch Commission Invoice Details  <small>(Admin)</small></h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                    <li class="breadcrumb-item active">
-                        Receive From Head Office
-                    </li>
+                    <li class="breadcrumb-item active">Pay To Branch Commission Invoice Details</li>
                 </ol>
             </div>
 
@@ -49,27 +47,27 @@
     @endif
 </div>
 @endif
-
+@php
+    $branch_id = Auth::guard('web')->user()->branch_id;
+@endphp
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+
                 <div class="card-body">
+
                     <div class="row" >
-                       {{--  <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <div style='color:red; padding: 0 5px;'>{{($errors->has('invoice_no'))?($errors->first('invoice_no')):''}}</div>
+                                <input type="text" disabled value="{{$invoice}}" class="form-control"/>
                             </div>
                         </div>
                          <div class="col-12 col-md-3">
-                            <label>From Date</label>
-                            <input type="text" name="from_date" id="from_date_id"  @if(isset($from_date))   value="{{ $from_date }}" @endif placeholder=" From Date" class="from_date_id_class form-control datepicker">
                         </div>
 
                         <div class="col-12 col-md-3">
-                            <label>To Date</label>
-                            <input type="text" name="to_date" id="to_date_id" @if(isset($to_date))   value="{{ $to_date }}" @endif  placeholder="To Date " class="to_date_id_class form-control datepicker">
-                        </div> --}}
+                        </div>
                     </div>
 
                     <hr>
@@ -81,45 +79,36 @@
                                         <thead>
                                             <tr>
                                                 <th>Sl.</th>
-                                                <th>Invoice No</th>
-                                                <th>Amount</th>
-                                                <th>Created Date</th>
-                                                <th>From Branch</th>
-                                                <th>Status</th>
-                                                <th style="width:10%;">Action</th>
+                                                <th>Order No</th>
+                                                <th>Service <br/> Charge</th>
+                                                <th>Commission  Type</th>
+                                                <th>Commission<br/>Amount</th>
                                             </tr>
                                         </thead>
-                                        <tbody >
-                                            @foreach ($invoices as $key=> $item)
+                                        <tbody>
+                                            @foreach ($invoices as $key=> $order)
                                                 <tr>
                                                     <td>{{$key+1}}</td>
                                                     <td>
-                                                        <a href="{{route('agent.headOfficeSendInvoiceListDetails',$item->id)}}">
-                                                            {{$item->payment_invoice_no}}
-                                                        </a>    
+                                                        {{$order->orders?$order->orders->invoice_no:NULL}}  
                                                     </td>
-                                                    <td>{{$item->totalInvoiceAmount()}}</td>
-                                                    <td>{{date('Y-m-d h:i:s',strtotime($item->payment_at))}}</td>
+                                                    <td>{{$order->service_charge}}</td>
                                                     <td>
-                                                        {{$item->fromBranchs?$item->fromBranchs->company_name:''}}
+                                                        {{getBranchCommissionByCommissionTypeId_HH($order->branch_commission_type_id)}}
                                                     </td>
                                                     <td>
-                                                        @if (!$item->payment_received_by)
-                                                            <a href="{{route('agent.receiveInvoiceFromheadOfficeSend',$item->id)}}" class="badge badge-info">
-                                                                Receive Now
-                                                            </a>
-                                                        @else
-                                                        <span class="badge badge-primary">Received</span>
-                                                        @endif
-                                                    </td>
-                                                    <td style="width:10%;">
-                                                        <a href="{{route('agent.headOfficeSendInvoiceListDetails',$item->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>View</a>
+                                                        <span id="del_order_id_{{$order->order_id}}">
+                                                            <span id="" class="total_before_action" >
+                                                            {{$order->amount}}
+                                                            </span>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                         <tfooter>
-                                           {{--   <tr>id="showResult"
+                                           {{--{{date('Y-m-d h:i:s',strtotime($item->created_at))}}   
+                                           <tr>id="showResult"
                                                 <td colspan="5"></td>
                                                 <td >
                                                     <a href="#" id="clearAll" class="btn btn-sm btn-danger clearAll">Clear All</a>
@@ -141,6 +130,158 @@
 
 
 @section('ajaxdropdown')
+
+    <script>
+        $(document).on('change','.order_id_class',function(){
+            var checkedResult = 0;
+            if($(this).is(":checked"))
+            {
+                checkedResult = 1;
+            }else{
+                checkedResult = 0;
+            }
+           
+            var get_checked_id  = $(this).attr('id');
+            var get_amount  = parseInt($(this).data('amount'));
+
+            var maked_amount_id = 'amount_'+get_checked_id;
+            var maked_del_id    = 'del_'+get_checked_id;
+
+            var set_amount      = parseInt(nanCheck($('#'+maked_del_id).text()));
+
+            var newAmount = parseInt(nanCheck($('#totalAmount').text()));
+            if(checkedResult)
+            {
+                $('#'+maked_amount_id).val(set_amount);
+                $('#'+maked_del_id).html(set_amount).css({'color':'black'});
+                newAmount += get_amount;
+            }else{
+                $('#'+maked_amount_id).val('');
+                $('#'+maked_del_id).html('<del>'+set_amount +'</del>').css({'color':'red'});
+
+                newAmount  -=  get_amount;
+            }
+            $('#totalAmount').text(newAmount);
+            $('#sendTotalAmount').val(newAmount);
+            submit(newAmount);
+        });
+
+        function nanCheck(val)
+        {
+            var nanResult = 0;
+            if(isNaN(val)) {
+                nanResult = 0;
+            }
+            else{
+                nanResult = val;
+            }
+            return nanResult;  
+        }
+
+        function totalAmountBeforeAction()
+        {
+            tt();
+            var sum = 0;
+            $(".total_before_action").each(function() {
+                sum += nanCheck(parseInt($(this).text()));
+            });
+            $('#totalAmount').text(sum);
+            $('#sendTotalAmount').val(sum);
+            submit(sum)
+        }
+        function submit(amount)
+        {
+            if(amount > 0 )
+            {
+                $('#submit').removeAttr('disabled','disabled');
+            }else{
+                $('#submit').attr('disabled','disabled');
+            }
+        }
+        function tt()
+        {
+            $(".order_id_class").each(function() {
+                var amount = nanCheck($(this).data('amount'));
+                var id = $(this).attr('id');
+                var checkedResult = 0;
+                if($(this).is(":checked"))
+                {
+                    checkedResult = 1;
+                }else{
+                    checkedResult = 0;
+                }
+                if(checkedResult)
+                {
+                    $('#amount_'+id).val(amount);
+                }
+                else{
+                    $('#amount_'+id).val('');
+                }
+            });
+        }
+    </script>
+
+   
+    <div id="payToHeadOfficeList" data-url="{{ route('agent.payToHeadOfficeList')}}"></div>
+    {{--Making Cart--}}
+    <script>
+        $(document).ready(function(){
+            var ctrlDown = false,
+            ctrlKey = 17,
+            cmdKey = 91,
+            vKey = 86,
+            cKey = 67;
+            $(document).on('keyup change','.from_date_id_class,.to_date_id_class',function(e)
+            {
+                if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+                if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) return false;
+                    var url = $('#payToHeadOfficeList').data("url");
+                    var from_date                    =  getValueFromSelectOption('from_date_id_class');
+                    var to_date                      =  getValueFromSelectOption('to_date_id_class');
+
+                 
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        data: {from_date:from_date,to_date:to_date},
+                        success: function(response)
+                        {
+                            $('#showResult').html(response);
+                            totalAmountBeforeAction();
+                        },
+                    });
+            });
+        });
+    </script>
+
+
+    {{---Print----}}
+    <div id="printManpowerOrderAssingedList" data-url="{{ route('agent.printManpowerOrderAssingedList')}}"></div>
+    <script>
+            $(document).on('click','#print',function(e)
+            {
+                e.preventDefault();
+                var url = $('#printManpowerOrderAssingedList').data("url");
+                var manpower_id                 =  getValueFromSelectOption('manpower_id_class');
+                var order_processing_type_id    =  getValueFromSelectOption('order_processing_type_id_class');
+                var order_assigning_status_id   =  getValueFromSelectOption('order_assigning_status_id_class');
+                var from_date                   =  getValueFromSelectOption('from_date_id_class');
+                var to_date                     =  getValueFromSelectOption('to_date_id_class');
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: {manpower_id:manpower_id,order_assigning_status_id:order_assigning_status_id,order_processing_type_id:order_processing_type_id,from_date:from_date,to_date:to_date},
+                    success: function(response)
+                    {
+                        $('#viewSingleDataByAjax').html(response).modal('show');
+                    },
+                });
+            });
+    </script>
+
+
 
     <script src="http://www.position-absolute.com/creation/print/jquery.printPage.js "></script>
     <script type="text/javascript">

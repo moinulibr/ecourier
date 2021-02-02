@@ -457,6 +457,9 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('view','OrderController@index')->name('order.index');
             Route::get('create','OrderController@create')->name('order.create');
             Route::post('store','OrderController@store')->name('order.store');
+            
+            Route::get('delete/order/{id}','OrderController@destroy')->name('admin.order.destroy');
+
 
             //ajax
             Route::get('if/order/existing','OrderController@ifOrderExisting')->name('ifOrderExisting');
@@ -668,6 +671,16 @@ Route::get('/home', 'HomeController@index')->name('home');
                 Route::get('parcel/amount/merchant/client/payment/create/list','BranchPayToMerchantClientController@payToMerchantClientCreateList')->name('payToMerchantClientCreateList');
                 Route::post('parcel/amount/merchant/client/payment/create/store','BranchPayToMerchantClientController@payToMerchantClientCreateListStore')->name('payToMerchantClientCreateListStore');
                 /*======= Pay to Merchant/Client ==========*/
+
+
+                /*======= Pay to Branch Commission ==========*/
+                Route::get('paid/branch/commission/invoice','PayToBranchCommissionController@paidBranchCommissionInvoiceList')->name('paidBranchCommissionInvoiceList');
+                Route::get('paid/branch/commission/invoice/details/{id}','PayToBranchCommissionController@paidBranchCommissionInvoiceListDetails')->name('paidBranchCommissionInvoiceListDetails');
+                
+                Route::get('pay/to/branch/commission/invoice/create','PayToBranchCommissionController@paidBranchCommissionInvoiceCreate')->name('paidBranchCommissionInvoiceCreate');
+                Route::get('pay/to/branch/commission/invoice/create/list','PayToBranchCommissionController@payBranchCommissionCreateListByAjax')->name('payBranchCommissionCreateListByAjax');
+                Route::post('pay/to/branch/commission/invoice/create/list/store','PayToBranchCommissionController@payBranchCommissionCreateListByAjaxStore')->name('payBranchCommissionCreateListByAjaxStore');
+                /*======= Pay to Branch Commission ==========*/
 
             });
             /*For Admin*/

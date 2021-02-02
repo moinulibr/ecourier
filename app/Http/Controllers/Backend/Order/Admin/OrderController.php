@@ -562,7 +562,44 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order =  Order::findOrFail($id);
+        DB::beginTransaction();
+        try
+        {
+            $order->orderProcessingHistories()->delete();
+            $order->orderAssigns()->delete();
+            $order->branchCommissions()->delete();
+            $order->manpowerIncomeHistories()->delete();
+            $order->orderDestinations()->delete();
+
+            $order->headOfficePayToBranchInvoiceDetails()->delete();
+            $order->branchPayToMerchantClientInvoiceDetails()->delete();
+            $order->payToHeadofficeInvoiceDetails()->delete();
+            $order->orderDescriptions()->delete();
+
+            $order->orderReceiveAmounts()->delete();
+            $order->delete();
+            DB::commit();
+            return redirect()->back()->with('success','Parcel Deleted Successfully');
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            if($e->getMessage())
+            {
+                $message = $e->getMessage() ;//"Something went wrong! Please Try again";
+            }
+            return Redirect()->back()
+                ->with('error',$message);
+        }
+        return $order->headOfficePayToBranchInvoiceDetails;
+        return $order->orderDescriptions;
+        $user = User::find($id);
+
+        
+        // delete related   
+        //$user->photos()->delete();
+        //$user->delete();
     }
 
     public function showSingleViewByAjax(Request $request)

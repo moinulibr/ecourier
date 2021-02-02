@@ -23,8 +23,8 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->id}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->id) }}" value="{{$order->id}}"  />
-                <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->id}}"  name="order_id_amount[]" value="" />
+                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->orderId}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->orderId) }}" value="{{$order->orderId}}"  />
+                <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->orderId}}"  name="order_id_amount[]" value="" />
             </td>
             <td>{{$order->invoice_no}}</td>
              <td>
@@ -64,8 +64,8 @@
             <td>
                 <span id="del_order_id_{{$order->id}}">
                     <span id="" class="total_before_action" >
-                    {{totalServiceChargePaymentStatusByOrderId_HH($order->id) }}
-                        {{---$order->client_merchant_payable_amount--}}
+                    {{--  {{totalServiceChargePaymentStatusByOrderId_HH($order->id) }}  --}}
+                        {{ $order->client_merchant_payable_amount }}
                     </span>
                 </span>
             </td>

@@ -18,7 +18,32 @@
         </div>
     </div>
     <!-- end page title -->
-
+    @if (session()->has('error'))
+    <div class="alert alert-danger">
+        @if(is_array(session('error')))
+            <ul>
+                @foreach (session('error') as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        @else
+            {{ session('error') }}
+        @endif
+    </div>
+    @endif
+    @if (session()->has('success'))
+    <div class="alert alert-success">
+        @if(is_array(session('success')))
+            <ul>
+                @foreach (session('success') as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        @else
+            {{ session('success') }}
+        @endif
+    </div>
+    @endif
  
     <div class="row">
         <div class="col-12">
@@ -118,7 +143,12 @@
                                             </li>
                                              
                                             <li> 
-                                                <a id="delete" href="" class="delete"><i class="fa fa-trash"></i> Delete</a>
+                                                <a id="delete" href="{{ route('admin.order.destroy', $order->id) }}" class="delete"><i class="fa fa-trash"></i> Delete</a>
+                                                {{--  <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="submit" value="Delete" class="btn btn-danger btn-block" onclick="return confirm('Are you sure to delete?')">       
+                                                </form>  --}}
                                            </li>
                                         </ul> 
                                     </div>

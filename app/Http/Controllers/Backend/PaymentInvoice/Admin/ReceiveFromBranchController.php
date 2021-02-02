@@ -65,6 +65,7 @@ class ReceiveFromBranchController extends Controller
         /* ->where('parcel_amount_payment_status_id',3)
         ->orWhere('service_cod_payment_status_id',1)
         ->orWhere('service_delivery_payment_status_id',1) */
+        ->whereNull("deleted_at")
         ->orderBy('order_id', 'ASC')
         ->orderBy('receive_amount_type_id', 'ASC')
         ->groupBy('order_id')
@@ -88,7 +89,9 @@ class ReceiveFromBranchController extends Controller
             $update->payment_received_at    = date('Y-m-d h:i:s');
             $update->save();
 
-            $alls = PayToHeadOfficeInvoiceDetail::where('pay_to_head_office_invoice_id',$id)->get();
+            $alls = PayToHeadOfficeInvoiceDetail::where('pay_to_head_office_invoice_id',$id)
+                                                ->whereNull("deleted_at")
+                                                ->get();
             foreach ($alls as $key => $value)
             {
                 $this->updateDataReceiveAmountHistory($value->receive_amount_history_id,$value->receive_amount_type_id,$value->order_id);
@@ -125,7 +128,7 @@ class ReceiveFromBranchController extends Controller
         {
             if($order_id->creating_branch_id == $branch_type_id->id &&
                 $order_id->destination_branch_id == $branch_type_id->id
-            )//$branch_type_id->id == head offfice
+            )//$branch_type_id->id == head offfice 
             {
                 $update->service_delivery_payment_status_id = 6;//Head Office Receive commission of his own branch
                 $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);

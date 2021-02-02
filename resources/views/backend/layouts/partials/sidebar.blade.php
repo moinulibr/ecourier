@@ -102,6 +102,8 @@
                                     <li><a href="{{route('admin.sendToOthersBranchFromAdmin')}}">Sent To <small>Other Branch</small></a></li>
                                     <li><a href="{{route('admin.payToMerchantClientIndex')}}">Merchant Paid Invoices</a></li>
                                     <li><a href="{{route('admin.payToMerchantClientCreate')}}">Pay To Merchant</a></li>
+                                    <li><a href="{{route('admin.paidBranchCommissionInvoiceList')}}"><small>Branch Commission</small></a></li>
+                                    <li><a href="{{route('admin.paidBranchCommissionInvoiceCreate')}}"><small>Pay To Branch (Commission)</small></a></li>
                                 </ul>
                             </li>
                             <li>

@@ -32,7 +32,9 @@ class HeadOfficePayToBranchInvoiceController extends Controller
     public function sendInvoiceListDetails($id)
     {
         $data['invoice'] = HeadOfficePayToBranchInvoice::find($id)->payment_invoice_no;
-        $data['invoices'] = HeadOfficePayToBranchInvoiceDetail::where('head_office_pay_to_branch_invoice_id',$id)->get();
+        $data['invoices'] = HeadOfficePayToBranchInvoiceDetail::where('head_office_pay_to_branch_invoice_id',$id)
+                                                                ->whereNull("deleted_at")    
+                                                                ->get();
         return view('backend.payment_invoice.admin.send_to_other_branch.send_invoice_list_detail',$data); 
     }
     /**
@@ -74,6 +76,7 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         $data['orders'] =  Order::where('orders.creating_branch_id',$send_branch_id)
                                 ->where('orders.creating_branch_id','!=',$branch_id)
                                 ->where('orders.parcel_amount_payment_status_id',5)
+                                ->whereNull("deleted_at")
                                 //->where('pay_to_head_office_invoice_details.payment_status_id',1)
                                 //->where('pay_to_head_office_invoice_details.receive_amount_type_id',4)
                                 //->groupBy('pay_to_head_office_invoice_details.order_id')
@@ -150,7 +153,7 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         $paytoBranch = new HeadOfficePayToBranchInvoice();
         $paytoBranch->payment_invoice_no    = $payment_invoice_no;
         $paytoBranch->from_branch_id        = $branch_id;
-        $paytoBranch->payment_amount        = $total_amount;
+        //$paytoBranch->payment_amount        = $total_amount;
         $paytoBranch->payment_status_id     = 1;
         $paytoBranch->payment_by            = $created_by;
         $paytoBranch->received_branch_id    = $send_branch_id;
@@ -186,6 +189,7 @@ class HeadOfficePayToBranchInvoiceController extends Controller
         $created_by = Auth::guard('web')->user()->branch_id;
         
         $data = ReceiveAmountHistory::where('order_id',$orderId)
+                            ->whereNull("deleted_at")
                             ->where('receive_amount_type_id',$receive_amount_type_id)
                             ->where('activate_status_id',1)
                             ->where('parcel_amount_payment_status_id',5)

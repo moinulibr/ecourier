@@ -68,6 +68,7 @@ class PayToHeadOfficeInvoiceController extends Controller
         ->orderBy('receive_amount_type_id', 'ASC')
         ->groupBy('order_id')
         ->groupBy('pay_to_head_office_invoice_id')
+        ->whereNull("deleted_at")
         ->get();
 
 
@@ -166,6 +167,7 @@ class PayToHeadOfficeInvoiceController extends Controller
                     ->orderBy('order_id', 'ASC')
                     ->orderBy('receive_amount_type_id', 'ASC')
                     ->groupBy('order_id')
+                    ->whereNull("deleted_at")
                     ->whereBetween('created_at',[$startDate,$endDate])
                     ->get();
 
@@ -188,6 +190,7 @@ class PayToHeadOfficeInvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // store///
     public function payToHeadOfficeStore(Request $request)
     {
         //return $request;
@@ -235,7 +238,7 @@ class PayToHeadOfficeInvoiceController extends Controller
         $payment = new PayToHeadOfficeInvoice();
         $payment->payment_invoice_no  = $invoice_no;
         $payment->from_branch_id  = $branch_id;
-        $payment->payment_amount  = $total_amount;
+        //$payment->payment_amount  = $total_amount;
         $payment->payment_method_id  = NULL;
         $payment->payment_status_id  = 1;
         $payment->payment_by  = $created_by;
@@ -303,6 +306,7 @@ class PayToHeadOfficeInvoiceController extends Controller
     public function updateDataReceiveAmountHistory($id,$receiveAmoutTypeId)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
         $update = ReceiveAmountHistory::find($id);
         $order_id = $update->order_id;
         if($receiveAmoutTypeId == 1)
@@ -317,12 +321,15 @@ class PayToHeadOfficeInvoiceController extends Controller
         }
         else if($receiveAmoutTypeId == 4)
         {
-            if($update->destination_branch_id != $branch_id)
+            if($order_id->creating_branch_id == $branch_type_id->id)//$branch_type_id->id == head offfice
             {
-                $update->parcel_amount_payment_status_id  = 4;
-                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
-            }else{
-                $update->parcel_amount_payment_status_id  = 8;
+                $update->parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
+                $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
+            }
+           else{
+                 //Branch received from delivery man
+                $update->parcel_amount_payment_status_id = 4;
+                $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
             }
         }
         $update->save();
@@ -333,6 +340,7 @@ class PayToHeadOfficeInvoiceController extends Controller
     public function updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId)
     {
         $order = Order::find($order_id);
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
         $branch_id = Auth::guard('web')->user()->branch_id;
         if($receiveAmoutTypeId == 1)
         {
@@ -344,7 +352,7 @@ class PayToHeadOfficeInvoiceController extends Controller
         }
         else if($receiveAmoutTypeId == 4)
         {
-            if($branch_id == $order->destination_branch_id)
+            if($order->creating_branch_id == $branch_type_id->id)//head office
             {
                 $order->parcel_amount_payment_status_id = 8;
             }else{
@@ -374,6 +382,7 @@ class PayToHeadOfficeInvoiceController extends Controller
             }) */
         ->orderBy('order_id', 'ASC')
         ->orderBy('receive_amount_type_id', 'ASC')
+        ->whereNull("deleted_at")
         //->groupBy('order_id')
         ->get();
         return $orders;

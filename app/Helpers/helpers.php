@@ -1259,6 +1259,30 @@ Thanked By ".appUrl_HS();
                     return $data;
             }
         }
+        /**Branch Commission Get */
+        function getBranchCommissionByCommissionTypeId_HH($branch_commission_type_id)
+        {
+            switch ($branch_commission_type_id) 
+            {
+                case "1":
+                    return "Create And Pickup Commission";
+                    break;
+                case "2":
+                    return "Create Pickup and Delivery Commission";
+                    break;
+                case "3":
+                    return "Receive And Delivery Commission";
+                    break;
+                case "4":
+                    return "Receive As Media Commission";
+                    break;
+                case "5":
+                    return "Sending As Media Commission";
+                    break;
+                default:
+                    return $data;
+            }
+        }
 
         function insertingBranchCommission_HH($order,$myBranchId)
         {

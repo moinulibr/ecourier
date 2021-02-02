@@ -83,7 +83,7 @@
                                             <tr>
                                                 <th>Sl.</th>
                                                 <th>Invoice No</th>
-                                                <th>Amount</th>
+                                                <th>Paid Amount</th>
                                                 <th>Created Date</th>
                                                 <th>Status</th>
                                                 <th style="width:10%;">Action</th>
@@ -98,7 +98,7 @@
                                                             {{$item->payment_invoice_no}}
                                                         </a>    
                                                     </td>
-                                                    <td>{{$item->payment_amount}}</td>
+                                                    <td>{{$item->totalInvoiceAmount()}}</td>
                                                     <td>{{date('Y-m-d h:i:s',strtotime($item->payment_at))}}</td>
                                                    
                                                     <td>

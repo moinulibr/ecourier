@@ -1,18 +1,18 @@
 @extends('backend.layouts.master')
-@section('title','Receive From Head Office')
+@section('title','Branch Commission Paid Invoice')
 @section('content')
 
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Receive From Head Office  <small>(Agent)</small></h4>
+            <h4 class="mb-0">Branch Commission Paid Invoice  <small>(Admin)</small></h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
                     <li class="breadcrumb-item active">
-                        Receive From Head Office
+                        Branch Commission Paid Invoice
                     </li>
                 </ol>
             </div>
@@ -55,6 +55,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <a href="{{route('admin.paidBranchCommissionInvoiceCreate')}}" class="btn btn-primary btn-sm" /> Pay To Branch Commission </a>
                     <div class="row" >
                        {{--  <div class="col-md-6">
                             <div class="form-group">
@@ -82,9 +83,8 @@
                                             <tr>
                                                 <th>Sl.</th>
                                                 <th>Invoice No</th>
-                                                <th>Amount</th>
+                                                <th>Paid Amount</th>
                                                 <th>Created Date</th>
-                                                <th>From Branch</th>
                                                 <th>Status</th>
                                                 <th style="width:10%;">Action</th>
                                             </tr>
@@ -94,26 +94,18 @@
                                                 <tr>
                                                     <td>{{$key+1}}</td>
                                                     <td>
-                                                        <a href="{{route('agent.headOfficeSendInvoiceListDetails',$item->id)}}">
+                                                        <a href="{{route('admin.paidBranchCommissionInvoiceListDetails',$item->id)}}">
                                                             {{$item->payment_invoice_no}}
                                                         </a>    
                                                     </td>
                                                     <td>{{$item->totalInvoiceAmount()}}</td>
                                                     <td>{{date('Y-m-d h:i:s',strtotime($item->payment_at))}}</td>
+                                                   
                                                     <td>
-                                                        {{$item->fromBranchs?$item->fromBranchs->company_name:''}}
-                                                    </td>
-                                                    <td>
-                                                        @if (!$item->payment_received_by)
-                                                            <a href="{{route('agent.receiveInvoiceFromheadOfficeSend',$item->id)}}" class="badge badge-info">
-                                                                Receive Now
-                                                            </a>
-                                                        @else
-                                                        <span class="badge badge-primary">Received</span>
-                                                        @endif
+                                                       Success
                                                     </td>
                                                     <td style="width:10%;">
-                                                        <a href="{{route('agent.headOfficeSendInvoiceListDetails',$item->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>View</a>
+                                                        <a href="{{route('admin.paidBranchCommissionInvoiceListDetails',$item->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>View</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

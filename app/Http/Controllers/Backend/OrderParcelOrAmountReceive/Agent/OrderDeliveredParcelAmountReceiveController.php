@@ -35,7 +35,6 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         return view('backend.orderParcelOrAmountReceive.agent.receiveDeliveredParcelAmount.index',$data);
     }
 
-
     public function showParcelAmountOrderList(Request $request)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
@@ -70,6 +69,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
         $data['orders'] = $query->whereBetween('created_at',[$startDate,$endDate])
                         ->where('branch_id',$branch_id)
+                        ->whereNull('deleted_at')
                         ->where('order_processing_type_id',2)
                         ->where('collection_status',0)
                         ->get();
@@ -77,6 +77,8 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         return view('backend.orderParcelOrAmountReceive.agent.receiveDeliveredParcelAmount.list',$data);
     }
 
+
+    //store///
     public function storeParcelAmountOrderList(Request $request)
     {
         $branch_id                  = Auth::guard('web')->user()->branch_id;
@@ -116,14 +118,18 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
         $data = Order_assign::where('order_id',$orderId)
+                    ->whereNull("deleted_at")
                     ->where('branch_id',$branch_id)
                     ->where('manpower_id',$manpower_id)
                     ->where('Order_processing_type_id',2)
                     ->where('collection_status',0)
                     ->where('order_assigning_status_id',$order_assigning_status_id)
                     ->first();
-        $data->collection_status = 1;
-        $data->save();
+        if($data)
+        {
+            $data->collection_status = 1;
+            $data->save();
+        }
 
         //amount receive history
         $this->insertOrderPaymentReceivingHistoryTable($orderId,$manpower_id);
@@ -205,7 +211,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
 
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id,$amount,$manpower_id)
-    {
+    { 
         $branch_id = Auth::guard('web')->user()->branch_id;
         $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
         $parcel_amount_payment_status_id =  NULL;
@@ -223,21 +229,8 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
         else if($receive_amount_type_id == 4)
         {
-            if($order_id->creating_branch_id == $branch_type_id->id &&
-                $order_id->destination_branch_id == $branch_type_id->id
-            )//$branch_type_id->id == head offfice
-            {
-                $parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
-            }
-            else if($order_id->destination_branch_id == $branch_type_id->id &&
-                $order_id->creating_branch_id != $branch_type_id->id
-            )
-            {
-                $parcel_amount_payment_status_id = 5;//8
-            }else{
-                 //Branch received from delivery man
-                 $parcel_amount_payment_status_id = 3;
-            }
+            //Branch received from delivery man
+            $parcel_amount_payment_status_id = 3;
         }
 
         $orderProcessing =  new ReceiveAmountHistory();
@@ -265,11 +258,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
     public function updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
-        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
-        $parcel_amount_payment_status_id =  NULL;
-        $service_delivery_payment_status_id = NULL;
-        $service_cod_payment_status_id = NULL;
-       
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);       
         $order_id =  Order::where('id',$orderId)->first();
         $order_id->office_collect_amount_from_delivery_man =  1;
 
@@ -284,21 +273,8 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
 
         else if($receive_amount_type_id == 4)
         {
-            if($order_id->creating_branch_id == $branch_type_id->id &&
-                $order_id->destination_branch_id == $branch_type_id->id
-            )//$branch_type_id->id == head offfice
-            {
-                $parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
-            }
-            else if($order_id->destination_branch_id == $branch_type_id->id &&
-                $order_id->creating_branch_id != $branch_type_id->id
-            )
-            {
-                $parcel_amount_payment_status_id = 5;//8
-            }else{
-                 //Branch received from delivery man
-                 $parcel_amount_payment_status_id = 3;
-            }
+            //Branch received from delivery man
+            $parcel_amount_payment_status_id = 3;
         }
         //update order tabel
         $order_id->save();
