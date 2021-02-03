@@ -57,36 +57,48 @@ class BranchCurrentAccountController extends Controller
         ->whereBetween('orders.created_at',[$startDate,$endDate])
         ->get(); */
 
-        $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[5,8])
+        $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[5,8,9])
                                     ->where('activate_status_id',1)
                                     //->where('receive_amount_type_id',$receive_amount_type_id)
                                     //->where('received_amount_branch_id',$branch_id)
                                     ->orWhere(function ($query) use($branch_id)
                                         {
-                                            return $query->orWhere('service_cod_payment_status_id',3);
+                                            return $query->orWhere('service_cod_payment_status_id','>',2);
                                             //->where('received_amount_branch_id',$branch_id);
                                         })
                                     ->orWhere(function ($query) use($branch_id)
                                         {
-                                            return $query->orWhere('service_cod_payment_status_id',6);
+                                            return $query->orWhere('service_cod_payment_status_id','>',6);
                                             //->where('received_amount_branch_id',$branch_id);
                                         })
                                     ->orWhere(function ($query) use($branch_id)
                                         {
-                                            return $query->orWhere('service_delivery_payment_status_id',3);
+                                            return $query->orWhere('service_delivery_payment_status_id',">",2);
                                             //->where('received_amount_branch_id',$branch_id);
                                         })
                                     ->orWhere(function ($query) use($branch_id)
                                         {
-                                            return $query->orWhere('service_delivery_payment_status_id',6);
+                                            return $query->orWhere('service_delivery_payment_status_id','>',6);
                                             //->where('received_amount_branch_id',$branch_id);
                                         })
                                     //->where('service_delivery_payment_status_id',3)
                                     //->where('service_cod_payment_status_id',3)
                                     //->whereBetween('created_at',[$startDate,$endDate])
                                     ->get();
-        $data['total_amount'] = $getData->sum('amount');
+        $data['total_amount_beforePaid'] = $getData->sum('amount');
         $data['data'] = $getData;
+
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $data['bcommission'] = Branch_commission::where('active_status',1)
+                        ->get();
+        /* $data['total_amount'] = $data['bcommission']->sum('commission'); */
+
+        $data['paidbcommission'] = Branch_commission::where('active_status',2)
+                                                    ->get();
+        $data['total_paid_amount'] = $data['paidbcommission']->sum('commission');
+
+
+        $data['total_amount'] = $data['total_amount_beforePaid'] - $data['total_paid_amount'] ;
         return view('backend.admin.account.branch_current_balance.index',$data); 
     }
 

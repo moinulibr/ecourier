@@ -45,7 +45,7 @@ class PayToBranchCommissionController extends Controller
                                                                 ->whereNull("deleted_at")
                                                                 ->latest()
                                                                 ->get();
-        return view('backend.payment_invoice.admin.pay_to_branch_commission.send_invoice_list',$data); 
+        return view('backend.payment_invoice.admin.pay_to_branch_commission.send_invoice_list',$data);
     }//PayToBranchCommissionInvoiceDetail
 
     /**
@@ -59,7 +59,7 @@ class PayToBranchCommissionController extends Controller
         $data['invoices']   = PayToBranchCommissionInvoiceDetail::where('pay_to_branch_commission_invoice_id',$id)
                                                                         ->whereNull("deleted_at")
                                                                         ->get();
-        return view('backend.payment_invoice.admin.pay_to_branch_commission.send_invoice_list_detail',$data); 
+        return view('backend.payment_invoice.admin.pay_to_branch_commission.send_invoice_list_detail',$data);
     }
 
 
@@ -70,9 +70,9 @@ class PayToBranchCommissionController extends Controller
         $data['branches'] = Branch::whereNull('deleted_at')
                                     ->where('branch_type_id','!=',1)
                                     ->get();
-        return view('backend.payment_invoice.admin.pay_to_branch_commission.create',$data); 
+        return view('backend.payment_invoice.admin.pay_to_branch_commission.create',$data);
     }
-    
+
 
     public function payBranchCommissionCreateListByAjax(Request $request)
     {
@@ -108,7 +108,7 @@ class PayToBranchCommissionController extends Controller
         ->where('orders.parcel_amount_payment_status_id',">",6)
         ->whereBetween('orders.created_at',[$startDate,$endDate])
         ->get();
-        return view('backend.payment_invoice.admin.pay_to_branch_commission.ajax.list',$data); 
+        return view('backend.payment_invoice.admin.pay_to_branch_commission.ajax.list',$data);
     }
 
 
@@ -121,25 +121,25 @@ class PayToBranchCommissionController extends Controller
 
     public function payBranchCommissionCreateListByAjaxStore(Request $request)
     {
-        return $request;
         // Start transaction!
         DB::beginTransaction();
         try
         {
-        $payment_invoice_no     = $request->payment_invoice_no;
-        $parcel_owner_type_id   = $request->parcel_owner_type_id;
-        $merchant_client_id     = $request->merchant_client_id;
-        $total_amount           = $request->total_amount;
-        $paytoBranch = $this->insertBranchPayToMerchantClient($payment_invoice_no,$total_amount,$parcel_owner_type_id,$merchant_client_id);
-        $order_ids = $request->order_id;
-        $amounts = $request->order_id_amount;
-        
+            $payment_invoice_no     = $request->payment_invoice_no;
+            $received_branch_id     = $request->received_branch_id;
+            $merchant_client_id     = $request->merchant_client_id;
+            $total_amount           = $request->total_amount;
+            $paytoBranch = $this->inserPayToBranchCommission($payment_invoice_no,$total_amount,$received_branch_id);
+            $order_ids = $request->order_id;
+            $amounts = $request->order_id_amount;
         foreach ($request->order_id as $key => $order_id)
         {
-            $this->insertBranchPayToMerchantClientDetailsData($order_id,$amounts[$key],$paytoBranch?$paytoBranch->id:NULL,$parcel_owner_type_id,$merchant_client_id);
+            $this->inserPayToBranchCommissionDetailsData($order_id,$paytoBranch?$paytoBranch->id:NULL,$received_branch_id);
+            $this->orderCodServiceStatusChange($order_id);
+            $this->receiveAmountChangeCODServiceChargeId($order_id);
         }
             DB::commit();
-            Session::flash('success','Client Payable Amount Paid Successfully!');
+            Session::flash('success','Branch Commission Amount Paid Successfully!');
             return back();
         }
         catch(\Exception $e)
@@ -152,15 +152,96 @@ class PayToBranchCommissionController extends Controller
             return Redirect()->back()
                 ->with('error',$message);
         }
-        
+
     }
 
 
+    public function inserPayToBranchCommission($payment_invoice_no,$total_amount,$received_branch_id)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $paytoBranch =     new PayToBranchCommissionInvoice();
+        $paytoBranch->payment_invoice_no    = $payment_invoice_no;
+        $paytoBranch->from_branch_id        = $branch_id;
+        $paytoBranch->payment_status_id     = 1;
+        $paytoBranch->received_branch_id    = $received_branch_id;
+        $paytoBranch->payment_by            = Auth::guard('web')->user()->id;
+        $paytoBranch->payment_at            = date('Y-m-d h:i:s');
+        $paytoBranch->save();
+        return $paytoBranch;
+    }
 
 
+    public function inserPayToBranchCommissionDetailsData($order_id,$payToBranchCommissionInvoiceId,$received_branch_id)
+    {
+        $branchCom = $this->branchCommissionDetails($order_id,$received_branch_id);
+        $payToBranchComInvoiDetails = new PayToBranchCommissionInvoiceDetail();
+        $payToBranchComInvoiDetails->pay_to_branch_commission_invoice_id = $payToBranchCommissionInvoiceId;
+        $payToBranchComInvoiDetails->order_id                               = $order_id;
+        $payToBranchComInvoiDetails->branch_commission_type_id              = $branchCom?$branchCom->branch_commission_type_id :NULL;
+        $payToBranchComInvoiDetails->branch_commission_id                   = $branchCom?$branchCom->id :NULL;
+        $payToBranchComInvoiDetails->amount                                 = $branchCom?$branchCom->commission:0;
+        $payToBranchComInvoiDetails->payment_status_id                      = 1;
+        $payToBranchComInvoiDetails->payment_by                             = Auth::guard('web')->user()->id;
+        $payToBranchComInvoiDetails->save();
+
+        if($branchCom)
+        {
+            $branchCom->pay_to_branch_commission_invoice_detail_id = $payToBranchComInvoiDetails->id;
+            $branchCom->active_status = 2;
+            $branchCom->save();
+        }
+        return $payToBranchComInvoiDetails;
+    }
 
 
+    public function branchCommissionDetails($order_id,$branch_id)
+    {
+        return Branch_commission::where('order_id',$order_id)
+                        ->where('active_status',1)
+                        ->where('branch_id',$branch_id)
+                        ->first();
 
+    }
+
+    public function orderCodServiceStatusChange($orderId)
+    {
+        $order       = Order::find($orderId);
+        //$order->parcel_amount_payment_status_id = 9;
+        $order->service_cod_payment_status_id = 4;
+        $order->service_delivery_payment_status_id = 4;
+        //$order->order_status_id                 = 24;
+        $order->save();
+        return $order;
+    }
+    public function receiveAmountChangeCODServiceChargeId($orderId)
+    {
+        $serviceData       = ReceiveAmountHistory::where('order_id',$orderId)
+                                            ->where('service_delivery_payment_status_id',3)
+                                            ->where('receive_amount_type_id',1)
+                                            ->where('activate_status_id',1)
+                                            ->first();
+        if($serviceData)
+        {
+            //$order->parcel_amount_payment_status_id = 9;
+            $serviceData->service_delivery_payment_status_id = 4;
+            //$order->order_status_id                 = 24;
+            $serviceData->save();
+        }
+
+        $codData       = ReceiveAmountHistory::where('order_id',$orderId)
+                                            ->where('service_cod_payment_status_id',3)
+                                            ->where('receive_amount_type_id',2)
+                                            ->where('activate_status_id',1)
+                                            ->first();
+        if($codData)
+        {     
+            //$order->parcel_amount_payment_status_id = 9;
+            $codData->service_cod_payment_status_id = 4;
+            //$order->order_status_id                 = 24;
+            $codData->save();
+        }
+        return 1;
+    }
 
     public function store(Request $request)
     {

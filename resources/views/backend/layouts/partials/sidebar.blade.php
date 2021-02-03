@@ -232,6 +232,7 @@
                                     <li><a href="{{route('agent.headOfficeSendInvoiceList')}}">Receive From<small> Head Office</small></a></li>
                                       <li><a href="{{route('agent.payToMerchantClientIndex')}}">Merchant Paid Invoices</a></li>
                                     <li><a href="{{route('agent.payToMerchantClientCreate')}}">Pay To Merchant</a></li>
+                                     <li><a href="{{route('agent.paidBranchCommissionInvoiceList')}}"><small>Branch Commission List</small></a></li>
                                 </ul>
                             </li>
                             <li>

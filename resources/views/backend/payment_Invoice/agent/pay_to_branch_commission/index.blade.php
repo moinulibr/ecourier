@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
-@section('title','Pay To Branch Commission Invoice Details')
+@section('title','Send To Other Branch')
 @section('content')
 
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Pay To Branch Commission Invoice Details  <small>(Admin)</small></h4>
+            <h4 class="mb-0">Send To Other Branch  <small>(Admin)</small></h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                    <li class="breadcrumb-item active">Pay To Branch Commission Invoice Details</li>
+                    <li class="breadcrumb-item active">Send To Other Branch</li>
                 </ol>
             </div>
 
@@ -47,26 +47,53 @@
     @endif
 </div>
 @endif
-@php
-    $branch_id = Auth::guard('web')->user()->branch_id;
-@endphp
+
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
 
                 <div class="card-body">
-
+                    <form action="{{route('admin.sendToOthersBranchFromAdminListStore')}}" method="POST">
+                        @csrf
                     <div class="row" >
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" disabled value="{{$invoice}}" class="form-control"/>
+                               <label>Invoice No</label>
+                               <input type="text" readonly class="form-control" name="payment_invoice_no" value="{{$invoice}}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-md-6">
+                            <div class="form-group">
+                               <label>Branch</label>
+                               <select name="send_branch_id" class="form-control send_branch_id_class select2">
+                                    <option value=""> Select One Branch</option>
+                                    @foreach($branches as $item)
+                                    <option value="{{$item->id}}">{{$item->company_name}}</option>
+                                    @endforeach
+                               </select>
+                            </div>
+                            </div>
+                        <div class="col-md-3" style="display: none;">
+                            <div class="form-group">
+                               <label>Amount Type</label>
+                               <select name="send_payment_type" class="form-control send_payment_type_class">
+                                    <option value="1"> Parcel Price</option>
+                                    <option value="2"> Charge Commission</option>
+                                    <option value="3"> Parcel Price & Charge Commission</option>
+                               </select>
                             </div>
                         </div>
                          <div class="col-12 col-md-3">
+                            <label>From Date</label>
+                            <input type="text" name="from_date" id="from_date_id"  @if(isset($from_date))   value="{{ $from_date }}" @endif placeholder=" From Date" class="from_date_id_class form-control datepicker">
                         </div>
 
                         <div class="col-12 col-md-3">
+                            <label>To Date</label>
+                            <input type="text" name="to_date" id="to_date_id" @if(isset($to_date))   value="{{ $to_date }}" @endif  placeholder="To Date " class="to_date_id_class form-control datepicker">
                         </div>
                     </div>
 
@@ -74,43 +101,25 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <div class="row">
-                                <div class="table-responsive dt-responsive" id="tshowResult">
+                                <div class="table-responsive dt-responsive" id="showResult">
                                     <table  class="table table-striped table-bordered nowrap">
                                         <thead>
                                             <tr>
                                                 <th>Sl.</th>
-                                                <th>Order No</th>
+                                                <th></th>
+                                                {{--  <th>Order No</th>
                                                 <th>Service <br/> Charge</th>
-                                                <th>Commission  Type</th>
-                                                <th>Commission<br/>Amount</th>
+                                                <th>COD <br/> Charge</th>
+                                                <th>Other <br/> Charge</th>  --}}
+                                                <th>Parcel  Amount</th>
+                                               {{--   <th>Sub Total</th>  --}}
+                                                <th style="width:5%;"></th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($invoices as $key=> $order)
-                                                <tr>
-                                                    <td>{{$key+1}}</td>
-                                                    <td>
-                                                        {{$order->orders?$order->orders->invoice_no:NULL}}  
-                                                    </td>
-                                                    <td>
-                                                        {{$order->orders?$order->orders->service_charge:0}} 
-                                                    </td>
-                                                    <td>
-                                                        {{getBranchCommissionByCommissionTypeId_HH($order->branch_commission_type_id)}}
-                                                    </td>
-                                                    <td>
-                                                        <span id="del_order_id_{{$order->order_id}}">
-                                                            <span id="" class="total_before_action" >
-                                                            {{$order->amount}}
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                        <tbody >
                                         </tbody>
                                         <tfooter>
-                                           {{--{{date('Y-m-d h:i:s',strtotime($item->created_at))}}   
-                                           <tr>id="showResult"
+                                           {{--   <tr>id="showResult"
                                                 <td colspan="5"></td>
                                                 <td >
                                                     <a href="#" id="clearAll" class="btn btn-sm btn-danger clearAll">Clear All</a>
@@ -121,7 +130,7 @@
                                 </div>
                             </div>
                         </div>
-        
+                    </form>
                     </div>
 
                 </div>
@@ -142,7 +151,7 @@
             }else{
                 checkedResult = 0;
             }
-           
+
             var get_checked_id  = $(this).attr('id');
             var get_amount  = parseInt($(this).data('amount'));
 
@@ -177,7 +186,7 @@
             else{
                 nanResult = val;
             }
-            return nanResult;  
+            return nanResult;
         }
 
         function totalAmountBeforeAction()
@@ -223,8 +232,8 @@
         }
     </script>
 
-   
-    <div id="payToHeadOfficeList" data-url="{{ route('agent.payToHeadOfficeList')}}"></div>
+
+    <div id="sendToOthersBranchFromAdminAjaxList" data-url="{{ route('admin.sendToOthersBranchFromAdminAjaxList')}}"></div>
     {{--Making Cart--}}
     <script>
         $(document).ready(function(){
@@ -233,20 +242,20 @@
             cmdKey = 91,
             vKey = 86,
             cKey = 67;
-            $(document).on('keyup change','.from_date_id_class,.to_date_id_class',function(e)
+            $(document).on('keyup change','.send_branch_id_class,.send_payment_type_class,.from_date_id_class,.to_date_id_class',function(e)
             {
                 if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
                 if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) return false;
-                    var url = $('#payToHeadOfficeList').data("url");
+                    var url = $('#sendToOthersBranchFromAdminAjaxList').data("url");
                     var from_date                    =  getValueFromSelectOption('from_date_id_class');
                     var to_date                      =  getValueFromSelectOption('to_date_id_class');
-
-                 
+                    var send_payment_type            =  getValueFromSelectOption('send_payment_type_class');
+                    var send_branch_id               =  getValueFromSelectOption('send_branch_id_class');
 
                     $.ajax({
                         url: url,
                         type: "GET",
-                        data: {from_date:from_date,to_date:to_date},
+                        data: {send_branch_id:send_branch_id,from_date:from_date,to_date:to_date,send_payment_type:send_payment_type},
                         success: function(response)
                         {
                             $('#showResult').html(response);
@@ -258,30 +267,7 @@
     </script>
 
 
-    {{---Print----}}
-    <div id="printManpowerOrderAssingedList" data-url="{{ route('agent.printManpowerOrderAssingedList')}}"></div>
-    <script>
-            $(document).on('click','#print',function(e)
-            {
-                e.preventDefault();
-                var url = $('#printManpowerOrderAssingedList').data("url");
-                var manpower_id                 =  getValueFromSelectOption('manpower_id_class');
-                var order_processing_type_id    =  getValueFromSelectOption('order_processing_type_id_class');
-                var order_assigning_status_id   =  getValueFromSelectOption('order_assigning_status_id_class');
-                var from_date                   =  getValueFromSelectOption('from_date_id_class');
-                var to_date                     =  getValueFromSelectOption('to_date_id_class');
 
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    data: {manpower_id:manpower_id,order_assigning_status_id:order_assigning_status_id,order_processing_type_id:order_processing_type_id,from_date:from_date,to_date:to_date},
-                    success: function(response)
-                    {
-                        $('#viewSingleDataByAjax').html(response).modal('show');
-                    },
-                });
-            });
-    </script>
 
 
 
@@ -297,16 +283,15 @@
     {{--if cart is exist--}}
     <script>
         $(document).ready(function(){
-                var url = $('#payToHeadOfficeList').data("url");
-                var manpower_id                 =  getValueFromSelectOption('manpower_id_class');
-                var order_assigning_status_id   =  getValueFromSelectOption('order_assigning_status_id_class');
+                var url = $('#sendToOthersBranchFromAdminAjaxList').data("url");
                 var from_date                   =  getValueFromSelectOption('from_date_id_class');
                 var to_date                     =  getValueFromSelectOption('to_date_id_class');
-
+                var send_payment_type           =  getValueFromSelectOption('send_payment_type_class');
+                var send_branch_id               =  getValueFromSelectOption('send_branch_id_class');
                 $.ajax({
                     url: url,
                     type: "GET",
-                    data: {manpower_id:manpower_id,order_assigning_status_id:order_assigning_status_id,from_date:from_date,to_date:to_date},
+                    data: {send_branch_id:send_branch_id,send_payment_type:send_payment_type,from_date:from_date,to_date:to_date},
                     success: function(response)
                     {
                         $('#showResult').html(response);
@@ -336,7 +321,7 @@
 
 
     {{----Pagination by ajax-----}}
-    <input type="hidden" id="getDataByPagination" data-url="{{route('agent.manPowerOrderDeliveredAmount')}}" >
+    <input type="hidden" id="getDataByPagination" data-url="{{route('admin.sendToOthersBranchFromAdminAjaxList')}}" >
     <script>
             $(document).on("click",".pagination li a",function(e){
                 e.preventDefault();
@@ -346,9 +331,9 @@
             });//split == delete some things...
 
             function getPagination(pageNumber){
-                var createUrl = $('#payToHeadOfficeList').data("url");
+                var createUrl = $('#sendToOthersBranchFromAdminAjaxList').data("url");
                 var url =  createUrl+"?page="+pageNumber;
-                
+
                 $.ajax({
                     url: url,
                     type: "GET",

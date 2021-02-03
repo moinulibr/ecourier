@@ -571,6 +571,7 @@ class OrderController extends Controller
             $order->branchCommissions()->delete();
             $order->manpowerIncomeHistories()->delete();
             $order->orderDestinations()->delete();
+            $order->branchCommissionInvoices()->delete();
 
             $order->headOfficePayToBranchInvoiceDetails()->delete();
             $order->branchPayToMerchantClientInvoiceDetails()->delete();

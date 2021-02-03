@@ -43,6 +43,7 @@ use App\Model\Backend\Manpower\ManpowerIncomeHistory;
 use App\Model\Backend\PaymentInvoice\HeadOfficePayToBranchInvoiceDetail;
 use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoiceDetail;
 use App\Model\Backend\PaymentInvoice\PayToHeadOfficeInvoiceDetail;
+use App\Model\Backend\PaymentInvoice\PayToBranchCommissionInvoiceDetail;
 class Order extends Model
 {
     public function merchantshop()
@@ -160,6 +161,10 @@ class Order extends Model
       {
             return $this->hasMany(Order_destination::class,'order_id','id');
       }
+      public function branchCommissionInvoices()
+      {
+            return $this->hasMany(PayToBranchCommissionInvoiceDetail::class,'order_id','id');
+      }
       
     /*hasMany and hasOne relationship for delete and others*/
 
@@ -185,7 +190,7 @@ class Order extends Model
     public function payToHeadofficeInvoiceDetails()
     {
           return $this->hasOne(PayToHeadOfficeInvoiceDetail::class,'order_id','id');
-    }
+    } 
     /*hasOne and hasOne relationship for delete and others*/
 
 

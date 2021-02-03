@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
-@section('title','Pay To Branch Commission Invoice Details')
+@section('title','Invoice Details , Send To Head Office')
 @section('content')
 
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Pay To Branch Commission Invoice Details  <small>(Admin)</small></h4>
+            <h4 class="mb-0">Invoice Details , Send To Head Office  <small>(Agent)</small></h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                    <li class="breadcrumb-item active">Pay To Branch Commission Invoice Details</li>
+                    <li class="breadcrumb-item active">Invoice Details , Send To Head Office</li>
                 </ol>
             </div>
 
@@ -80,12 +80,14 @@
                                             <tr>
                                                 <th>Sl.</th>
                                                 <th>Order No</th>
-                                                <th>Service <br/> Charge</th>
-                                                <th>Commission  Type</th>
-                                                <th>Commission<br/>Amount</th>
+                                                <th>Service <br/>Charge</th>
+                                                <th>COD <br/>Charge</th>
+                                                <th>Others <br/>Charge</th>
+                                                <th>Parcel <br/>Amount</th>
+                                                <th>Total Amount</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody >
                                             @foreach ($invoices as $key=> $order)
                                                 <tr>
                                                     <td>{{$key+1}}</td>
@@ -93,15 +95,27 @@
                                                         {{$order->orders?$order->orders->invoice_no:NULL}}  
                                                     </td>
                                                     <td>
-                                                        {{$order->orders?$order->orders->service_charge:0}} 
+                                                        @php
+                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,1,$pay_to_head_office_invoice_id);
+                                                        @endphp
                                                     </td>
                                                     <td>
-                                                        {{getBranchCommissionByCommissionTypeId_HH($order->branch_commission_type_id)}}
+                                                        @php
+                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,2,$pay_to_head_office_invoice_id);
+                                                        @endphp
+                                                    </td>
+                                                    <td>
+                                                        00.00
+                                                    </td>
+                                                    <td>
+                                                        @php
+                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,4,$pay_to_head_office_invoice_id);
+                                                        @endphp
                                                     </td>
                                                     <td>
                                                         <span id="del_order_id_{{$order->order_id}}">
                                                             <span id="" class="total_before_action" >
-                                                            {{$order->amount}}
+                                                            {{$order->total_amount}}
                                                             </span>
                                                         </span>
                                                     </td>

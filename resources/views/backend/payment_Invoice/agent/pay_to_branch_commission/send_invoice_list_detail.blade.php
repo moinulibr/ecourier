@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
-@section('title','Pay To Branch Commission Invoice Details')
+@section('title','Paid Branch Commission Invoice Details')
 @section('content')
 
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Pay To Branch Commission Invoice Details  <small>(Admin)</small></h4>
+            <h4 class="mb-0">Paid Branch Commission Invoice Details  <small>(Agent)</small></h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                    <li class="breadcrumb-item active">Pay To Branch Commission Invoice Details</li>
+                    <li class="breadcrumb-item active">Paid Branch Commission Invoice Details</li>
                 </ol>
             </div>
 

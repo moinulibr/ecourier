@@ -60,6 +60,7 @@ class BranchCurrentAccountController extends Controller
 
         $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[3,7])
                                     ->where('activate_status_id',1)
+                                    ->where('destination_branch_id',$branch_id)
                                     //->where('receive_amount_type_id',$receive_amount_type_id)
                                     //->where('received_amount_branch_id',$branch_id)
                                     ->orWhere(function ($query) use($branch_id)
@@ -75,7 +76,7 @@ class BranchCurrentAccountController extends Controller
                                     //->where('service_delivery_payment_status_id',3)
                                     //->where('service_cod_payment_status_id',3)
                                     //->whereBetween('created_at',[$startDate,$endDate])
-                                    ->get();
+                                    ->get(); 
         $data['total_amount'] = $getData->sum('amount');
         $data['data'] = $getData;
 

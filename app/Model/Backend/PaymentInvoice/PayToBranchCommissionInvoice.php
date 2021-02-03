@@ -8,7 +8,7 @@ class PayToBranchCommissionInvoice extends Model
 {
     public function totalInvoiceAmount()
     {
-        return PayToBranchCommissionInvoiceDetail::where('pay_to_branch_commission_invoice_id',$this->id)
+        return  PayToBranchCommissionInvoiceDetail::where('pay_to_branch_commission_invoice_id',$this->id)
         ->whereNull("deleted_at")
         ->sum('amount');
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2021 at 11:14 AM
+-- Generation Time: Feb 03, 2021 at 07:07 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -787,6 +787,7 @@ CREATE TABLE `branch_commissions` (
   `commission` decimal(20,2) DEFAULT NULL,
   `payment_status` tinyint(4) NOT NULL DEFAULT 1,
   `active_status` tinyint(4) DEFAULT NULL,
+  `pay_to_branch_commission_invoice_detail_id` int(11) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `is_verified` tinyint(4) NOT NULL DEFAULT 1,
@@ -1410,6 +1411,13 @@ CREATE TABLE `head_office_pay_to_branch_invoices` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `head_office_pay_to_branch_invoices`
+--
+
+INSERT INTO `head_office_pay_to_branch_invoices` (`id`, `payment_invoice_no`, `from_branch_id`, `payment_amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `payment_at`, `payment_received_by`, `received_branch_id`, `payment_received_at`, `payment_description`, `payment_note`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 'DACBD-APTB2021030210505631', 1, NULL, NULL, 1, 1, '2021-02-03 10:51:03', 4, 2, '2021-02-03 10:51:37', NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-03 04:51:03', '2021-02-03 04:51:37');
+
 -- --------------------------------------------------------
 
 --
@@ -1867,7 +1875,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (88, '2021_01_27_181050_create_order_pickup_delivery_holding_reasons_table', 12),
 (89, '2021_01_27_183406_create_order_pickup_delivery_reschedules_table', 12),
 (90, '2021_01_27_214746_create_order_pickup_delivery_cancels_table', 13),
-(91, '2021_01_31_110750_create_instant_all_charge_received_statuses_table', 14);
+(91, '2021_01_31_110750_create_instant_all_charge_received_statuses_table', 14),
+(92, '2021_02_02_211958_create_pay_to_branch_commission_invoices_table', 15),
+(93, '2021_02_02_212021_create_pay_to_branch_commission_invoice_details_table', 15);
 
 -- --------------------------------------------------------
 
@@ -2336,7 +2346,11 @@ INSERT INTO `order_sms_sendings` (`id`, `order_id`, `sending_method`, `sending_m
 (65, 4, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-02 05:18:52', '2021-02-02 05:18:52'),
 (66, 4, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-02 05:19:32', '2021-02-02 05:19:32'),
 (67, 4, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-02 05:19:32', '2021-02-02 05:19:32'),
-(68, 4, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-02 05:20:05', '2021-02-02 05:20:05');
+(68, 4, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-02 05:20:05', '2021-02-02 05:20:05'),
+(69, 5, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-03 04:40:52', '2021-02-03 04:40:52'),
+(70, 5, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-03 04:43:09', '2021-02-03 04:43:09'),
+(71, 5, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-03 04:43:09', '2021-02-03 04:43:09'),
+(72, 5, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-03 04:43:52', '2021-02-03 04:43:52');
 
 -- --------------------------------------------------------
 
@@ -2682,6 +2696,59 @@ INSERT INTO `payment_methods` (`id`, `branch_id`, `name`, `status`, `is_active`,
 (1, 1, 'Bank Account', 1, 1, 1, NULL, NULL, NULL, NULL),
 (2, 1, 'Mobile Banking', 1, 1, 1, NULL, NULL, NULL, NULL),
 (3, 1, 'Cash Payment', 1, 1, 1, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pay_to_branch_commission_invoices`
+--
+
+CREATE TABLE `pay_to_branch_commission_invoices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `payment_invoice_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `from_branch_id` int(11) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `payment_status_id` int(11) NOT NULL DEFAULT 1,
+  `payment_by` int(11) DEFAULT NULL,
+  `payment_at` datetime DEFAULT NULL,
+  `payment_received_by` int(11) DEFAULT NULL,
+  `received_branch_id` int(11) DEFAULT NULL,
+  `payment_received_at` datetime DEFAULT NULL,
+  `payment_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_note` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pay_to_branch_commission_invoice_details`
+--
+
+CREATE TABLE `pay_to_branch_commission_invoice_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `pay_to_branch_commission_invoice_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `branch_commission_type_id` int(11) DEFAULT NULL,
+  `branch_commission_id` int(11) DEFAULT NULL,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `payment_status_id` int(11) DEFAULT NULL,
+  `payment_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -4500,6 +4567,18 @@ ALTER TABLE `payment_methods`
   ADD UNIQUE KEY `payment_methods_name_unique` (`name`);
 
 --
+-- Indexes for table `pay_to_branch_commission_invoices`
+--
+ALTER TABLE `pay_to_branch_commission_invoices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pay_to_branch_commission_invoice_details`
+--
+ALTER TABLE `pay_to_branch_commission_invoice_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pay_to_head_office_invoices`
 --
 ALTER TABLE `pay_to_head_office_invoices`
@@ -4753,7 +4832,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `branch_commissions`
 --
 ALTER TABLE `branch_commissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `branch_commission_settings`
@@ -4861,13 +4940,13 @@ ALTER TABLE `general_customers`
 -- AUTO_INCREMENT for table `head_office_pay_to_branch_invoices`
 --
 ALTER TABLE `head_office_pay_to_branch_invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `head_office_pay_to_branch_invoice_details`
 --
 ALTER TABLE `head_office_pay_to_branch_invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hub_detail_informations`
@@ -4903,7 +4982,7 @@ ALTER TABLE `manpower_detail_informations`
 -- AUTO_INCREMENT for table `manpower_income_histories`
 --
 ALTER TABLE `manpower_income_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `manpower_typies`
@@ -4933,13 +5012,13 @@ ALTER TABLE `merchant_shops`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_assigning_statuses`
@@ -4951,7 +5030,7 @@ ALTER TABLE `order_assigning_statuses`
 -- AUTO_INCREMENT for table `order_assigns`
 --
 ALTER TABLE `order_assigns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `order_descriptions`
@@ -4963,7 +5042,7 @@ ALTER TABLE `order_descriptions`
 -- AUTO_INCREMENT for table `order_destinations`
 --
 ALTER TABLE `order_destinations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `order_notes`
@@ -4999,7 +5078,7 @@ ALTER TABLE `order_pickup_delivery_reschedules`
 -- AUTO_INCREMENT for table `order_processing_histories`
 --
 ALTER TABLE `order_processing_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `order_processing_typies`
@@ -5017,7 +5096,7 @@ ALTER TABLE `order_receiving_sending_statuses`
 -- AUTO_INCREMENT for table `order_sms_sendings`
 --
 ALTER TABLE `order_sms_sendings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `order_statuses`
@@ -5080,6 +5159,18 @@ ALTER TABLE `payment_methods`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `pay_to_branch_commission_invoices`
+--
+ALTER TABLE `pay_to_branch_commission_invoices`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pay_to_branch_commission_invoice_details`
+--
+ALTER TABLE `pay_to_branch_commission_invoice_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `pay_to_head_office_invoices`
 --
 ALTER TABLE `pay_to_head_office_invoices`
@@ -5095,7 +5186,7 @@ ALTER TABLE `pay_to_head_office_invoice_details`
 -- AUTO_INCREMENT for table `receive_amount_histories`
 --
 ALTER TABLE `receive_amount_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `receive_amount_typies`

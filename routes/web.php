@@ -731,6 +731,12 @@ Route::get('/home', 'HomeController@index')->name('home');
                 Route::get('parcel/amount/merchant/client/payment/create/list','BranchPayToMerchantClientInvoiceController@payToMerchantClientCreateList')->name('payToMerchantClientCreateList');
                 Route::post('parcel/amount/merchant/client/payment/create/store','BranchPayToMerchantClientInvoiceController@payToMerchantClientCreateListStore')->name('payToMerchantClientCreateListStore');
                 /*======= Pay to Merchant/Client ==========*/
+                
+                /*======= Branch Commission ==========*/
+                Route::get('paid/branch/commission/invoice','ReceiveBranchCommissionController@paidBranchCommissionInvoiceList')->name('paidBranchCommissionInvoiceList');
+                Route::get('paid/branch/commission/invoice/details/{id}','ReceiveBranchCommissionController@paidBranchCommissionInvoiceListDetails')->name('paidBranchCommissionInvoiceListDetails');
+                
+                /*======= Branch Commission ==========*/
             });
              /*For Agent*/
         /*
