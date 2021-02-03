@@ -102,84 +102,6 @@ class OrderController extends Controller
         $data = parcelOrderCreateCalculationFormula_HH($input);
         return view('backend.order.admin.order.ajax.delivery_charge.calculation_charge',$data); 
         
-
-        /* 
-            $merchant_id = $request->merchantId;
-            $merchant_shop_id = $request->merchantShopId;
-            $weight_id = $request->weightId;
-            $customer_area_id = $request->areaId;
-            $parcel_category_id = $request->parcelCategoryId;
-            $parcel_type_id = $request->parcelTypeId;
-            $service_type_id = $request->serviceTypeId;
-            $collect_amount = $request->collectAmount; 
-        */
-        /* 
-            $merchant_shop = getMerchantShopByMerchantId_HH($merchant_id,$merchant_shop_id);
-            $merchant_pickup_area_id =  $merchant_shop?$merchant_shop->pickup_area_id:NULL;
-            $data['merchant_pickup_area_id'] = $merchant_pickup_area_id;
-            
-            $customerSingleAreaDetail       = getAreaByAreaId_HH($customer_area_id);
-            $merchantSingleAreaDetail       = getAreaByAreaId_HH($merchant_pickup_area_id);
-
-            $customer_district_id           = $customerSingleAreaDetail?$customerSingleAreaDetail->district_id:NULL;
-            $merchant_district_id           = $merchantSingleAreaDetail?$merchantSingleAreaDetail->district_id:NULL;
-            $data['merchant_district_id']   = $merchant_district_id;
-            $data['customer_district_id']   = $customer_district_id;
-
-            //creating branch id
-            $merchant = getMerchantByMerchantId_HH($merchant_id);//from user table
-            $creating_branch_id = $merchant?$merchant->branch_id:getBranchTypeByBranchTypeID_HH(1)->id;
-            $data['merchant_branch_id']     = $creating_branch_id;
-
-            // get destination branch id by  customer area_id
-            $destinaiton_branch = getBranchByAreaIdFromAreaBranch_HH($customer_area_id);
-            $destinaiton_branch_id = $destinaiton_branch?$destinaiton_branch->branch_id:NULL;
-
-            $destinaitonAreaDetail          = $customerSingleAreaDetail;
-            $destinaitonAreaId_service_city_type_id = $destinaitonAreaDetail?$destinaitonAreaDetail->service_city_type_id:3;
-            $merchantAreaId_service_city_type_id    = $merchantSingleAreaDetail?$merchantSingleAreaDetail->service_city_type_id:3;
-            
-            //====================================================================    
-                if($creating_branch_id == $destinaiton_branch_id)
-                {
-                    if($destinaitonAreaId_service_city_type_id == $merchantAreaId_service_city_type_id)
-                    {
-                        $service_city_type = $destinaitonAreaId_service_city_type_id;   
-                    }
-                    else if($destinaitonAreaId_service_city_type_id > $merchantAreaId_service_city_type_id)
-                    {
-                        $service_city_type = $destinaitonAreaId_service_city_type_id;   
-                    }
-                    else if($destinaitonAreaId_service_city_type_id < $merchantAreaId_service_city_type_id)
-                    {
-                        $service_city_type = $merchantAreaId_service_city_type_id;   
-                    }else{
-                        $service_city_type = 3; 
-                    }
-                }else{
-                    $service_city_type = 3; 
-                }
-                
-            //====================================================================
-            
-                $query = Service_charge_setting::query();
-                    $query->where('service_type_id',$service_type_id);
-                    $query->where('parcel_category_id',$parcel_category_id);
-                    $query->where('parcel_type_id',$parcel_type_id);
-                    $query->where('weight_id',$weight_id);
-                if($service_city_type)
-                {
-                    $query->where('service_city_type_id',$service_city_type);
-                }
-                
-            $service_charge = $query->first();
-            $data['charge'] =  deliveryChargeCalculationAmountForEachMerchant_HH($merchant_id,$service_city_type=1,$service_charge?$service_charge->charge:00.00);
-            $data['collect_amount'] =   $collect_amount;
-            $data['service_charge_setting_id'] =   $service_charge?$service_charge->id:NULL;
-            $data['cod_charge'] =   codChargeCalculationAmountForEachMerchant_HH($merchant_id,$service_city_type=1,$collect_amount);
-            $data['total_payable_amount'] =   $collect_amount - ($data['cod_charge'] + $data['charge']);
-            return view('backend.order.admin.order.ajax.delivery_charge.calculation_charge',$data); 
-        */
     }
 
 
@@ -311,7 +233,7 @@ class OrderController extends Controller
             $order->order_status_changing_current_branch_id = $order_status_changing_current_branch_id;
             $order->partial                 = 0;
             $order->parcel_quantity         = 1;
-            $order->status                  = 1;
+            $order->status                  = 2;
             $order->is_active               = 1 ;
             $order->is_verified             = 1 ;
             $order->save();
@@ -565,7 +487,9 @@ class OrderController extends Controller
         $order =  Order::findOrFail($id);
         DB::beginTransaction();
         try
-        {
+        {   
+            insertOrupdateOrderStatusByOrderId_HH($id,$setStatus=3);
+
             $order->orderProcessingHistories()->delete();
             $order->orderAssigns()->delete();
             $order->branchCommissions()->delete();

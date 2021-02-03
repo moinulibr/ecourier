@@ -165,13 +165,16 @@ class OrderAssigningStatusController extends Controller
             }
             else if($request->changing_status_id == 28){
                 $final_success_cancel_status_id = 2;
+
             }
             foreach($request->order_id as $key => $order)
             {
                 $orderChangeStatus                                  = Order::find($order);
                 $orderChangeStatus->order_status_id                 = $request->changing_status_id;
-                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id;
+                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id?$final_success_cancel_status_id:NULL;
                 $orderChangeStatus->save();
+                updateOrderStatusByOrderId_HH($order,$request->changing_status_id);
+                
                 $this->insertOtherTableAfterChangingStatusId($request->changing_status_id,$order,$request->manpower_id);
             }
             

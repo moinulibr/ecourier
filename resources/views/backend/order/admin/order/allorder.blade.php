@@ -65,7 +65,10 @@
                                 </th>
                                 <th>Customer info</th>
                                 <th>Area</th>
-                                <th>Status</th>
+                                <th>
+                                    <a data-toggle="modal" data-target="#myModal">Status</a>
+                                </th>
+                                <th>Order <br/>Tracking</th>
                                 <th>Customer <br/>
                                     Service <br/>Charge<br/>Payment Status
                                 </th>
@@ -105,6 +108,11 @@
                                 <td>
                                     {{ $order->area->area_name }} <br>
                                     {{ $order->district->name }}
+                                </td>
+                                <td>
+                                    <span style="">
+                                        {{ getOrderStatusByOrderStatus_HH($order->status) }}
+                                    </span>
                                 </td>
                                 <td>
                                     <span style="{{ orderStatusStyle_HH($order->order_status_id) }}">
@@ -164,6 +172,34 @@
             <!-- end card -->
         </div> <!-- end col -->
     </div> <!-- end row -->
+
+
+
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+       @foreach(getOrderStatus_HH() as $key => $data)
+            <button id="status_id" name="status_id" value="{{$data['id']}}"class="status_id_class btn btn-md" >
+                {{$data['name']}}
+            </button> <br/>
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 {{-- ----------------Fmor Modal randering---------------- --}}

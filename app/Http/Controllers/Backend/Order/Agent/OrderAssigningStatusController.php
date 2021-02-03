@@ -19,7 +19,7 @@ class OrderAssigningStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -168,8 +168,10 @@ class OrderAssigningStatusController extends Controller
             {
                 $orderChangeStatus                                  = Order::find($order);
                 $orderChangeStatus->order_status_id                 = $request->changing_status_id;
-                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id;
+                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id?$final_success_cancel_status_id:NULL;
                 $orderChangeStatus->save();
+                updateOrderStatusByOrderId_HH($order,$request->changing_status_id);
+                
                 $this->insertOtherTableAfterChangingStatusId($request->changing_status_id,$order,$request->manpower_id);
             }
 

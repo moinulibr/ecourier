@@ -650,7 +650,7 @@
             $data->branch_id                    = $branch_id;
             $data->created_by                   = $created_by;
             $data->status_changer_id            = $status_changer_id;
-            $data->status                       = $status;
+            //$data->status                       = $status;
             $data->save();
             return $data;
         }
@@ -1209,144 +1209,144 @@ Thanked By ".appUrl_HS();
                                     ->first();
         }
         //---------------======================------------------=====================--------------
-        /**Branch Commission Set */
-        function getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($branch_id,$branch_commission_type_id)
-        {
-            $setting = branchCommissionSettings_HH($branch_id);
-            if(!$setting)return 0;
-            $data = [];
-            $data['commission_amount']     = 0;
-            $data['commission_type']       = 0;
-            $data['commission_setting_id'] = 0;
-            switch ($branch_commission_type_id) 
+            /**Branch Commission Set */
+            function getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($branch_id,$branch_commission_type_id)
             {
-                case "1":
-                    $data['commission_amount']     = $setting->create_and_pick_commission_amount;
-                    $data['commission_type']       = $setting->create_and_pick_commission_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->create_and_pick_commission_amount;
-                    break;
-                case "2":
-                    $data['commission_amount']     = $setting->create_pick_and_delivery_commision_amount;
-                    $data['commission_type']       = $setting->create_pick_and_delivery_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->create_pick_and_delivery_commision_amount;
-                    break;
-                case "3":
-                    $data['commission_amount']     = $setting->receive_and_delivery_commision_amount;
-                    $data['commission_type']       = $setting->receive_and_delivery_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->receive_and_delivery_commision_amount;
-                    break;
-                case "4":
-                    $data['commission_amount']     = $setting->receive_as_media_commision_amount;
-                    $data['commission_type']       = $setting->receive_as_media_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->receive_as_media_commision_amount;
-                    break;
-                case "5":
-                    $data['commission_amount']     = $setting->sending_as_media_commision_amount;
-                    $data['commission_type']       = $setting->sending_as_media_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->sending_as_media_commision_amount;
-                    break;
-                default:
-                    return $data;
-            }
-        }
-        /**Branch Commission Get */
-        function getBranchCommissionByCommissionTypeId_HH($branch_commission_type_id)
-        {
-            switch ($branch_commission_type_id) 
-            {
-                case "1":
-                    return "Create And Pickup Commission";
-                    break;
-                case "2":
-                    return "Create Pickup and Delivery Commission";
-                    break;
-                case "3":
-                    return "Receive And Delivery Commission";
-                    break;
-                case "4":
-                    return "Receive As Media Commission";
-                    break;
-                case "5":
-                    return "Sending As Media Commission";
-                    break;
-                default:
-                    return $data;
-            }
-        }
-
-        function insertingBranchCommission_HH($order,$myBranchId)
-        {
-            $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
-            $headBranch = $branch_type_id?$branch_type_id->id:1;
-            $creating_branch_id         = $order->creating_branch_id;
-            if($creating_branch_id != $headBranch)
-            {
-                //------------------------------------------
-                $destination_branch_id      = $order->destination_branch_id;
-                $branch_commission_type_id  = NULL;
-                $branch_type_id    = getBranchByBranchId_HH($myBranchId)->branch_type_id;
-                if($creating_branch_id  != $destination_branch_id)
+                $setting = branchCommissionSettings_HH($branch_id);
+                if(!$setting)return 0;
+                $data = [];
+                $data['commission_amount']     = 0;
+                $data['commission_type']       = 0;
+                $data['commission_setting_id'] = 0;
+                switch ($branch_commission_type_id) 
                 {
-                    $branch_commission_type_id = 1;  
+                    case "1":
+                        $data['commission_amount']     = $setting->create_and_pick_commission_amount;
+                        $data['commission_type']       = $setting->create_and_pick_commission_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->create_and_pick_commission_amount;
+                        break;
+                    case "2":
+                        $data['commission_amount']     = $setting->create_pick_and_delivery_commision_amount;
+                        $data['commission_type']       = $setting->create_pick_and_delivery_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->create_pick_and_delivery_commision_amount;
+                        break;
+                    case "3":
+                        $data['commission_amount']     = $setting->receive_and_delivery_commision_amount;
+                        $data['commission_type']       = $setting->receive_and_delivery_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->receive_and_delivery_commision_amount;
+                        break;
+                    case "4":
+                        $data['commission_amount']     = $setting->receive_as_media_commision_amount;
+                        $data['commission_type']       = $setting->receive_as_media_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->receive_as_media_commision_amount;
+                        break;
+                    case "5":
+                        $data['commission_amount']     = $setting->sending_as_media_commision_amount;
+                        $data['commission_type']       = $setting->sending_as_media_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->sending_as_media_commision_amount;
+                        break;
+                    default:
+                        return $data;
+                }
+            }
+            /**Branch Commission Get */
+            function getBranchCommissionByCommissionTypeId_HH($branch_commission_type_id)
+            {
+                switch ($branch_commission_type_id) 
+                {
+                    case "1":
+                        return "Create And Pickup Commission";
+                        break;
+                    case "2":
+                        return "Create Pickup and Delivery Commission";
+                        break;
+                    case "3":
+                        return "Receive And Delivery Commission";
+                        break;
+                    case "4":
+                        return "Receive As Media Commission";
+                        break;
+                    case "5":
+                        return "Sending As Media Commission";
+                        break;
+                    default:
+                        return $data;
+                }
+            }
+
+            function insertingBranchCommission_HH($order,$myBranchId)
+            {
+                $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
+                $headBranch = $branch_type_id?$branch_type_id->id:1;
+                $creating_branch_id         = $order->creating_branch_id;
+                if($creating_branch_id != $headBranch)
+                {
+                    //------------------------------------------
+                    $destination_branch_id      = $order->destination_branch_id;
+                    $branch_commission_type_id  = NULL;
+                    $branch_type_id    = getBranchByBranchId_HH($myBranchId)->branch_type_id;
+                    if($creating_branch_id  != $destination_branch_id)
+                    {
+                        $branch_commission_type_id = 1;  
+                    }else{
+                        $branch_commission_type_id = 2; 
+                    } 
+                    $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
+                    $commission_type                    = $data['commission_type'];
+                    $commission_amount                  = $data['commission_amount'];
+                    $branch_commission_setting_id       = $data['commission_setting_id'];
+                    $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
+                    $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
+                    //------------------------------------------
+                    $commission = new Branch_commission();
+                    $commission->order_id                       = $order->id;  
+                    $commission->branch_id                      = $myBranchId;  
+                    $commission->branch_commission_setting_id   = $branch_commission_setting_id;  
+                    $commission->branch_type_id                 = $branch_type_id;  
+                    $commission->branch_commission_type_id      = $branch_commission_type_id;  
+                    $commission->charge                         = $totalCharge;  
+                    $commission->commission                     = $commissionAmount;  
+                    $commission->active_status                  = 0;  
+                    $commission->save();
+                    return $commission;    
+                }return 1;
+            }
+
+            function branchCommissionCalculationAmount_HH($commissionType,$commissionAmount,$totalChargeAmount)
+            {
+                if($commissionType == 1)//parcent 
+                {
+                    return $commissionAmount * $totalChargeAmount / 100;
                 }else{
-                    $branch_commission_type_id = 2; 
-                } 
-                $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
-                $commission_type                    = $data['commission_type'];
-                $commission_amount                  = $data['commission_amount'];
-                $branch_commission_setting_id       = $data['commission_setting_id'];
-                $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
-                $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
-                //------------------------------------------
-                $commission = new Branch_commission();
-                $commission->order_id                       = $order->id;  
-                $commission->branch_id                      = $myBranchId;  
-                $commission->branch_commission_setting_id   = $branch_commission_setting_id;  
-                $commission->branch_type_id                 = $branch_type_id;  
-                $commission->branch_commission_type_id      = $branch_commission_type_id;  
-                $commission->charge                         = $totalCharge;  
-                $commission->commission                     = $commissionAmount;  
-                $commission->active_status                  = 0;  
-                $commission->save();
-                return $commission;    
-            }return 1;
-        }
-
-        function branchCommissionCalculationAmount_HH($commissionType,$commissionAmount,$totalChargeAmount)
-        {
-            if($commissionType == 1)//parcent 
-            {
-                return $commissionAmount * $totalChargeAmount / 100;
-            }else{
-                return $commissionAmount;
+                    return $commissionAmount;
+                }
             }
-        }
 
-        /**total Service Charge */
-        function getOrderTotalServiceCharge_HH($order_id)
-        {
-            $order = getOrderByOrderId_HH($order_id);
-            $service_charge = $order->service_charge;
-            $cod_charge     = $order->cod_charge;
-            if(branchCommissionWithOrWithoutCodCharge_HS())
+            /**total Service Charge */
+            function getOrderTotalServiceCharge_HH($order_id)
             {
-                //$others_charge  = $order->others_charge;
-                $total  = $service_charge + $cod_charge ;//+ $others_charge; 
-            }else{
-                $total          = $service_charge ;
+                $order = getOrderByOrderId_HH($order_id);
+                $service_charge = $order->service_charge;
+                $cod_charge     = $order->cod_charge;
+                if(branchCommissionWithOrWithoutCodCharge_HS())
+                {
+                    //$others_charge  = $order->others_charge;
+                    $total  = $service_charge + $cod_charge ;//+ $others_charge; 
+                }else{
+                    $total          = $service_charge ;
+                }
+                return  $total;
             }
-            return  $total;
-        }
         //---------------======================------------------=====================--------------
        
         /*inserting branch commission when receiving and sending*/
@@ -1358,6 +1358,8 @@ Thanked By ".appUrl_HS();
             $branch_type_id             = getBranchByBranchId_HH($myBranchId)->branch_type_id;
             if($myBranchId != $headBranchId)
             {
+                $existOrNot = checkBranchCommissionExistOrNot_HH($order->id,$myBranchId,$branch_commission_type_id);
+                if($existOrNot)return;
                 $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
                 $commission_type                    = $data['commission_type'];
                 $commission_amount                  = $data['commission_amount'];
@@ -1365,6 +1367,7 @@ Thanked By ".appUrl_HS();
                 $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
                 $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
                 //------------------------------------------
+                
                 $commission = new Branch_commission();
                 $commission->order_id                       = $order->id;  
                 $commission->branch_id                      = $myBranchId;  
@@ -1378,7 +1381,13 @@ Thanked By ".appUrl_HS();
                 return $commission;    
             }return 1;
         }
-
+        function checkBranchCommissionExistOrNot_HH($order_id,$branch_id,$branch_commission_type_id)
+        {
+            return Branch_commission::where('branch_id',$branch_id)
+                            ->where('order_id',$order_id)
+                            ->where('branch_commission_type_id',$branch_commission_type_id)
+                            ->first();
+        }
         function orderReceivingCommissionTypeId_HH($order_id,$myBranchId)
         {
             $order                  = getOrderByOrderId_HH($order_id);
@@ -1416,7 +1425,7 @@ Thanked By ".appUrl_HS();
             return $branch_commission_type_id;
         }
         //---------------======================------------------=====================--------------
-        /**total Commission of a branch */
+    /**total Commission of a branch */
 
         function getManpowerAssignedAreaByManpowerId_HH($manpower_id)
         {
@@ -1927,4 +1936,167 @@ Thanked By ".appUrl_HS();
     |*|------------------------------------------------------------------------------------------------------------|*|
     |*|                            Delivery Charge Bearer End                                                        |*|
     |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order For All Status 
+    | 
+    | --------------------------------------------------------------------------
+    */
+    function getOrderStatusByOrderStatus_HH($status)
+    {
+        switch ($status) 
+        {
+            case "1":
+                return "PickUp Pending";
+                break;
+            case "2":
+                return "Picked Up";
+                break;
+            case "3":
+                return "Deleted";
+                break;
+            case "4":
+                return "Delivery In Progress";
+                break;
+            case "5":
+                return "Delivered";
+                break;
+            case "6":
+                return "Damaged";
+                break;
+            case "7":
+                return "Returning";
+                break;
+            case "8":
+                return "Returning";
+                break;
+            case "9":
+                return "Rejected";
+                break;
+            case "10":
+                return "Hold";
+                break;
+            default:
+                return "Pending";
+        }
+    }
+
+
+    /*
+        foreach(getOrderStatus_HH() as $key => $data)
+        {
+            echo $data['id']. "<br/>"; 
+            echo $data['name']. "<br/>"; 
+        }
+        return "yes";
+    */
+    function getOrderStatus_HH()
+    {
+        $data = [];
+        $data = [
+
+            1 =>[
+                'id' => 1,
+                "name" => "PickUp Pending"
+            ],
+            2 =>[
+                'id' => 2,
+                'name' => 'Picked Up'
+            ],
+            3 =>[
+                'id' => 3,
+                'name' => "Deleted"
+            ],
+            4 =>[
+                'id' => 4,
+                'name' => "Delivery In Progress"
+            ],
+            5 =>[
+                'id' => 5,
+                'name' => "Delivered"
+            ],
+            6 =>[
+                'id' => 6,
+                'name' => "Damaged"
+            ],
+            7 =>[
+                'id' => 7,
+                'name' => "Returning"
+            ],
+            8 =>[
+                'id' => 8,
+                'name' => "Returned"
+            ],
+            9 =>[
+                'id' => 9,
+                'name' => "Rejected"
+            ],
+            10 =>[
+                'id' => 10,
+                'name' => "Hold"
+            ],
+        ];
+        return $data;
+    }
+
+    function updateOrderStatusByOrderId_HH($order_id,$changing_status_id)
+    {
+        $order = getOrderByOrderId_HH($order_id);
+        $setStatus   = $order->status;
+        if($changing_status_id == 5)
+        {
+            $setStatus = 2;
+        } 
+        else if($changing_status_id > 5 && $changing_status_id < 18)
+        {
+            $setStatus = 4;
+        } 
+        else if($changing_status_id == 18)//Successfully Delivered
+        {
+            $setStatus = 5;
+        } 
+        else if($changing_status_id == 19)//Hold Delivery
+        {
+            $setStatus = 10;
+        }
+        else if($changing_status_id > 26 || $changing_status_id < 40)//Delivery Canceling
+        {
+            $setStatus = 7;
+        }
+        else if($changing_status_id == 40)//Delivery Canceled
+        {
+            $setStatus = 8;
+        }
+        else if($changing_status_id == 41 || $changing_status_id == 42)//Send to Head Office, Head Office Received Parcel
+        {
+            $setStatus = 4;
+        }
+        else if($changing_status_id == 43 )//Order Cancel by Merchant/Client when Pickup Parcel
+        {
+            $setStatus = 9;
+        }
+        else if($changing_status_id == 44)//Order Hold by Merchant / Client , when Pickup Parcel
+        {
+            $setStatus = 1;
+        }
+        $order->status = $setStatus;
+        $order->save();
+        return $order;
+    }
+
+    function insertOrupdateOrderStatusByOrderId_HH($order_id,$setStatus)
+    {
+        $order = getOrderByOrderId_HH($order_id);
+        $order->status = $setStatus;
+        $order->save();
+        return $order;
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Order For All Status 
+    | 
+    | --------------------------------------------------------------------------
     */

@@ -270,12 +270,12 @@ class OrderController extends Controller
                 $order->service_charge                  = $request->charge;
                 $order->cod_charge                      = $request->cod_charge?$request->cod_charge:0.0;
                 $order->others_charge                   = 0;
-                $order->service_cod_payment_status_id           = $service_cod_payment_status_id;
+                $order->service_cod_payment_status_id      = $service_cod_payment_status_id;
 
-                $order->service_delivery_payment_status_id      = $service_delivery_payment_status_id;
+                $order->service_delivery_payment_status_id = $service_delivery_payment_status_id;
 
-                $order->product_amount                          = $request->product_amount;
-                $order->client_merchant_payable_amount          = $client_merchant_payable_amount;
+                $order->product_amount                     = $request->product_amount;
+                $order->client_merchant_payable_amount     = $client_merchant_payable_amount;
 
                 $order->parcel_category_id      = $request->parcel_category_id;
                 $order->service_type_id         = $request->service_type_id;
@@ -288,7 +288,7 @@ class OrderController extends Controller
                 $order->order_status_changing_current_branch_id = $order_status_changing_current_branch_id;
                 $order->partial                 = 0;
                 $order->parcel_quantity         = 1;
-                $order->status                  = 1;
+                $order->status                  = 2;
                 $order->is_active               = 1;
                 $order->is_verified             = 1;
                 $order->save();
@@ -482,7 +482,7 @@ class OrderController extends Controller
                 $order->order_status_changing_current_branch_id = $order_status_changing_current_branch_id;
                 $order->partial                 = 0;
                 $order->parcel_quantity         = 1;
-                $order->status                  = 1;
+                $order->status                  = 2;
                 $order->is_active               = 1 ;
                 $order->is_verified             = 1 ;
                 $order->save();
@@ -517,7 +517,7 @@ class OrderController extends Controller
                 /*---====---- Auto manpower Assign when order Creating---========----*/
 
 
-                /*Order Branch Commission Amount insert*/
+                /*Order Branch Commission Amount insert*/ 
                 insertingBranchCommission_HH($order,$myBranchId=Auth::guard('web')->user()->branch_id);
                 /*Order Branch Commission Amount insert*/
 
