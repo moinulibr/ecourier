@@ -1932,7 +1932,7 @@ Thanked By ".appUrl_HS();
     /*
     |--------------------------------------------------------------------------
     | Order For All Status 
-    | 
+    |   status
     | --------------------------------------------------------------------------
     */
     function getOrderStatusByOrderStatus_HH($status)
@@ -1961,7 +1961,7 @@ Thanked By ".appUrl_HS();
                 return "Returning";
                 break;
             case "8":
-                return "Returning";
+                return "Returned";
                 break;
             case "9":
                 return "Rejected";

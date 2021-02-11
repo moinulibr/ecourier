@@ -12,7 +12,7 @@
                       <div class="wrapper">
                         <div class="alert-container">
                              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                              <strong>Congratulations !</strong> 
+                              <strong>Congratulations ! Your new parcel order complete.</strong> 
                                 @if(Session::has('success'))    {{Session::get('success')}}  @endif
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -25,7 +25,8 @@
                                 <div class="subtitle-wrapper">
                                     <p class="title">
                                         {{ $order->merchantshop?$order->merchantshop->shop_name: '' }}  <br>
-                                        {{ $order->merchantshop?$order->merchantshop->pickup_address: '' }} 
+                                        {{ $order->merchantshop?$order->merchantshop->pickup_address: '' }}  <br>
+                                        {{ $order->merchantshop?$order->merchantshop->pickup_phone: '' }} 
                                        
 
                                     </p>
@@ -38,6 +39,7 @@
                                 <div class="subtitle-wrapper">
                                     <p class="address">
                                         {{ $order->customer?$order->customer->customer_name: '' }} <br>
+                                        {{ $order->customer?$order->customer->customer_phone: '' }} <br>
                                         {{ $order->customer?$order->customer->address: '' }}
 
                                     </p>

@@ -4,19 +4,19 @@
             <div class="navbar-brand-box">
                 <a href="{{ route('home') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset($websetting->logo) }}" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset($websetting->logo) }}" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="40">
                     </span>
                 </a>
 
                 <a href="{{ route('home') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset($websetting->logo) }}" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset($websetting->logo) }}" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="40">
                     </span>
                 </a>
             </div>
@@ -127,7 +127,7 @@
                                     <li><a href="{{ route('weight.index') }}">Weight</a></li>
                                     <li><a href="{{ route('service.charge.setting.index') }}">Delivery Charge Setting </a></li>
                                     <li><a href="{{ route('parcel.category.index') }}">Parcel Categories</a></li>
-
+                                    <li><a href="{{ route('setting.index') }}">Web Setting</a></li>
                                 </ul>
                             </li>
                             <li>

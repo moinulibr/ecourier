@@ -80,6 +80,7 @@ class SettingController extends Controller
              'email' => 'required',
              'callcenter' => 'required',
              'address' => 'required',
+             'website' => 'required',
 
         ]);
         if($validators->fails()){
@@ -97,6 +98,9 @@ class SettingController extends Controller
               $setting->address      = $request->address;
               $setting->hotlinenumber= $request->hotlinenumber;
               $setting->callcenter   = $request->callcenter;
+              $setting->website      = $request->website;
+              $setting->facebook     = $request->facebook;
+              $setting->instagram    = $request->instagram;
 
               $image = $request->logo;
 

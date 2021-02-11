@@ -5,7 +5,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Merchant Modal Header</h4>
+            <h4 class="modal-title">Order OverView</h4>
           </div>
           <div class="modal-body">
 
@@ -51,7 +51,7 @@
                                 <hr>
                                     <table class="table table-bordered table-hover">
                                         <tr>
-                                            <th>Invoice No</th>
+                                            <th>Tracking No</th>
                                             <th>:</th>
                                             <th>{{ $order->invoice_no }} </th>
                                         </tr>
@@ -59,34 +59,6 @@
                                             <th>Customer Invoice</th>
                                             <th>:</th>
                                             <th>{{ $order->merchant_invoice }} </th>
-                                        </tr>
-                                        <tr>
-                                            <th>Parcel Owner Type</th>
-                                            <th>:</th>
-                                            <th>
-                                                @if ($order->parcel_owner_type_id == 1)
-                                                    Merchant
-                                                    @else
-                                                    General Customer
-                                                @endif
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                @if ($order->parcel_owner_type_id == 1)
-                                                    Merchant
-                                                    @else
-                                                    General Customer
-                                                @endif
-                                            </th>
-                                            <th>:</th>
-                                            <th>
-                                                @if ($order->parcel_owner_type_id == 1)
-                                                        {{ $order->merchant_id?$order->merchant?$order->merchant->name:'':'' }}
-                                                    @else
-                                                    {{ $order->general_customer_id?$order->generalCustomer?$order->generalCustomer->name:'':'' }}
-                                                @endif
-                                            </th>
                                         </tr>
                                         @if ($order->parcel_owner_type_id == 1)
                                         <tr>
@@ -99,16 +71,7 @@
                                             </th>
                                         </tr>
                                         @endif
-                                        <tr>
-                                            <th>
-                                                Creating Branch <br/> Area
-                                            </th>
-                                            <th>:</th>
-                                            <th>
-                                                {{ $order->creatingBranches?$order->creatingBranches->company_name:'' }} <br>
-                                                {{ $order->creatingAreas?$order->creatingAreas->area_name:'' }} <br>
-                                            </th>
-                                        </tr>
+                                         
                                         <tr>
                                             <th>
                                                 Weight
@@ -165,25 +128,32 @@
                                         </tr>
                                         <tr>
                                             <th>
-                                                Customer
+                                                Customer Name
                                             </th>
                                             <th>:</th>
                                             <th>
                                                 {{ $order->customer?$order->customer->customer_name:'' }}
                                             </th>
                                         </tr>
-                                        <tr>
+                                         <tr>
+                                            <th> Customer Phone </th>
+                                            <th>:</th>
                                             <th>
-                                                Customer  Address
+                                                {{ $order->customer?$order->customer->customer_phone:'' }}
                                             </th>
+                                        </tr>
+                                        <tr>
+                                            <th> Customer Address </th>
                                             <th>:</th>
                                             <th>
                                                 {{ $order->customer?$order->customer->address:'' }}
                                             </th>
                                         </tr>
+
+                                       
                                         <tr>
                                             <th>
-                                                Destination City <br/> Area
+                                                Delivery Area
                                             </th>
                                             <th>:</th>
                                             <th>

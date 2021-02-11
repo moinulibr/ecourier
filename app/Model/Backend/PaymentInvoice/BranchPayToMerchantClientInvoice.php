@@ -8,6 +8,11 @@ use DB;
 class BranchPayToMerchantClientInvoice extends Model
 {
 
+    public function parcelQty()
+    {
+        return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
+        ->count();
+    } 
     public function collectAmount()
     {
         return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
@@ -26,22 +31,40 @@ class BranchPayToMerchantClientInvoice extends Model
     public function totalInvoiceDeliveryAmount()
     {
         return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
-        ->where('receive_amount_type_id',1)
         ->whereNull("deleted_at")
-        ->sum('amount');
+        ->sum('service_charge');
+
+       /*  return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
+        ->join('orders','orders.id','=','branch_pay_to_merchant_client_invoice_details.order_id')
+        ->select('branch_pay_to_merchant_client_invoice_details.*','orders.service_charge',
+            DB::raw('sum(orders.service_charge) as serviceCharge')
+            )
+        ->where('branch_pay_to_merchant_client_invoice_details.receive_amount_type_id',4)
+        ->whereNull("branch_pay_to_merchant_client_invoice_details.deleted_at")
+        ->sum('orders.service_charge'); */
     }
     public function totalInvoiceCodAmount()
     {
         return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
-        ->where('receive_amount_type_id',2)
         ->whereNull("deleted_at")
-        ->sum('amount');
+        ->sum('cod_charge');
+       /*  return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
+        ->join('orders','orders.id','=','branch_pay_to_merchant_client_invoice_details.order_id')
+        ->select('branch_pay_to_merchant_client_invoice_details.*','orders.cod_charge',
+            DB::raw('sum(orders.cod_charge) as cod_charge')
+            )
+        ->where('branch_pay_to_merchant_client_invoice_details.receive_amount_type_id',4)
+        ->whereNull("branch_pay_to_merchant_client_invoice_details.deleted_at")
+        ->sum('orders.cod_charge'); */
     }
     public function totalInvoiceParcelAmount()
     {
         return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
-        ->where('receive_amount_type_id',4)
         ->whereNull("deleted_at")
         ->sum('amount');
+       /*  return BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$this->id)
+        ->where('receive_amount_type_id',4)
+        ->whereNull("deleted_at")
+        ->sum('amount'); */
     }
 }

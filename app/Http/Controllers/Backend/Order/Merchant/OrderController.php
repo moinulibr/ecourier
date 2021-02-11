@@ -537,13 +537,30 @@ class OrderController extends Controller
     public function paymentinvoiceDetails($id)
     {
         $myAuthId = Auth::guard('merchant')->user()->id;
+        $orders = BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$id)
+                                        ->where('pay_to_merchant_client_id',$myAuthId)
+                                        ->latest()   
+                                     ->pluck('order_id');
+        
+        $colAmount =0;
+        if(count( $orders) > 0)
+        {
+           $colAmount = Order::whereIn('id',$orders)->whereNull('deleted_at')->sum('collect_amount');
+        }
+        $myAuthId = Auth::guard('merchant')->user()->id;
         $data['invoices'] = BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$id)
                                         ->where('pay_to_merchant_client_id',$myAuthId)
                                         ->latest()
                                         ->get();
+        $data['totalCollectAmount']    = $colAmount;
+        $data['totalServiceCharge'] = $data['invoices']->sum('service_charge');
+        $data['totalCODCharge']     = $data['invoices']->sum('cod_charge');
+        $data['totalReturnCharge']  = $data['invoices']->sum('others_charge');
+        $data['total']  = $data['totalCollectAmount'] - ($data['totalServiceCharge'] + $data['totalCODCharge'] + $data['totalReturnCharge']);
+        //return view('backend.merchant.invoices.invoice_print',$data);
        $pdf =  PDF::loadView('backend.merchant.invoices.invoice_print',$data);
        //$p = $pdf->stream();
-       return $pdf->download('invoice.pdf');
+        return $pdf->download('invoice.pdf');
     }
 
 

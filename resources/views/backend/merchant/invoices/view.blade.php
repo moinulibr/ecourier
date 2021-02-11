@@ -53,12 +53,14 @@
                             <tr>
                                 <th>Invoice ID</th>
                                 <th>Invoice Date</th>
+                                <th>Parcel <br/>Quantity</th>
                                 <th>Cash Collection (TK) </th>
                                 <th>Delivery Charge (TK)</th>
                                 <th>COD Charge (TK)</th>
                                 <th>Return Charge (TK)</th>
                                 <th>Amount Paid Out (TK)</th>
-                                <th>Download</th>
+                                <th>Download</th> 
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,14 +68,16 @@
                             <tr>
                                 <td>{{$item->payment_invoice_no}}</td>
                                 <td>{{date('Y-m-d h:i:s',strtotime($item->created_at))}}</td>
+                                <td> {{$item->parcelQty()}} </td>
                                 <td> {{$item->collectAmount()}} </td>
                                 <td>{{$item->totalInvoiceDeliveryAmount()}}</td>
                                 <td>{{$item->totalInvoiceCodAmount()}}</td>
-                                <td>{{0.0}}</td>
-                                <td>{{$item->payment_amount}}</td>
+                                <td>{{number_format(0,2)}}</td>
+                                <td>{{$item->totalInvoiceParcelAmount()}}</td>
                                 <td>
                                     <a href="{{route('merchant.paymentinvoiceDetails',$item->id)}}" style="font-size: 18px"> <i class="fa fa-file"></i> </a>
                                 </td>
+                                <td>Paid</td>
                             </tr>
                             @endforeach
                             <tr>

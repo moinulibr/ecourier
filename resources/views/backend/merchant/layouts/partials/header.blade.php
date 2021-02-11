@@ -7,19 +7,19 @@
                     <div class="navbar-brand-box">
                         <a href="index.html" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="{{asset('links/backend/01')}}/assets/images/logo-dark-sm.png" alt="" height="22">
+                                <img src="{{asset($websetting->logo)}}" alt="" height="50">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{asset('links/backend/01')}}/assets/images/logo-dark.png" alt="" height="18">
+                                <img src="{{asset($websetting->logo)}}" alt="" height="45">
                             </span>
                         </a>
 
                         <a href="index.html" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="{{asset('links/backend/01')}}/assets/images/logo-light-sm.png" alt="" height="22">
+                                <img src="{{asset($websetting->logo)}}" alt="" height="50">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{asset('links/backend/01')}}/assets/images/logo-light.png" alt="" height="18">
+                                <img src="{{asset($websetting->logo)}}" alt="" height="45">
                             </span>
                         </a>
                     </div>

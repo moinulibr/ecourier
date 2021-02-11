@@ -18,16 +18,16 @@
 
     </head>
 
-    <body class="authentication-bg" style="background-image: url(assets/images/auth-bg.png)">
+     <body class="authentication-bg" style="background-image: url({{ asset('public/links/backend/01/assets/images/auth-bg.png') }})">
 
         <div class="account-pages mt-5 mb-4 pt-sm-5">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <a href="index.html" class="mb-5 d-block auth-logo">
-                                <img src="assets/images/logo-dark.png" alt="" height="22" class="logo logo-dark">
-                                <img src="assets/images/logo-light.png" alt="" height="22" class="logo logo-light">
+                             <a href="{{ route('frontend') }}" class="mb-5 d-block auth-logo">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-dark">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-light">
                             </a>
                         </div>
                     </div>

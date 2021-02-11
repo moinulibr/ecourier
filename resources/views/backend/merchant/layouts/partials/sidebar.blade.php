@@ -4,19 +4,19 @@
             <div class="navbar-brand-box">
                 <a href="{{ route(merchantDashboardRoute_HH) }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark-sm.png" alt="" height="22">
+                        <img src="{{asset($websetting->logo)}}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark.png" alt="" height="18">
+                        <img src="{{asset($websetting->logo)}}" alt="" height="40">
                     </span>
                 </a>
 
-                <a href="index.html" class="logo logo-light">
+                <a href="{{ route(merchantDashboardRoute_HH) }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light-sm.png" alt="" height="22">
+                        <img src="{{asset($websetting->logo)}}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light.png" alt="" height="18">
+                        <img src="{{asset($websetting->logo)}}" alt="" height="40">
                     </span>
                 </a>
             </div>
@@ -47,7 +47,7 @@
                         <li>
                             <a href="{{ route(merchantDashboardRoute_HH) }}" class="waves-effect">
                                 <i class="icon nav-icon" data-feather="home"></i>
-                                <span class="menu-item" key="t-dashboards">Dashboards</span>
+                                <span class="menu-item" key="t-dashboards">Dashboard</span>
                             </a>
                         </li>                           
                         <li>

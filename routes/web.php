@@ -22,7 +22,7 @@ Route::get('/clear', function() {
 
 /* fontend controller */
 Route::group(['namespace' => 'Frontend'],function(){
-    Route::get('/','FrontendController@index');
+    Route::get('/','FrontendController@index')->name('frontend');
     Route::get('/contact','FrontendController@contact')->name('contact');
     Route::get('/about','FrontendController@about')->name('about');
     Route::get('/privacy','FrontendController@privacy')->name('privacy');
@@ -411,6 +411,29 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::post('area/update/{id}','AreaBranchController@update')->name('branch.area.update');
             Route::get('area/destroy/{id}','AreaBranchController@destroy')->name('branch.area.destroy');
         });
+
+
+
+
+          Route::group(['prefix' => 'setting','namespace'=>'Backend\Admin\Setting'],function(){
+            Route::get('view','SettingController@edit')->name('setting.index');
+            Route::post('store','SettingController@store')->name('setting.store');
+            Route::post('update','SettingController@update')->name('setting.update');
+            Route::get('destroy/{id}','SettingController@destroy')->name('setting.destroy');
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 
         /* Service Type */
