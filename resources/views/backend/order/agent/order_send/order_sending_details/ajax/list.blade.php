@@ -14,8 +14,8 @@
         @foreach($orders as $key=> $order)
         <tr>
             <td>{{$key+1}}</td>
-            <td>{{$order->send_at}}</td>
             <td>{{$order->total}}</td>
+            <td>{{$order->send_at}}</td>
             <td>{{$order->total_collect_amount}}</td>
             <td>
                 <a class="btn btn-primary btn-sm viewByDate"> Print</a>

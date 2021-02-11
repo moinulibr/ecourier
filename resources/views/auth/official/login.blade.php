@@ -39,7 +39,7 @@
                             <div class="card-body p-4"> 
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Dakbd.</p>
+                                    <p class="text-muted">Sign in to continue to {{$websetting->company_name }}.</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form method="POST" action="{{ route(showOfficialUsersLoginFormRoute_HH) }}">
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p> DakBD &copy; Copyright By SOFTECH BD</p>
+                            <p> {{$websetting->company_name }} &copy; Copyright By SOFTECH BD</p>
                         </div>
 
                     </div>

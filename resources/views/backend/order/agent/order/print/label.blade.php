@@ -49,11 +49,14 @@
     }
 
     @page {
-      margin: 0;
+      margin: 0 auto;
     }
 
     /* custom css */
-
+    .printlabel{
+      width: 6in;
+      margin: 0 auto;
+    }
     .inv_head{
       text-align: center;
       text-transform: capitalize;
@@ -97,25 +100,30 @@
 </head>
 
 <body>
+  <div class="printlabel">
   <div class="inv_head">
-    <h1>বারিশাল</h1>
-    <P>banasree, dhaka to barishal(BSL)</P>
+    <img src="{{ asset($setting->logo) }}" alt=""  style="width: 40px;height: 40px;">
+    <h4>{{ $setting->company_name }}</h4>
+    <h1>{{ $order->customer->district->bn_name }}</h1>
+    <P>{{ $order->creatingAreas->area_name }} to  {{ $order->destinationAreas->area_name }} </P>
     <!--<img src="barcode2.PNG" alt="barcode">-->
-    {!! DNS1D::getBarcodeHTML($order->invoice_no, "C128",1.4,22) !!}
-    <p class="barcode-bottom">03758926170642</p>
-    <h1>03758926170642/1</h1>
+   <center> {!! DNS1D::getBarcodeHTML($order->invoice_no, "C128",1.4,22) !!} </center>
+    <p class="barcode-bottom"></p>
+    <h3>{{ $order->invoice_no }}</h3>
   </div>
   <div class="inv-body">
-    <h4>ref :-</h4>
+    <h4>Ref :-</h4>
     <span class="inv_itely inv_border">item details</span>
-    <p class="pad_top">1 ctn cap</p>
+    <p class="pad_top">{{ $order->orderDescriptions?$order->orderDescriptions->parcel_description:'' }}</p>
 
-    <p>receiver  <span class="mar_left">md mirez</span> </p>
-    <span class="inv_itely inv_border">address</span>
-    <p class="pad_top">barishal</p>
+    <p>Receiver  <span class="mar_left">{{ $order->customer?$order->customer->customer_name:'' }}</span> </p>
+    <span class="inv_itely inv_border">Contact :  </span> {{ $order->customer?$order->customer->customer_phone:'' }} <br>
+    <span class="inv_itely inv_border">address: </span> {{ $order->customer?$order->customer->address:'' }}
+    <p class="pad_top">{{ $order->destinationAreas->area_name }}</p>
   </div>
   <div class="footer">
-    <p><span>30-nav-2021</span><span class="mar_left">1:24:37</span><span class="mar_left">pm(narayan_bsr_p)</span> </p>
+    <p><span>{{ $order->created_at->format('D-m-Y') }}</span> <span class="mar_left">{{ Auth::guard('web')->user()->name }}</span> </p>
+  </div>
   </div>
 </body>
 

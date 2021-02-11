@@ -98,7 +98,7 @@
                                                 <th>Cash <br/> Collection</th>
                                                 <th style="width:5%;">Status</th>
                                                 <th>Condition<br/>Payment<br/>Status</th>
-                                                <th></th>
+                                              
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -140,6 +140,7 @@
             var get_checked_id  = $(this).attr('id');
             var get_amount  = parseInt($(this).data('amount'));
 
+                var ide = $(this).data('id');
             var maked_amount_id = 'amount_'+get_checked_id;
             var maked_del_id    = 'del_'+get_checked_id;
 
@@ -148,10 +149,12 @@
             var newAmount = parseInt(nanCheck($('#totalAmount').text()));
             if(checkedResult)
             {
+                $('#order_id_'+ide).val(ide);
                 $('#'+maked_amount_id).val(set_amount);
                 $('#'+maked_del_id).html(set_amount).css({'color':'black'});
                 newAmount += get_amount;
             }else{
+                $('#order_id_'+ide).val('');
                 $('#'+maked_amount_id).val('');
                 $('#'+maked_del_id).html('<del>'+set_amount +'</del>').css({'color':'red'});
 
@@ -199,6 +202,7 @@
             $(".order_id_class").each(function() {
                 var amount = nanCheck($(this).data('amount'));
                 var id = $(this).attr('id');
+                var ide = $(this).data('id');
                 var checkedResult = 0;
                 if($(this).is(":checked"))
                 {
@@ -208,9 +212,11 @@
                 }
                 if(checkedResult)
                 {
+                     $('#order_id_'+ide).val(ide);
                     $('#amount_'+id).val(amount);
                 }
                 else{
+                    $('#order_id_'+ide).val('');
                     $('#amount_'+id).val('');
                 }
             });

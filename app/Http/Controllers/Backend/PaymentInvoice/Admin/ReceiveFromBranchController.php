@@ -46,25 +46,7 @@ class ReceiveFromBranchController extends Controller
         $data['pay_to_head_office_invoice_id'] = $id;
         $data['from_branch_id'] = PayToHeadOfficeInvoice::find($id)->from_branch_id;
 
-        $data['invoices'] =   PayToHeadOfficeInvoiceDetail::select('id','order_id','receive_amount_type_id','amount',
-            DB::raw('(select sum(amount) where receive_amount_type_id = 1) as service_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 2) as cod_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 3) as others_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 4) as parcel_amount'),
-            DB::raw('sum(amount) as total_amount')
-            )   //where('from_branch_id',$branch_id)
-            ->where('pay_to_head_office_invoice_id',$id)
-        //->where('destination_branch_id','!=',$branch_id)
-        /* ->where('parcel_amount_payment_status_id',3)
-        ->where('activate_status_id',1)
-        ->orWhere(function ($query)
-            {
-                return $query->orWhere('service_cod_payment_status_id',1)
-                ->orWhere('service_delivery_payment_status_id',1);
-            }) */
-        /* ->where('parcel_amount_payment_status_id',3)
-        ->orWhere('service_cod_payment_status_id',1)
-        ->orWhere('service_delivery_payment_status_id',1) */
+        $data['invoices'] =   PayToHeadOfficeInvoiceDetail::where('pay_to_head_office_invoice_id',$id)
         ->whereNull("deleted_at")
         ->orderBy('order_id', 'ASC')
         ->orderBy('receive_amount_type_id', 'ASC')

@@ -42,28 +42,10 @@ class PayToHeadOfficeInvoiceController extends Controller
         $data['invoices'] = PayToHeadOfficeInvoiceDetail::where('pay_to_head_office_invoice_id',$id)
                             ->whereNull('deleted_at')
                             ->get();
-        $data['pay_to_head_office_invoice_id'] = $id;
-
-        $data['invoices'] =   PayToHeadOfficeInvoiceDetail::where('from_branch_id',$branch_id)
-            ->select('id','order_id','receive_amount_type_id','amount',
-            DB::raw('(select sum(amount) where receive_amount_type_id = 1) as service_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 2) as cod_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 3) as others_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 4) as parcel_amount'),
-            DB::raw('sum(amount) as total_amount')
-            )
+    
+     $data['invoices'] =   PayToHeadOfficeInvoiceDetail::where('from_branch_id',$branch_id)
+           
             ->where('pay_to_head_office_invoice_id',$id)
-        //->where('destination_branch_id','!=',$branch_id)
-        /* ->where('parcel_amount_payment_status_id',3)
-        ->where('activate_status_id',1)
-        ->orWhere(function ($query)
-            {
-                return $query->orWhere('service_cod_payment_status_id',1)
-                ->orWhere('service_delivery_payment_status_id',1);
-            }) */
-        /* ->where('parcel_amount_payment_status_id',3)
-        ->orWhere('service_cod_payment_status_id',1)
-        ->orWhere('service_delivery_payment_status_id',1) */
         ->orderBy('order_id', 'ASC')
         ->orderBy('receive_amount_type_id', 'ASC')
         ->groupBy('order_id')
@@ -71,7 +53,7 @@ class PayToHeadOfficeInvoiceController extends Controller
         ->whereNull("deleted_at")
         ->get();
 
-
+        $data['pay_to_head_office_invoice_id'] = $id;
         return view('backend.payment_invoice.agent.send_to_head_office.view_list',$data);
     }
 
@@ -80,38 +62,6 @@ class PayToHeadOfficeInvoiceController extends Controller
     public function payToHeadOfficeCreate()
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
-
-        $o = ReceiveAmountHistory::where('received_amount_branch_id',$branch_id)
-                        ->select('order_id','receive_amount_type_id','amount')
-                            ->where('parcel_amount_payment_status_id',3)
-                            ->orWhere('service_cod_payment_status_id',1)
-                            ->orWhere('service_delivery_payment_status_id',1)
-                            ->orderBy('order_id', 'ASC')
-                            ->orderBy('receive_amount_type_id', 'ASC')
-                            ->groupBy('order_id')
-                            ->pluck('order_id')->toArray();
-
-        $ods =   ReceiveAmountHistory::where('received_amount_branch_id',$branch_id)
-            ->select('id','order_id','receive_amount_type_id','amount',
-            DB::raw('(select sum(amount) where receive_amount_type_id = 1) as service_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 2) as cod_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 3) as others_charge'),
-            DB::raw('(select sum(amount) where receive_amount_type_id = 4) as parcel_amount'),
-            DB::raw('sum(amount) as total_amount')
-
-            )
-           // ->where('destination_branch_id','!=',$branch_id)
-            ->where('parcel_amount_payment_status_id',3)
-            ->orWhere(function ($query)
-                {
-                   return $query->orWhere('service_cod_payment_status_id',1)
-                    ->orWhere('service_delivery_payment_status_id',1);
-                })
-            ->orderBy('order_id', 'ASC')
-            ->orderBy('receive_amount_type_id', 'ASC')
-            ->groupBy('order_id')
-            ->get('order_id');
-
         $data['invoice'] = makeInvoiceNo_HH($type = "DACBD");
         return view('backend.payment_invoice.agent.send_to_head_office.index',$data);
     }
@@ -140,17 +90,8 @@ class PayToHeadOfficeInvoiceController extends Controller
 
 
         $data['orders'] =   ReceiveAmountHistory::where('received_amount_branch_id',$branch_id)
-                    ->select('id','order_id','receive_amount_type_id','amount',
-                    DB::raw('(select sum(amount) where receive_amount_type_id = 1 AND activate_status_id = 1) as service_charge'),
-                    DB::raw('(select sum(amount) where receive_amount_type_id = 2 AND activate_status_id = 1) as cod_charge'),
-                    DB::raw('(select sum(amount) where receive_amount_type_id = 3 AND activate_status_id = 1) as others_charge'),
-                    DB::raw('(select sum(amount) where receive_amount_type_id = 4 AND activate_status_id = 1) as parcel_amount'),
-                    DB::raw('(select sum(amount) where activate_status_id = 1 AND received_amount_branch_id = '.$branch_id.') as total_amount')
-                    //DB::raw('sum(amount) as total_amount')
-                    )
-                    //->where('destination_branch_id','!=',$branch_id)
-                    ->where('parcel_amount_payment_status_id',3)
                     ->where('activate_status_id',1)
+                    ->whereIn('parcel_amount_payment_status_id',[NULL,3])
                     ->orWhere(function ($query) use($branch_id)
                         {
                             return $query->orWhere('service_cod_payment_status_id',1)
@@ -161,9 +102,6 @@ class PayToHeadOfficeInvoiceController extends Controller
                             return $query->orWhere('service_delivery_payment_status_id',1)
                             ->where('received_amount_branch_id',$branch_id);
                         })
-                    /* ->where('parcel_amount_payment_status_id',3)
-                    ->orWhere('service_cod_payment_status_id',1)
-                    ->orWhere('service_delivery_payment_status_id',1) */
                     ->orderBy('order_id', 'ASC')
                     ->orderBy('receive_amount_type_id', 'ASC')
                     ->groupBy('order_id')
@@ -193,7 +131,6 @@ class PayToHeadOfficeInvoiceController extends Controller
     // store///
     public function payToHeadOfficeStore(Request $request)
     {
-        //return $request;
         //return $this->getReceiveAmountHistory(7);
         $branch_id = Auth::guard('web')->user()->branch_id;
         $created_by = Auth::guard('web')->user()->id;
@@ -321,22 +258,20 @@ class PayToHeadOfficeInvoiceController extends Controller
         }
         else if($receiveAmoutTypeId == 4)
         {
-            if($order_id->creating_branch_id == $branch_type_id->id)//$branch_type_id->id == head offfice
+            if($update->creating_branch_id == $branch_type_id->id)//$branch_type_id->id == head offfice
             {
                 $update->parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
-                $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
+                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
             }
            else{
                  //Branch received from delivery man
                 $update->parcel_amount_payment_status_id = 4;
-                $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
+                $this->updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId);
             }
         }
         $update->save();
         return $update;
     }
-
-
     public function updateOrderParcelCodServiceStatus($order_id,$receiveAmoutTypeId)
     {
         $order = Order::find($order_id);

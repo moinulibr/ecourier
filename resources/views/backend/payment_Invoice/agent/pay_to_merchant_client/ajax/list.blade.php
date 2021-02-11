@@ -23,7 +23,7 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->orderId}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->orderId) }}" value="{{$order->orderId}}"  />
+                <input checked type="checkbox" class="order_id_class" data-id="{{$order->orderId}}" id="order_id_{{$order->orderId}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->orderId) }}" />
                 <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->orderId}}"  name="order_id_amount[]" value="" />
             </td>
             <td>{{$order->invoice_no}}</td>

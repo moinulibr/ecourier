@@ -57,7 +57,7 @@ class BranchCurrentAccountController extends Controller
         ->whereBetween('orders.created_at',[$startDate,$endDate])
         ->get(); */
 
-        $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[5,8,9])
+        $getData = ReceiveAmountHistory::whereIn('parcel_amount_payment_status_id',[5,8])
                                     ->where('activate_status_id',1)
                                     //->where('receive_amount_type_id',$receive_amount_type_id)
                                     //->where('received_amount_branch_id',$branch_id)

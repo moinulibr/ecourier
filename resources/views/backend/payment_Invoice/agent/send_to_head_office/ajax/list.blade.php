@@ -20,7 +20,6 @@
             <th>Cash <br/> Collection</th>
             <th style="width:5%;">(Service Charge)<br/>Status</th>
             <th>Condition<br/>Payment<br/>Status</th>
-            <th></th>
         </tr>
     </thead> 
     <tbody id="">
@@ -28,7 +27,13 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->order_id}}" name="order_id[]"  data-amount="{{$order->total_amount}}" value="{{$order->order_id}}"  />
+                 @php
+                    $de_charge = receivedAmountTypeAmount_HH($order->order_id,$branch_id,1);
+                    $cod_charge = receivedAmountTypeAmount_HH($order->order_id,$branch_id,2);
+                    $amountParcel = receivedAmountTypeAmount_HH($order->order_id,$branch_id,4);
+                    $total = $de_charge + $cod_charge + $amountParcel; 
+                @endphp
+                <input checked type="checkbox" class="order_id_class" data-id="{{$order->order_id}}" id="order_id_{{$order->order_id}}" name="order_id[]"  data-amount="{{$total}}" value=""  />
                 <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->order_id}}"  name="order_id_amount[]" value="" />
             </td>
             <td>{{ $order->orders?$order->orders->customer->customer_name : NULL }}</td>
@@ -57,7 +62,7 @@
                 @endphp  --}}
                 <span id="del_order_id_{{$order->order_id}}" >
                     <span id="" class="total_before_action" >
-                    {{$order->total_amount}}
+                    {{$total}}
                     </span>
                 </span>
             </td>

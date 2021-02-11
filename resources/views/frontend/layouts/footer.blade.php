@@ -32,7 +32,7 @@
                             <div class="media">
                                 <i class="fa fa-map-marker"></i>
                                 <div class="media-body">
-                                    <span>Baliadangi, Thakurgaon (5041), Rangpur, Bangladesh</span>
+                                    <span>77/1, Khalpara Raod, (Near Subastu Tower), Uttar Badda. Dhaka - 1216.</span>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="media">
                                 <i class="fa fa-phone"></i>
                                 <div class="media-body">
-                                    <span>Phone : +8801755430927</span>
+                                    <span>Phone : +01991140407</span>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                             <div class="media">
                                 <i class="fa fa-envelope"></i>
                                 <div class="media-body">
-                                    <span>Email: <a href="#">info@hawladercurier.com</a></span>
+                                    <span>Email: <a href="#">hawladercourier@gmail.com</a></span>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-youtube"></i></a>
                         </div>
-                        <small>© Hawlader Courier 2020. <br> All rights reserved</small>
+                        <small> Hawlader Courier & Parcel Service © 2020. <br> All rights reserved</small>
                     </div>
                 </div>
             </div>
@@ -94,11 +94,19 @@
     <script src="{{ asset('public/frontend') }}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ asset('public/frontend') }}/js/mixitup.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $('.parent-container').magnificPopup({
             delegate: 'a', // child items selector, by clicking on it popup will open
             type: 'image'
             // other options
+        });
+
+
+
+        $(document).ready(function() {
+            $('.select2').select2();
         });
 
     </script>

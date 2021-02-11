@@ -20,10 +20,10 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->id}}" name="order_id[]"  data-amount="{{$order->client_merchant_payable_amount}}" value="{{$order->id}}"  />
+                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->id}}"  data-id="{{$order->id}}" name="order_id[]"  data-amount="{{$order->client_merchant_payable_amount}}" value=""  />
                 <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->id}}"  name="order_id_amount[]" value="" />
             </td>
-            <td>{{$order->id}}</td>
+            <td>{{$order->invoice_no}}</td>
             <td>
                 {{ $order->generalCustomer?$order->generalCustomer->name:'' }}
                 {{ $order->merchant?$order->merchant->name:'' }} <br>

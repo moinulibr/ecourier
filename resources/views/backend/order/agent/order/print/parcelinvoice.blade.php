@@ -202,20 +202,135 @@
             }
 
             body {
+            	padding-top: 20px;
                 box-shadow: none;
-                margin: 0;
+                margin: 0 auto;
+
             }
 
         }
 
         @page {
-            margin: 0;
+            margin: 0 auto;
         }
 
 	</style>
 </head>
 
 <body>
+
+	<div style="height:450px;">
+	<section class="header">
+		<div class="header_left">
+			<img src="{{ asset($setting->logo) }}" alt="">
+		</div>
+		<div class="header_middle">
+			<h1 style="margin: 0" class="color"><b>{{ $setting->company_name }}</b></h1>
+			<p class="color"> <b>Head Office :</b> {{ $setting->address }} , <b> Phone :</b> {{ $setting->phone }} </p>
+			<p class="color"><b class="colorg">Hotline : {{ $setting->hotlinenumber }} ,</b> {{ $setting->website }} </p>
+		</div>
+		<div class="header_right">
+			<p class="color" style="text-align: center;"><b>Office Copy</b></p>
+		</div>
+	</section>
+
+	<section class="barcodeaddress">
+		<div class="barcodeleft">
+			<img src="qr2.JPG" alt="" width="300">
+ 				 {!! DNS1D::getBarcodeHTML($order->invoice_no, "C128",1.4,22) !!}
+ 				<p class="pid" style="font-weight: bold;    margin: 4px 0;margin-bottom: 11px;"> {{$order->invoice_no}}</p>
+		</div>
+		<div class="barcoderight">
+			<p style="margin-top: 7px"><b>Destination Area : {{ $order->destinationAreas?$order->destinationAreas->area_name:null }}</b></p>
+		</div>
+	</section>
+
+	<section class="parceladdress">
+		<div class="address_left">
+			<table>
+				<tr>
+					<th>Form</th>
+					<td>:</td>
+					<td>{{ $order->generalCustomer?$order->generalCustomer->name:null }}</td>
+				</tr>
+				<tr>
+					<th>Address</th>
+					<td>:</td>
+					<td>{{ $order->generalCustomer?$order->generalCustomer->address:null }}</td>
+				</tr>
+				<tr>
+					<th>Phone</th>
+					<td>:</td>
+					<td>{{ $order->generalCustomer?$order->generalCustomer->phone:null }}</td>
+				</tr>
+
+			</table>
+		</div>
+		<div class="address_right">
+			<table>
+				<tr>
+					<th>To</th>
+					<td>:</td>
+					<td>{{ $order->customer?$order->customer->customer_name:null }}</td>
+				</tr>
+				<tr>
+					<th>Address</th>
+					<td>:</td>
+					<td>{{ $order->customer?$order->customer->address:null }}</td>
+				</tr>
+				<tr>
+					<th>Phone</th>
+					<td>:</td>
+					<td>{{ $order->customer?$order->customer->customer_phone:null }}</td>
+				</tr>
+
+			</table>
+
+		</div>
+	</section>
+	<section class="product">
+		<table>
+			<tr style="background: #ff00001f;">
+				<th>QTY</th>
+				<th width="50%">Description</th>
+				<th>Amount</th>
+				<th>Total</th>
+			</tr>
+			<tr>
+				<td>01</td>
+				<td> </td>
+				<td style="font-size: 15px; font-weight: bold;">Cash</td>
+				<td>
+					{{ $order->service_charge + $order->cod_charge }} <br>
+					( {{ $order->service_charge  }} + {{ $order->cod_charge }} )
+				</td>
+			</tr>
+		</table>
+		<div>
+			<p style="margin-bottom: 0; padding-bottom: 15px;"><b class="color">In Word : </b> ............................</p>
+		</div>
+	</section>
+
+
+	<section class="author" style="margin-top: 15px;">
+		<div class="author_name center">
+			 <p class="margin">{{ Auth::guard('web')->user()->name }}</p>
+			<h5 class="before margin color" style="font-size: 15px;">Booking Offier</h5>
+		</div>
+		<div class="order_date">
+			<p class="margin">{{ $order->created_at->format('D-m-Y') }}</p>
+			<h5 class="before2 margin color" style="font-size: 15px;">Date</h5>
+		</div>
+	</section>
+	</div>
+
+
+	 <hr>
+
+
+
+
+	<div style="height:450px;">
 	<section class="header">
 		<div class="header_left">
 			<img src="{{ asset($setting->logo) }}" alt="">
@@ -294,7 +409,7 @@
 			</tr>
 			<tr>
 				<td>01</td>
-				<td>1 Bosta Tea</td>
+				<td> </td>
 				<td style="font-size: 15px; font-weight: bold;">Cash</td>
 				<td>
 					{{ $order->service_charge + $order->cod_charge }} <br>
@@ -303,7 +418,7 @@
 			</tr>
 		</table>
 		<div>
-			<p style="margin-bottom: 0; padding-bottom: 15px;"><b class="color">In Word : </b> three hundred taka</p>
+			<p style="margin-bottom: 0; padding-bottom: 15px;"><b class="color">In Word : </b> ............................</p>
 		</div>
 	</section>
 
@@ -318,6 +433,9 @@
 			<h5 class="before2 margin color" style="font-size: 15px;">Date</h5>
 		</div>
 	</section>
+	</div>
+
+
 
 
 

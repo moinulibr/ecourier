@@ -27,21 +27,19 @@
                     <h4 class="card-title">Total Percel</h4>
 
                     <hr>
-                    <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
+                <div class="table-responsive">
+                    <table id="" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Serial</th>
                                 <th>Parcel ID</th>
-                                <th>Parcel Owner</th>
-                                <th>
-                                    Merchant Name <br> Shop Name
-                                    <br/>
-                                    General Customer
-                                </th>
+                                <th>Sender info</th>
                                 <th>Customer info</th>
-                                <th>Area</th>
-                                <th>Service <br/>Charge</th>
-                                 <th>
+                                
+                                <th>Address <br> Destination Area </th>
+                                <th>Collection <br> Amount</th>
+                                <th>Charge</th>
+                                <th>COD Charge</th>
+                                <th>
                                     <a data-toggle="modal" data-target="#myModal">Status</a>
                                 </th>
                                 <th>Order <br/>Tracking</th>
@@ -58,37 +56,32 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <a href="#" class="viewSingleDataByAjax"   data-id="{{ $order->id }}" >
                                     {{ $order->invoice_no }}
                                     </a>
                                 </td>
-                                <td>
-                                    @if ($order->parcel_owner_type_id == 1)
-                                    Merchant
-                                    @else
-                                    General Customer
-                                @endif
-                                </td>
+                                
                                 <td>
                                     {{ $order->generalCustomer?$order->generalCustomer->name:'' }}
-                                    {{ $order->merchant?$order->merchant->name:'' }} <br>
-                                     {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
+                                    {{ $order->generalCustomer?$order->generalCustomer->phone:'' }}
+                                    
                                 </td>
                                 <td>
+                                   
                                     {{ $order->customer->customer_name }} <br>
                                     {{ $order->customer->customer_phone }} <br>
-                                    {{ $order->customer->address }} <br>
+                                  
                                 </td>
                                 <td>
+                                    {{ $order->customer->address }} <br>
                                     {{ $order->area->area_name }} <br>
                                     {{ $order->district->name }}
                                 </td>
+                                <td> {{ $order->collect_amount }}  </td>
+                                <td> {{ $order->service_charge }}  </td>
+                                <td> {{ $order->cod_charge }}  </td>
                                 <td>
-                                    {{ $order->service_charge }}
-                                </td>
-                                 <td>
                                     <span style="">
                                         {{ getOrderStatusByOrderStatus_HH($order->status) }}
                                     </span>
@@ -142,6 +135,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                 </div>
                 </div>
                 <!-- end card-body -->
             </div>

@@ -93,7 +93,8 @@ class PayToBranchCommissionController extends Controller
             $end= date('d-m-Y');
             $endDate = date("Y-m-d",strtotime($end."+1 day"));
         }
-        $data['orders'] = Branch_commission::join('orders','orders.id','=','branch_commissions.order_id')
+         $query = Branch_commission::query();
+             $query->join('orders','orders.id','=','branch_commissions.order_id')
             ->select('branch_commissions.*','orders.cod_charge',
             'orders.service_charge','orders.product_amount','orders.others_charge','orders.parcel_amount_payment_type_id',
             'orders.order_status_id','orders.parcel_amount_payment_status_id',
@@ -102,12 +103,23 @@ class PayToBranchCommissionController extends Controller
             // DB::raw('sum(orders.client_merchant_payable_amount) as total_amount')
             )
         ->where('branch_commissions.branch_id',$send_branch_id)
-        ->where('branch_commissions.active_status',1)
-        ->where('orders.service_cod_payment_status_id',3)
         ->where('orders.service_delivery_payment_status_id',3)
-        ->where('orders.parcel_amount_payment_status_id',">",6)
-        ->whereBetween('orders.created_at',[$startDate,$endDate])
-        ->get();
+        ->where('branch_commissions.active_status',1);
+
+       /*
+        $query->when('orders.service_cod_payment_status_id' == NULL && 'orders.service_delivery_payment_status_id' != NULL, function ($q) {
+           return $q->where('orders.service_delivery_payment_status_id',3)
+                    ->where('orders.service_cod_payment_status_id',NULL);
+        }); 
+        $query->when('orders.service_cod_payment_status_id' != NULL && 'orders.service_delivery_payment_status_id' != NULL, function ($q) {
+           return $q->where('orders.service_delivery_payment_status_id',3)
+                    ->where('orders.service_cod_payment_status_id',3);
+        });  */
+        //->where('orders.service_delivery_payment_status_id',3)
+        //->where('orders.service_cod_payment_status_id',3)
+        //->where('orders.parcel_amount_payment_status_id',">",6)
+        $query->whereBetween('orders.created_at',[$startDate,$endDate]);
+    $data['orders'] =      $query->get();
         return view('backend.payment_invoice.admin.pay_to_branch_commission.ajax.list',$data);
     }
 

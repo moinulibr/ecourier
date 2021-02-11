@@ -1619,44 +1619,28 @@ Thanked By ".appUrl_HS();
     function receivedAmountTypeAmount_HH($order_id,$branch_id,$receive_amount_type_id)
     {
                 $q = ReceiveAmountHistory::query();
-                        $q->where('received_amount_branch_id',$branch_id);
-                        $q->where('order_id',$order_id);
-                        $q->select('order_id','receive_amount_type_id','amount',
-                        DB::raw('(select sum(amount) where activate_status_id = 1) as amount')
-                            //DB::raw('SUM(amount) as amount')
-                        );
-                        $q->where('receive_amount_type_id',$receive_amount_type_id);
-                        $q->where('activate_status_id',1);
-                      
-                            //->where('destination_branch_id','!=',$branch_id)
-                        if($receive_amount_type_id == 1)
-                        {
-                            $q->where('service_delivery_payment_status_id',1);
-                           /*  $result =  $q->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                        else if($receive_amount_type_id == 2)
-                        {
-                            $q->where('service_cod_payment_status_id',1);
-                            /* $result =  $q->latest()->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                        else if($receive_amount_type_id == 4)
-                        {
-                            $q->where('parcel_amount_payment_status_id',3);
-                            /* $result =  $q->latest()->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                            /* ->orWhere(function ($query)
-                                {
-                                   return $query->orWhere('service_cod_payment_status_id',1)
-                                    ->orWhere('service_delivery_payment_status_id',1);
-                                })
-                            ->where('parcel_amount_payment_status_id',3)
-                            ->orWhere('service_cod_payment_status_id',1)
-                            ->orWhere('service_delivery_payment_status_id',1) */
-                            //$q->orderBy('order_id', 'ASC')
-                            //->orderBy('receive_amount_type_id', 'ASC')
+                    $q->where('received_amount_branch_id',$branch_id);
+                    $q->where('order_id',$order_id);
+                    $q->select('order_id','receive_amount_type_id','amount'
+                   // ,DB::raw('(select sum(amount) where activate_status_id = 1) as amount')
+                        //DB::raw('SUM(amount) as amount')
+                    );
+                    $q->where('receive_amount_type_id',$receive_amount_type_id);
+                    $q->where('activate_status_id',1);
+                  
+                    if($receive_amount_type_id == 1)
+                    {
+                        $q->where('service_delivery_payment_status_id',1);
+                    }
+                    else if($receive_amount_type_id == 2)
+                    {
+                        $q->where('service_cod_payment_status_id',1);
+                    }
+                    else if($receive_amount_type_id == 4)
+                    {
+                        $q->where('parcel_amount_payment_status_id',3);
+                    }
+                        
                return $result =  $q->sum('amount');
     }
 
@@ -1673,7 +1657,13 @@ Thanked By ".appUrl_HS();
                         
                return $result =  $q->sum('amount');
     }
-
+    function payToHeadOfficeTotalInvoiceAmount_HH($pay_to_head_office_invoice_id)
+    {
+        $q = PayToHeadOfficeInvoiceDetail::query();
+        $q->where('pay_to_head_office_invoice_id',$pay_to_head_office_invoice_id);
+                
+       return $result =  $q->sum('amount');
+    }
     function receiveFromOtherBranchInvoiceAmount_HH($order_id,$branch_id,$receive_amount_type_id,$pay_to_head_office_invoice_id)
     {
                 $q = PayToHeadOfficeInvoiceDetail::query();

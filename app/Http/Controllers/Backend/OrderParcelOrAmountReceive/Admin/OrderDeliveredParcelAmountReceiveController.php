@@ -160,7 +160,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         {
             $this->OrderPaymentReceivingHistory($order_id,1,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4,$client_merchant_payable_amount,$manpower_id);
 
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
             $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);

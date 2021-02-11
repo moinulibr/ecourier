@@ -142,6 +142,7 @@
             }
 
             var get_checked_id  = $(this).attr('id');
+             var onlyId  = $(this).data('id');
             var get_amount  = parseInt($(this).data('amount'));
 
             var maked_amount_id = 'amount_'+get_checked_id;
@@ -153,10 +154,12 @@
             if(checkedResult)
             {
                 $('#'+maked_amount_id).val(set_amount);
+                $('#order_id_'+onlyId).val(onlyId);
                 $('#'+maked_del_id).html(set_amount).css({'color':'black'});
                 newAmount += get_amount;
             }else{
                 $('#'+maked_amount_id).val('');
+                $('#order_id_'+onlyId).val('');
                 $('#'+maked_del_id).html('<del>'+set_amount +'</del>').css({'color':'red'});
 
                 newAmount  -=  get_amount;
@@ -192,7 +195,7 @@
         function submit(amount)
         {
             var received_branch_id = $('#received_branch_id').val();
-            if(amount > 0 && received_branch_id)
+            if(received_branch_id)
             {
                 $('#submit').removeAttr('disabled','disabled');
             }else{
@@ -204,6 +207,7 @@
             $(".order_id_class").each(function() {
                 var amount = nanCheck($(this).data('amount'));
                 var id = $(this).attr('id');
+                 var onlyId  = $(this).data('id');
                 var checkedResult = 0;
                 if($(this).is(":checked"))
                 {
@@ -214,9 +218,11 @@
                 if(checkedResult)
                 {
                     $('#amount_'+id).val(amount);
+                    $('#order_id_'+onlyId).val(onlyId);
                 }
                 else{
                     $('#amount_'+id).val('');
+                    $('#order_id_'+onlyId).val('');
                 }
             });
         }

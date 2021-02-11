@@ -4,19 +4,19 @@
             <div class="navbar-brand-box">
                 <a href="{{ route('home') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark-sm.png" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark.png" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="18">
                     </span>
                 </a>
 
                 <a href="{{ route('home') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light-sm.png" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light.png" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="18">
                     </span>
                 </a>
             </div>
@@ -64,13 +64,7 @@
                                     <li><a href="{{ route('agent.index') }}">Agent</a></li>
                                     <li><a href="{{ route('deliveryman.index') }}">Delivery Man</a></li>
                                     <li><a href="{{ route('hub.index') }}">Hub User List</a></li>
-
-
-                                    <li><a href="#">Office Stuff</a></li>
                                     <li><a href="{{ route('sub.office.index')}}">Sub Office</a></li>
-                                    <li><a href="#">Sub Office Stuff</a></li>
-                                    <li><a href="#">Agent Delivery Man</a></li>
-                                    <li><a href="#">Affiliate/Merketer</a></li>
 
                                 </ul>
                             </li>
@@ -213,7 +207,7 @@
                             <li>
                                 <a href="javascript: void(0);"  >
                                     <i data-feather="shopping-cart"></i>
-                                    <span class="menu-item" key="t-layouts"><small>Sending Parcel  Management</small></span>
+                                    <span class="menu-item" key="t-layouts">Transfer  Management</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('agent.send.parcel') }}">Send Other Branch</a></li>
