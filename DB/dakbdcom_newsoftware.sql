@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 24, 2021 at 09:07 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.5
+-- Host: localhost:3306
+-- Generation Time: Feb 25, 2021 at 08:44 PM
+-- Server version: 10.3.27-MariaDB-cll-lve
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `abutaleb_vai_courier`
+-- Database: `dakbdcom_newsoftware`
 --
 
 -- --------------------------------------------------------
@@ -579,7 +580,9 @@ INSERT INTO `areas` (`id`, `area_name`, `area_name_bn`, `service_city_type_id`, 
 (451, 'Horipur', 'হরিপুর', 3, 33, 6, 1, 1, 1, NULL, NULL, '2021-01-08 16:34:43', '2021-01-08 16:34:43'),
 (452, 'Mymensingh Sadar', 'ময়মনসিংহ  সদর', 1, 10, 8, 1, 1, 1, NULL, NULL, '2021-01-08 16:36:20', '2021-01-08 16:36:20'),
 (453, 'Chattogram Sadar', 'চট্রগ্রাম', 1, 43, 2, 1, 1, 1, NULL, NULL, '2021-01-08 16:37:35', '2021-01-08 16:37:35'),
-(454, 'Munshiganj', 'মুন্সিগঞ্জ', 3, 9, 3, 1, 1, 1, NULL, NULL, '2021-01-09 04:05:01', '2021-01-09 04:05:01');
+(454, 'Munshiganj', 'মুন্সিগঞ্জ', 3, 9, 3, 1, 1, 1, NULL, NULL, '2021-01-09 04:05:01', '2021-01-09 04:05:01'),
+(455, 'Barisal Sadar', 'বারিশা সদর', 1, 35, 1, 1, 1, 1, NULL, NULL, '2021-02-08 14:05:24', '2021-02-08 14:05:24'),
+(456, 'barguna', 'বরগুনা', 3, 34, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:18:56', '2021-02-17 09:18:56');
 
 -- --------------------------------------------------------
 
@@ -617,7 +620,25 @@ INSERT INTO `area_branch` (`id`, `area_id`, `district_id`, `branch_id`, `status`
 (9, 8, 1, 1, 1, 1, 1, NULL, 1, '2021-01-09 13:54:24', '2021-01-09 13:54:24'),
 (10, 9, 1, 1, 1, 1, 1, NULL, 1, '2021-01-09 13:54:35', '2021-01-09 13:54:35'),
 (11, 10, 1, 1, 1, 1, 1, NULL, 1, '2021-01-09 13:54:45', '2021-01-09 13:54:45'),
-(12, 11, 1, 1, 1, 1, 1, NULL, 1, '2021-01-09 13:54:57', '2021-01-09 13:54:57');
+(12, 11, 1, 1, 1, 1, 1, NULL, 1, '2021-01-09 13:54:57', '2021-01-09 13:54:57'),
+(13, 447, 33, 4, 1, 1, 1, NULL, 1, '2021-02-05 16:34:57', '2021-02-05 16:34:57'),
+(14, 455, 35, 5, 1, 1, 1, NULL, 1, '2021-02-08 14:06:55', '2021-02-08 14:06:55'),
+(15, 256, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:45:40', '2021-02-12 02:45:40'),
+(16, 380, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:45:51', '2021-02-12 02:45:51'),
+(17, 12, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:46:04', '2021-02-12 02:46:04'),
+(18, 20, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:46:15', '2021-02-12 02:46:15'),
+(19, 29, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:46:25', '2021-02-12 02:46:25'),
+(20, 43, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:46:36', '2021-02-12 02:46:36'),
+(21, 8, 1, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:46:46', '2021-02-12 02:46:46'),
+(22, 9, 1, 1, 1, 1, 1, NULL, 1, '2021-02-15 05:01:38', '2021-02-15 05:01:38'),
+(23, 12, 1, 1, 1, 1, 1, NULL, 1, '2021-02-15 05:02:07', '2021-02-15 05:02:07'),
+(24, 5, 1, 1, 1, 1, 1, NULL, 1, '2021-02-15 05:02:35', '2021-02-15 05:02:35'),
+(25, 447, 33, 6, 1, 1, 1, NULL, 1, '2021-02-15 05:18:18', '2021-02-15 05:18:18'),
+(26, 448, 33, 6, 1, 1, 1, NULL, 1, '2021-02-15 05:18:33', '2021-02-15 05:18:33'),
+(27, 147, 1, 7, 1, 1, 1, NULL, 1, '2021-02-16 11:32:46', '2021-02-16 11:32:46'),
+(28, 146, 1, 7, 1, 1, 1, NULL, 1, '2021-02-16 11:33:37', '2021-02-16 11:33:37'),
+(29, 16, 1, 1, 1, 1, 1, NULL, 1, '2021-02-17 06:27:43', '2021-02-17 06:27:43'),
+(30, 17, 1, 1, 1, 1, 1, NULL, 1, '2021-02-17 09:15:20', '2021-02-17 09:15:20');
 
 -- --------------------------------------------------------
 
@@ -766,9 +787,9 @@ CREATE TABLE `branches` (
 --
 
 INSERT INTO `branches` (`id`, `company_name`, `area_id`, `branch_type_id`, `parent_id`, `district_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Dakbd', 1, 1, 1, '1', 1, 1, 1, NULL, NULL, NULL, NULL),
-(2, 'Chattogram Agent', 453, 4, 1, '43', 1, 1, 1, NULL, 1, '2021-01-08 16:39:49', '2021-01-08 16:39:49'),
-(3, 'Mymensingh Agent', 452, 4, 1, '10', 1, 1, 1, NULL, 1, '2021-01-08 16:40:45', '2021-01-08 17:22:40');
+(1, 'DAKBD', 1, 1, 1, '1', 1, 1, 1, NULL, 1, NULL, '2021-02-05 16:30:58'),
+(6, 'Thakurgaon', 447, 4, 1, '33', 1, 1, 1, NULL, 1, '2021-02-15 05:18:04', '2021-02-15 05:18:04'),
+(7, 'Khilgaon', 147, 4, 1, '1', 1, 1, 1, NULL, 1, '2021-02-16 11:32:25', '2021-02-16 11:32:25');
 
 -- --------------------------------------------------------
 
@@ -783,10 +804,11 @@ CREATE TABLE `branch_commissions` (
   `branch_commission_setting_id` int(11) DEFAULT NULL,
   `branch_type_id` int(11) DEFAULT NULL,
   `branch_commission_type_id` int(11) DEFAULT NULL,
-  `charge` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `commission` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `charge` decimal(20,2) DEFAULT NULL,
+  `commission` decimal(20,2) DEFAULT NULL,
   `payment_status` tinyint(4) NOT NULL DEFAULT 1,
   `active_status` tinyint(4) DEFAULT NULL,
+  `pay_to_branch_commission_invoice_detail_id` int(11) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `is_verified` tinyint(4) NOT NULL DEFAULT 1,
@@ -800,13 +822,14 @@ CREATE TABLE `branch_commissions` (
 -- Dumping data for table `branch_commissions`
 --
 
-INSERT INTO `branch_commissions` (`id`, `order_id`, `branch_id`, `branch_commission_setting_id`, `branch_type_id`, `branch_commission_type_id`, `charge`, `commission`, `payment_status`, `active_status`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(15, 6, 2, 2, 4, 1, '125.00', '12.50', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 06:09:03', '2021-01-22 06:09:03'),
-(16, 7, 2, 2, 4, 2, '125.00', '50.00', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 06:10:33', '2021-01-22 06:10:33'),
-(17, 8, 2, 2, 4, 1, '125.00', '12.50', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 06:11:48', '2021-01-22 06:11:48'),
-(18, 6, 2, 2, 4, 1, '125.00', '12.50', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 06:18:07', '2021-01-22 06:18:07'),
-(19, 8, 2, 2, 4, 1, '125.00', '12.50', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 06:18:07', '2021-01-22 06:18:07'),
-(20, 6, 3, 2, 4, 3, '125.00', '37.50', 1, 0, 1, 1, 1, NULL, NULL, '2021-01-22 09:09:22', '2021-01-22 09:09:22');
+INSERT INTO `branch_commissions` (`id`, `order_id`, `branch_id`, `branch_commission_setting_id`, `branch_type_id`, `branch_commission_type_id`, `charge`, `commission`, `payment_status`, `active_status`, `pay_to_branch_commission_invoice_detail_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
+(40, 6, 6, 1, 4, 3, 120.00, 24.00, 1, 1, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:16:10', '2021-02-15 12:19:33'),
+(41, 4, 6, 1, 4, 3, 120.00, 24.00, 1, 1, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:16:10', '2021-02-15 12:19:33'),
+(42, 2, 6, 1, 4, 3, 120.00, 24.00, 1, 1, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:16:10', '2021-02-15 12:19:33'),
+(43, 8, 6, 1, 4, 3, 120.00, 24.00, 1, 1, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:29:10', '2021-02-15 12:34:10'),
+(44, 9, 6, 1, 4, 3, 120.00, 24.00, 1, 1, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 14:50:51', '2021-02-15 14:52:51'),
+(45, 12, 6, 1, 4, 3, 120.00, 24.00, 1, 2, 14, 1, 1, 1, NULL, NULL, '2021-02-16 13:13:25', '2021-02-16 13:41:16'),
+(46, 11, 6, 1, 4, 3, 120.00, 24.00, 1, 2, 15, 1, 1, 1, NULL, NULL, '2021-02-16 13:13:25', '2021-02-16 13:41:16');
 
 -- --------------------------------------------------------
 
@@ -842,9 +865,9 @@ CREATE TABLE `branch_commission_settings` (
 --
 
 INSERT INTO `branch_commission_settings` (`id`, `branch_id`, `branch_type_id`, `create_and_pick_commission_type_id`, `create_and_pick_commission_amount`, `create_pick_and_delivery_commision_type_id`, `create_pick_and_delivery_commision_amount`, `receive_and_delivery_commision_type_id`, `receive_and_delivery_commision_amount`, `receive_as_media_commision_type_id`, `receive_as_media_commision_amount`, `sending_as_media_commision_type_id`, `sending_as_media_commision_amount`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, '10.00', 1, '40.00', 1, '20.00', 1, '2.00', 1, '2.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(2, 2, 4, 1, '10.00', 1, '40.00', 1, '30.00', 1, '2.00', 1, '2.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(3, 3, 4, 1, '10.00', 1, '40.00', 1, '30.00', 1, '2.00', 1, '2.00', 1, 1, 1, NULL, NULL, NULL, NULL);
+(1, 1, 1, 1, 10.00, 1, 40.00, 1, 20.00, 1, 2.00, 1, 2.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(6, 6, 4, 1, 10.00, 1, 50.00, 1, 40.00, 1, 2.00, 1, 2.00, 1, 1, 1, NULL, NULL, '2021-02-15 05:19:16', '2021-02-15 05:19:16'),
+(7, 7, 4, 1, 0.00, 2, 50.00, 1, 40.00, 1, 2.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-16 12:18:51', '2021-02-16 12:18:51');
 
 -- --------------------------------------------------------
 
@@ -885,7 +908,7 @@ CREATE TABLE `branch_pay_to_merchant_client_invoices` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `payment_invoice_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_branch_id` int(11) DEFAULT NULL,
-  `payment_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `payment_amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) NOT NULL DEFAULT 1,
   `payment_by` int(11) DEFAULT NULL,
@@ -910,8 +933,11 @@ CREATE TABLE `branch_pay_to_merchant_client_invoices` (
 --
 
 INSERT INTO `branch_pay_to_merchant_client_invoices` (`id`, `payment_invoice_no`, `from_branch_id`, `payment_amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `payment_at`, `parcel_owner_type_id`, `pay_to_merchant_client_id`, `payment_received_by`, `payment_received_at`, `payment_description`, `payment_note`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(2, 'DACBD-PTMC2021240112011249', 1, '539.00', NULL, 1, 1, '2021-01-24 12:02:04', 1, 3, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-01-23 18:02:04', '2021-01-23 18:02:04'),
-(3, 'DACBD-PTMC2021240112203921', 2, '875.00', NULL, 1, 2, '2021-01-24 12:24:12', 1, 3, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-01-23 18:24:12', '2021-01-23 18:24:12');
+(4, 'DACBD-PTMC2021150206142367', 1, NULL, NULL, 1, 1, '2021-02-15 06:14:33', 1, 20, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(5, 'DACBD-PTMC2021150208445059', 1, NULL, NULL, 1, 1, '2021-02-15 08:46:18', 1, 20, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(6, 'DACBD-PTMC2021150208564580', 1, NULL, NULL, 1, 1, '2021-02-15 08:56:57', 1, 20, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 14:56:57', '2021-02-15 14:56:57'),
+(7, 'DACBD-PTMC2021160207393067', 1, NULL, NULL, 1, 1, '2021-02-16 07:39:56', 1, 27, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(8, 'DACBD-PTMC2021160208000471', 1, NULL, NULL, 1, 1, '2021-02-16 08:00:41', 1, 20, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 14:00:41', '2021-02-16 14:00:41');
 
 -- --------------------------------------------------------
 
@@ -928,12 +954,12 @@ CREATE TABLE `branch_pay_to_merchant_client_invoice_details` (
   `receive_amount_history_id` int(11) DEFAULT NULL,
   `receive_amount_type_id` int(11) DEFAULT NULL,
   `pay_to_merchant_client_id` tinyint(4) DEFAULT NULL,
-  `amount` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `service_charge` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `cod_charge` decimal(20,3) NOT NULL DEFAULT 0.000,
-  `others_charge` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `total_charge` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `product_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `service_charge` decimal(20,2) DEFAULT NULL,
+  `cod_charge` decimal(20,3) DEFAULT NULL,
+  `others_charge` decimal(20,2) DEFAULT NULL,
+  `total_charge` decimal(20,2) DEFAULT NULL,
+  `product_amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) DEFAULT NULL,
   `payment_by` int(11) DEFAULT NULL,
@@ -951,8 +977,18 @@ CREATE TABLE `branch_pay_to_merchant_client_invoice_details` (
 --
 
 INSERT INTO `branch_pay_to_merchant_client_invoice_details` (`id`, `branch_pay_to_merchant_client_invoice_id`, `parcel_owner_type_id`, `paid_from_branch_id`, `order_id`, `receive_amount_history_id`, `receive_amount_type_id`, `pay_to_merchant_client_id`, `amount`, `service_charge`, `cod_charge`, `others_charge`, `total_charge`, `product_amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 1, 9, 21, 4, 3, '539.00', '55.00', '6.000', '0.00', '61.00', '400.00', NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-01-23 18:02:04', '2021-01-23 18:02:04'),
-(2, 3, 1, 2, 6, 19, 4, 3, '875.00', '115.00', '10.000', '0.00', '125.00', '800.00', NULL, 1, 2, NULL, 1, 1, 1, NULL, '2021-01-23 18:24:12', '2021-01-23 18:24:12');
+(8, 4, 1, 1, 1, 31, 4, 20, 930.00, 60.00, 10.000, 0.00, 70.00, NULL, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(9, 4, 1, 1, 3, 34, 4, 20, -60.00, 60.00, 0.000, 0.00, 60.00, NULL, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(10, 4, 1, 1, 5, 37, 4, 20, 435.00, 60.00, 5.000, 0.00, 65.00, NULL, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(11, 4, 1, 1, 7, 40, 4, 20, 930.00, 60.00, 10.000, 0.00, 70.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(12, 5, 1, 1, 2, 43, 4, 20, 1860.00, 120.00, 20.000, 0.00, 140.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(13, 5, 1, 1, 4, 46, 4, 20, -120.00, 120.00, 0.000, 0.00, 120.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(14, 5, 1, 1, 6, 49, 4, 20, 375.00, 120.00, 5.000, 0.00, 125.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(15, 6, 1, 1, 9, 55, 4, 20, 870.00, 120.00, 10.000, 0.00, 130.00, 870.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-15 14:56:57', '2021-02-15 14:56:57'),
+(16, 7, 1, 1, 10, 64, 4, 27, 4940.00, 60.00, 0.000, 0.00, 60.00, 3000.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(17, 7, 1, 1, 11, 67, 4, 27, -120.00, 120.00, 0.000, 0.00, 120.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(18, 7, 1, 1, 12, 70, 4, 27, 380.00, 120.00, 0.000, 0.00, 120.00, 0.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(19, 8, 1, 1, 13, 73, 4, 20, 494.40, 60.00, 5.600, 0.00, 65.60, 560.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 14:00:41', '2021-02-16 14:00:41');
 
 -- --------------------------------------------------------
 
@@ -965,10 +1001,10 @@ CREATE TABLE `branch_profits` (
   `order_id` int(11) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `branch_type_id` int(11) DEFAULT NULL,
-  `commission_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `transportation_cost` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `other_cost` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `profit_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `commission_amount` decimal(20,2) DEFAULT NULL,
+  `transportation_cost` decimal(20,2) DEFAULT NULL,
+  `other_cost` decimal(20,2) DEFAULT NULL,
+  `profit_amount` decimal(20,2) DEFAULT NULL,
   `payment_status` tinyint(4) NOT NULL DEFAULT 1,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
@@ -1072,12 +1108,12 @@ CREATE TABLE `company_profits` (
   `order_id` int(11) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `branch_type_id` int(11) DEFAULT NULL,
-  `charge` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `provided_commission` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `transportation_cost` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `other_cost` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `total_cost` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `profit_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `charge` decimal(20,2) DEFAULT NULL,
+  `provided_commission` decimal(20,2) DEFAULT NULL,
+  `transportation_cost` decimal(20,2) DEFAULT NULL,
+  `other_cost` decimal(20,2) DEFAULT NULL,
+  `total_cost` decimal(20,2) DEFAULT NULL,
+  `profit_amount` decimal(20,2) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `is_verified` tinyint(4) NOT NULL DEFAULT 1,
@@ -1115,26 +1151,21 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `customer_name`, `customer_phone`, `area_id`, `district_id`, `branch_id`, `address`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Mahafuj', '01779325718', 380, 1, 1, 'Thakurgaon Sadar', 1, 1, 1, NULL, NULL, '2021-01-08 17:19:28', '2021-01-08 17:19:28'),
-(2, 'Md mahafuj', '01723019475', 43, 1, 1, 'Uttara', 1, 1, 1, NULL, NULL, '2021-01-08 17:21:36', '2021-01-08 17:21:36'),
-(3, 'Md Sohag', '01717172300', 236, 1, 1, 'Uttara', 1, 1, 1, NULL, NULL, '2021-01-08 17:26:35', '2021-01-08 17:26:35'),
-(4, 'Customer', '0171722226', 448, 33, 1, 'Sylhet biani bazar', 1, 1, 1, NULL, NULL, '2021-01-09 04:07:20', '2021-01-09 04:07:20'),
-(5, 'Md Sohag', '0171722221', 453, 43, 2, 'Sylhet biani bazar', 1, 1, 1, NULL, NULL, '2021-01-09 05:32:14', '2021-01-09 05:32:14'),
-(6, 'Mamun', '01762708331', 448, 33, 1, 'Baliadangi', 1, 1, 1, NULL, NULL, '2021-01-09 05:41:46', '2021-01-09 05:41:46'),
-(7, 'Md Sohel', '01762708332', 380, 1, 1, 'Mirpur 10', 1, 1, 1, NULL, NULL, '2021-01-09 05:42:22', '2021-01-09 05:42:22'),
-(8, 'Md Sohel', '01789254887', 380, 1, 1, 'Mirpur 10', 1, 1, 1, NULL, NULL, '2021-01-09 07:08:13', '2021-01-09 07:08:13'),
-(9, 'Receiver name', '0158875422', 2, 1, 1, 'Receiver customer address', 1, 1, 1, NULL, NULL, '2021-01-09 07:16:14', '2021-01-09 07:16:14'),
-(10, 'Mymrnshingh Customer From Ctg', '214564211', 452, 10, 3, 'Mymrnshingh Customer From Ctg', 1, 1, 1, NULL, NULL, '2021-01-10 09:46:28', '2021-01-10 09:46:28'),
-(11, 'Mymrnshingh Customer From Ctg', '215456456', 452, 10, 3, 'Mymrnshingh Customer From Ctg', 1, 1, 1, NULL, NULL, '2021-01-10 09:53:31', '2021-01-10 09:53:31'),
-(13, 'Test Mymonshingh', '5455', 452, 10, 3, 'Test Mymonshingh', 1, 1, 1, NULL, NULL, '2021-01-10 10:39:28', '2021-01-10 10:39:28'),
-(14, 'Tet For Ctg', '5453', 453, 43, 2, 'adsfsadfsd', 1, 1, 1, NULL, NULL, '2021-01-10 10:41:10', '2021-01-10 10:41:10'),
-(15, 'Ctg self customer ,order form Ctg agent', '56545', 453, 43, 2, 'Ctg self customer ,order form Ctg agent', 1, 1, 1, NULL, NULL, '2021-01-10 10:52:50', '2021-01-10 10:52:50'),
-(18, 'Ctg', '445', 453, 43, 2, 'ctgjak fds', 1, 1, 1, NULL, NULL, '2021-01-10 11:20:23', '2021-01-10 11:20:23'),
-(19, 'Mymrnshingh Test Commission', '025659854454', 452, 10, 3, 'Mymrnshingh Test Commission', 1, 1, 1, NULL, NULL, '2021-01-17 06:25:28', '2021-01-17 06:25:28'),
-(20, 'Md Moinul Islam', '01712794033', 453, 43, 2, 'Mirpur-10\r\nMirpur-10', 1, 1, 1, NULL, NULL, '2021-01-17 06:28:33', '2021-01-17 06:28:33'),
-(21, 'To Cth Merchant', '54464', 453, 43, 2, 'To Cth Merchant', 1, 1, 1, NULL, NULL, '2021-01-17 09:27:57', '2021-01-17 09:27:57'),
-(22, 'To Chattangong General Customer', '2435235', 453, 43, 2, 'To Chattangong General Customer', 1, 1, 1, NULL, NULL, '2021-01-17 09:32:55', '2021-01-17 09:32:55'),
-(23, 'paid test', '23423434', 452, 10, 3, 'adsfdsfds', 1, 1, 1, NULL, NULL, '2021-01-22 05:14:29', '2021-01-22 05:14:29');
+(17, 'Parcel 01', '01779325711', 256, 1, 1, 'mirpur 01', 1, 1, 1, NULL, NULL, '2021-02-15 05:37:10', '2021-02-15 05:37:10'),
+(18, 'Parcel 02', '01723019477', 447, 33, 6, 'Parcel 02', 1, 1, 1, NULL, NULL, '2021-02-15 05:44:00', '2021-02-15 05:44:00'),
+(19, 'Parcel 03', '019881339001', 256, 1, 1, 'parcel 03', 1, 1, 1, NULL, NULL, '2021-02-15 05:44:47', '2021-02-15 05:44:47'),
+(20, 'Parcel 04', '01779325789', 447, 33, 6, 'Parcel 04', 1, 1, 1, NULL, NULL, '2021-02-15 05:47:20', '2021-02-15 05:47:20'),
+(21, 'Parcel 05', '01988154789', 12, 1, 1, 'Parcel 05', 1, 1, 1, NULL, NULL, '2021-02-15 05:49:03', '2021-02-15 05:49:03'),
+(22, 'parcel 07', '018998658901', 447, 33, 6, 'Parcel 07', 1, 1, 1, NULL, NULL, '2021-02-15 05:53:35', '2021-02-15 05:53:35'),
+(23, 'Parcel 08', '01988139020', 256, 1, 1, 'Parcel 08', 1, 1, 1, NULL, NULL, '2021-02-15 05:55:10', '2021-02-15 05:55:10'),
+(24, 'Md Abu Taleb', '01779325718', 447, 33, 6, 'Mirpur 10', 1, 1, 1, NULL, NULL, '2021-02-15 12:24:19', '2021-02-15 12:24:19'),
+(25, 'Create Admin, destinaiton Thakurgaon', '0546784545', 447, 33, 6, 'Create Admin, destinaiton Thakurgaon', 1, 1, 1, NULL, NULL, '2021-02-15 14:47:50', '2021-02-15 14:47:50'),
+(26, 'Rahat', '01710452636', 380, 1, 1, 'Mirpur 10', 1, 1, 1, NULL, NULL, '2021-02-16 12:51:18', '2021-02-16 12:51:18'),
+(27, 'Md Ibrahim Rahamn', '01916651188', 447, 33, 6, 'Mirpur 10', 1, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 12:52:14'),
+(28, 'habi Jabi', '01976651188', 1, 1, 1, 'uttara', 1, 1, 1, NULL, NULL, '2021-02-16 13:50:54', '2021-02-16 13:50:54'),
+(29, 'Nazmul Hassan', '01889349300', 17, 1, 1, 'House# 131, PB Modern school, Prembagan, Mollartek, Dhaka', 1, 1, 1, NULL, NULL, '2021-02-17 09:21:16', '2021-02-17 09:21:16'),
+(30, 'Shayla Jamman', '01408754481', 4, 1, 1, 'Simplatree Anarkoli Building 89 Gulshan Avnew Dhaka', 1, 1, 1, NULL, NULL, '2021-02-17 09:24:49', '2021-02-17 09:24:49'),
+(31, 'Al Muin', '01745096195', 399, 1, 1, 'Torki bondor gaurnadi', 1, 1, 1, NULL, NULL, '2021-02-17 09:28:54', '2021-02-17 09:28:54');
 
 -- --------------------------------------------------------
 
@@ -1159,13 +1190,6 @@ CREATE TABLE `delivery_men` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `delivery_men`
---
-
-INSERT INTO `delivery_men` (`id`, `name`, `father_name`, `mother_name`, `father_mobile`, `email`, `mobile`, `nidnumber`, `nidcardpage`, `fathernid`, `cvfile`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'customer_phone', 'asdfasdf', 'fasfdasdf', '0171722226', 'mahafuj@gmail.com', '0171722226', 'asdfasdf', 'public/images/users/5fed3a5241570.pdf', 'public/images/users/5fed3a5241987.pdf', 'public/images/users/5fed3a5241bef.pdf', 'Sylhet biani bazar', 1, '2020-12-31 02:41:22', '2020-12-31 02:41:22');
 
 -- --------------------------------------------------------
 
@@ -1419,14 +1443,6 @@ CREATE TABLE `general_customers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `general_customers`
---
-
-INSERT INTO `general_customers` (`id`, `name`, `phone`, `email`, `password`, `branch_id`, `address`, `area_id`, `district_id`, `verified_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Mahafuj', '01723019475', NULL, NULL, 2, 'Chatogram', 453, 43, NULL, 1, 1, 1, NULL, NULL, '2021-01-08 17:38:55', '2021-01-08 17:38:55'),
-(3, 'To Chattangong General Customer', '546575454', NULL, NULL, 3, 'To Chattangong General Customer', 453, 43, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 09:32:55', '2021-01-17 09:32:55');
-
 -- --------------------------------------------------------
 
 --
@@ -1437,7 +1453,7 @@ CREATE TABLE `head_office_pay_to_branch_invoices` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `payment_invoice_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_branch_id` int(11) DEFAULT NULL,
-  `payment_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `payment_amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) NOT NULL DEFAULT 1,
   `payment_by` int(11) DEFAULT NULL,
@@ -1456,13 +1472,6 @@ CREATE TABLE `head_office_pay_to_branch_invoices` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `head_office_pay_to_branch_invoices`
---
-
-INSERT INTO `head_office_pay_to_branch_invoices` (`id`, `payment_invoice_no`, `from_branch_id`, `payment_amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `payment_at`, `payment_received_by`, `received_branch_id`, `payment_received_at`, `payment_description`, `payment_note`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(5, 'DACBD-APTB2021220106113983', 1, '885.00', NULL, 1, 1, '2021-01-22 06:14:05', 4, 2, '2021-01-23 01:29:21', NULL, NULL, NULL, 1, 1, 1, NULL, '2021-01-22 12:14:05', '2021-01-23 07:29:21');
-
 -- --------------------------------------------------------
 
 --
@@ -1475,9 +1484,10 @@ CREATE TABLE `head_office_pay_to_branch_invoice_details` (
   `receive_amount_history_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `receive_amount_type_id` int(11) DEFAULT NULL,
-  `amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `received_branch_id` int(11) DEFAULT NULL,
+  `parcel_amount_payment_status_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) DEFAULT NULL,
   `payment_by` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -1488,13 +1498,6 @@ CREATE TABLE `head_office_pay_to_branch_invoice_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `head_office_pay_to_branch_invoice_details`
---
-
-INSERT INTO `head_office_pay_to_branch_invoice_details` (`id`, `head_office_pay_to_branch_invoice_id`, `receive_amount_history_id`, `order_id`, `receive_amount_type_id`, `amount`, `payment_method_id`, `received_branch_id`, `payment_status_id`, `payment_by`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 5, 19, 6, 4, '885.00', NULL, 2, NULL, 1, 1, 1, 1, 1, NULL, '2021-01-22 12:14:05', '2021-01-22 12:14:05');
 
 -- --------------------------------------------------------
 
@@ -1514,6 +1517,33 @@ CREATE TABLE `hub_detail_informations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `instant_all_charge_received_statuses`
+--
+
+CREATE TABLE `instant_all_charge_received_statuses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `instant_all_charge_received_statuses`
+--
+
+INSERT INTO `instant_all_charge_received_statuses` (`id`, `name`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'Service Charge', 1, 1, 1, NULL, NULL, NULL, NULL),
+(2, 'Service Charge & COD Charge', 1, 1, 1, NULL, NULL, NULL, NULL),
+(3, 'COD Charge', 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1542,12 +1572,15 @@ CREATE TABLE `manpower_assign_to_areas` (
 --
 
 INSERT INTO `manpower_assign_to_areas` (`id`, `area_id`, `district_id`, `manpower_id`, `manpower_type_id`, `branch_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 453, 43, 4, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-08 17:05:58', '2021-01-08 17:05:58'),
-(2, 452, 10, 5, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-08 17:07:31', '2021-01-08 17:07:31'),
-(3, 380, 1, 6, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-08 17:10:22', '2021-01-08 17:10:22'),
-(4, 1, 1, 7, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-08 17:11:56', '2021-01-08 17:11:56'),
-(5, 5, 1, 8, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-08 17:12:45', '2021-01-08 17:12:45'),
-(6, 10, 1, 9, 3, 1, 1, 1, 1, NULL, NULL, '2021-01-09 04:46:13', '2021-01-09 04:46:13');
+(7, 256, 1, 18, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-12 03:00:32', '2021-02-12 03:00:32'),
+(8, 8, 1, 18, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-12 03:00:54', '2021-02-12 03:00:54'),
+(9, 12, 1, 18, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-12 03:01:10', '2021-02-12 03:01:10'),
+(10, 43, 1, 21, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:16:40', '2021-02-15 05:16:40'),
+(11, 256, 1, 23, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:22:32', '2021-02-15 05:22:32'),
+(12, 8, 1, 23, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:23:14', '2021-02-15 05:23:14'),
+(13, 12, 1, 23, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:23:27', '2021-02-15 05:23:27'),
+(14, 380, 1, 23, 3, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:23:42', '2021-02-15 05:23:42'),
+(15, 256, 1, 24, 3, 6, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:20', '2021-02-15 12:17:20');
 
 -- --------------------------------------------------------
 
@@ -1581,12 +1614,12 @@ CREATE TABLE `manpower_commission_settings` (
 --
 
 INSERT INTO `manpower_commission_settings` (`id`, `manpower_id`, `manpower_type_id`, `branch_id`, `branch_type_id`, `pickup_commission_type_id`, `pickup_commission_amount`, `delivery_commission_type_id`, `delivery_commission_amount`, `return_commission_type_id`, `return_commission_amount_amount`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 4, 3, 2, 4, 1, '0.00', 1, '0.00', 1, '0.00', 1, 1, 1, NULL, NULL, '2021-01-08 17:05:41', '2021-01-08 17:05:41'),
-(2, 5, 3, 3, 4, 1, '0.00', 1, '0.00', 1, '0.00', 1, 1, 1, NULL, NULL, '2021-01-08 17:07:18', '2021-01-08 17:07:18'),
-(3, 6, 3, 1, 1, 1, '10.00', 1, '40.00', 1, '40.00', 1, 1, 1, NULL, NULL, '2021-01-08 17:10:22', '2021-01-08 17:10:50'),
-(4, 7, 3, 1, 1, 1, '10.00', 1, '40.00', 1, '0.00', 1, 1, 1, NULL, NULL, '2021-01-08 17:11:56', '2021-01-08 17:11:56'),
-(5, 8, 3, 1, 1, 1, '20.00', 1, '40.00', 1, '20.00', 1, 1, 1, NULL, NULL, '2021-01-08 17:12:45', '2021-01-08 17:12:45'),
-(6, 9, 3, 1, 1, 1, '10.00', 1, '40.00', 1, '0.00', 1, 1, 1, NULL, NULL, '2021-01-09 04:46:13', '2021-01-09 04:46:13');
+(11, 18, 3, 1, 1, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-12 03:00:32', '2021-02-12 03:00:32'),
+(12, 21, 3, 1, 1, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-15 05:16:40', '2021-02-15 05:17:08'),
+(13, 22, 3, 6, 4, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-15 05:20:17', '2021-02-15 05:20:17'),
+(14, 23, 3, 1, 1, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-15 05:22:32', '2021-02-15 05:22:32'),
+(15, 24, 3, 6, 4, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:20', '2021-02-15 12:17:20'),
+(16, 25, 3, 7, 4, 1, 0.00, 1, 0.00, 1, 0.00, 1, 1, 1, NULL, NULL, '2021-02-16 12:21:48', '2021-02-16 12:21:48');
 
 -- --------------------------------------------------------
 
@@ -1637,14 +1670,34 @@ CREATE TABLE `manpower_income_histories` (
 --
 
 INSERT INTO `manpower_income_histories` (`id`, `order_id`, `manpower_id`, `order_processing_type_id`, `received_by`, `amount`, `received_from`, `branch_id`, `payment_status_id`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(10, 7, 7, 2, NULL, '0.00', NULL, 2, NULL, 4, 1, 1, 1, NULL, '2021-01-22 06:22:24', '2021-01-22 06:22:24'),
-(11, 7, 7, 1, NULL, '0.00', NULL, 2, NULL, 4, 1, 1, 1, NULL, '2021-01-22 06:22:24', '2021-01-22 06:22:24'),
-(12, 8, 6, 2, NULL, '50.00', NULL, 1, NULL, 1, 1, 1, 1, NULL, '2021-01-22 09:00:05', '2021-01-22 09:00:05'),
-(13, 8, 7, 1, NULL, '0.00', NULL, 1, NULL, 1, 1, 1, 1, NULL, '2021-01-22 09:00:05', '2021-01-22 09:00:05'),
-(14, 6, 8, 2, NULL, '0.00', NULL, 3, NULL, 5, 1, 1, 1, NULL, '2021-01-22 09:11:02', '2021-01-22 09:11:02'),
-(15, 6, 7, 1, NULL, '0.00', NULL, 3, NULL, 5, 1, 1, 1, NULL, '2021-01-22 09:11:02', '2021-01-22 09:11:02'),
-(16, 9, 6, 2, NULL, '24.40', NULL, 1, NULL, 1, 1, 1, 1, NULL, '2021-01-22 17:10:26', '2021-01-22 17:10:26'),
-(17, 9, 9, 1, NULL, '6.10', NULL, 1, NULL, 1, 1, 1, 1, NULL, '2021-01-22 17:10:26', '2021-01-22 17:10:26');
+(55, 1, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(56, 1, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(57, 3, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(58, 3, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(59, 5, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(60, 5, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(61, 7, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:22', '2021-02-15 12:12:22'),
+(62, 7, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:12:22', '2021-02-15 12:12:22'),
+(63, 2, 24, 2, NULL, 0.00, NULL, 6, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(64, 2, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(65, 4, 24, 2, NULL, 0.00, NULL, 6, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(66, 4, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(67, 6, 24, 2, NULL, 0.00, NULL, 6, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(68, 6, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:19:33'),
+(69, 8, 24, 2, NULL, 0.00, NULL, 6, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 12:34:10', '2021-02-15 12:34:10'),
+(70, 9, 24, 2, NULL, 0.00, NULL, 6, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 14:52:51', '2021-02-15 14:52:51'),
+(71, 9, 23, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-15 14:52:51', '2021-02-15 14:52:51'),
+(72, 11, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(73, 11, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(74, 12, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(75, 12, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(76, 10, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(77, 10, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(78, 11, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:29:43'),
+(79, 11, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:29:43'),
+(80, 12, 23, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:29:43'),
+(81, 12, 18, 1, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:29:43'),
+(82, 13, 21, 2, NULL, 0.00, NULL, 1, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:59:53', '2021-02-16 13:59:53');
 
 -- --------------------------------------------------------
 
@@ -1709,7 +1762,11 @@ CREATE TABLE `merchants` (
 --
 
 INSERT INTO `merchants` (`id`, `name`, `company_name`, `email`, `mobile`, `password`, `office_address`, `pickupaddress`, `division_id`, `district_id`, `area_id`, `payment_type`, `mbankingname`, `mbankingnumber`, `bankname`, `bankbrunch`, `accountname`, `accountnumber`, `account_type`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'customer_phone', '120', 'mahafuj@gmail.com', '0171722226', 'afsdfas', 'Sylhet biani bazar', 'Sylhet biani bazar', '3', '1', '4', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2020-12-31 02:36:44', '2020-12-31 02:36:44');
+(2, 'lablu', 'rongbd', 'rongbd7@gmail.com', '01704977777', '123456', 'Multiplan Red Crescent City,(Padma Vaban)\r\n1216 Dhaka, Dhaka Division, Bangladesh', 'Multiplan Red Crescent City,(Padma Vaban)\r\n1216 Dhaka, Dhaka Division, Bangladesh', '3', '1', '16', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2021-02-13 04:41:49', '2021-02-13 04:41:49'),
+(3, 'Bappi Saha', 'salim\'s company', 'salimhosen19@gmail.com', '45645646464', 'jannatul', '33/4, Shyamoli, Dhaka-1207', '33/4, Shyamoli, Dhaka-1207', '3', '1', '19', '1', 'salim', 'hosen', NULL, NULL, NULL, NULL, NULL, 1, '2021-02-15 07:00:26', '2021-02-15 07:00:26'),
+(4, 'Salim Hosen', 'salim\'s company', 'salimhosen19@gmail.com', '01762473884', 'jannatul', '33/4, Shyamoli, Dhaka-1207', '33/4, Shyamoli, Dhaka-1207', '3', '1', '1', '1', 'salim', 'hosen', NULL, NULL, NULL, NULL, NULL, 1, '2021-02-15 07:01:46', '2021-02-15 07:01:46'),
+(5, 'lablu', 'rongbd', 'lablud@dakbd.com', '01704977777', '123456789', 'Multiplan Red Crescent City,(Padma Vaban)\r\n1216 Dhaka, Dhaka Division, Bangladesh', 'Multiplan Red Crescent City,(Padma Vaban)\r\n1216 Dhaka, Dhaka Division, Bangladesh', '3', '1', '1', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2021-02-16 11:09:53', '2021-02-16 11:09:53'),
+(6, 'Rahat', 'Econobd', 'econobd@gmail.com', '01710452636', '123456789', 'Mirpur 1', 'Mirpur 1', '3', '1', '256', '1', 'Bkash', '01779325718', NULL, NULL, NULL, NULL, NULL, 1, '2021-02-16 11:26:20', '2021-02-16 11:26:20');
 
 -- --------------------------------------------------------
 
@@ -1763,10 +1820,14 @@ CREATE TABLE `merchant_settings` (
 --
 
 INSERT INTO `merchant_settings` (`id`, `merchant_id`, `company_name`, `company_phone`, `delivery_charge_activate`, `delivery_charge_same_city`, `delivery_charge_out_of_city`, `delivery_charge_other_city`, `return_charge_activate`, `return_charge_same_city`, `return_charge_out_of_city`, `return_charge_other_city`, `cod_charge_activate`, `cod_charge_type`, `cod_charge_same_city`, `cod_charge_out_of_city`, `cod_charge_other_city`, `others_charge`, `rca_order_return_parcent`, `delivery_otp_activate`, `prepaid_delivery_otp`, `cash_on_delivery_otp`, `payment_receive_confirmation`, `payment_method_id`, `bank_account_id`, `fb_fan_page`, `website`, `company_logo`, `address`, `area_id`, `city_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `branch_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Believe Store', '01755560204', 1, '5.00', '10.00', '10.00', 1, '0.00', '0.00', '0.00', 1, 'percent', '1.00', '1.00', '1.00', '0.00', '0.00', 1, 0, 0, 1, 1, 1, NULL, 'www.believestore.com', NULL, 'Mirpur', 10, 1, 1, 1, 1, NULL, 1, '2021-01-08 16:52:58', '2021-01-09 04:58:40'),
-(2, 4, NULL, NULL, 0, '0.00', '0.00', '0.00', 0, '0.00', '0.00', '0.00', 1, 'percent', '1.00', '1.00', '1.00', '0.00', '0.00', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-08 17:05:41', '2021-01-08 17:05:41'),
-(3, 5, NULL, NULL, 0, '0.00', '0.00', '0.00', 0, '0.00', '0.00', '0.00', 1, 'percent', '1.00', '1.00', '1.00', '0.00', '0.00', 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-08 17:07:18', '2021-01-08 17:07:18'),
-(4, 10, NULL, NULL, 1, '0.00', '0.00', '0.00', 1, '0.00', '0.00', '0.00', 1, 'percent', '1.00', '1.00', '1.00', '0.00', '0.00', 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, NULL, 453, 43, 1, 1, 1, NULL, 1, '2021-01-09 05:03:49', '2021-01-09 05:36:22');
+(10, 17, NULL, NULL, 1, 0.00, 0.00, 0.00, 0, 0.00, 0.00, 0.00, 1, 'percent', 1.00, 1.00, 2.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, NULL, 256, 1, 1, 1, 1, NULL, 1, '2021-02-12 02:37:51', '2021-02-12 02:40:00'),
+(11, 19, NULL, NULL, 1, 0.00, 0.00, 0.00, 1, 0.00, 0.00, 0.00, 1, 'percent', 2.00, 0.00, 0.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, NULL, 16, 1, 1, 1, 1, NULL, 1, '2021-02-13 04:43:39', '2021-02-13 04:45:30'),
+(12, 20, 'Believe Store', '01988139001', 1, 0.00, 0.00, 0.00, 1, 0.00, 0.00, 0.00, 1, 'percent', 1.00, 1.00, 1.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, 'Uttara', 43, 1, 1, 1, 1, NULL, 1, '2021-02-15 05:03:19', '2021-02-15 05:33:20'),
+(13, 22, NULL, NULL, 0, 0.00, 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0, 'percent', 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 05:20:17', '2021-02-15 05:20:17'),
+(14, 25, NULL, NULL, 0, 0.00, 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0, 'percent', 0.00, 0.00, 0.00, 0.00, 0.00, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:21:48', '2021-02-16 12:21:48'),
+(15, 26, 'Econobd', '01710452636', 1, 0.00, 0.00, 0.00, 1, 0.00, 0.00, 0.00, 1, 'percent', 2.00, 2.00, 2.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, 'mirpur 1', 256, 1, 1, 1, 1, NULL, 1, '2021-02-16 12:27:46', '2021-02-16 12:30:39'),
+(16, 27, 'SAM Mirpur Home', '01842013992', 1, 0.00, 0.00, -10.00, 1, 0.00, 0.00, 0.00, 1, 'percent', 2.00, 0.00, 2.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, 'mirpur', 256, 1, 1, 1, 1, NULL, 1, '2021-02-16 12:40:37', '2021-02-16 13:44:39'),
+(17, 31, 'rongbd', NULL, 1, 0.00, 0.00, 0.00, 1, 0.00, 0.00, 0.00, 1, 'percent', 0.00, 1.50, 2.00, 0.00, 0.00, 1, 0, 0, 1, 1, 1, NULL, NULL, NULL, NULL, 16, 1, 1, 1, 1, NULL, 1, '2021-02-17 05:43:33', '2021-02-17 06:33:31');
 
 -- --------------------------------------------------------
 
@@ -1801,10 +1862,12 @@ CREATE TABLE `merchant_shops` (
 --
 
 INSERT INTO `merchant_shops` (`id`, `merchant_id`, `activate_status`, `shop_name`, `shop_address`, `pickup_address`, `area_id`, `city_id`, `pickup_area_id`, `pickup_city_id`, `pickup_phone`, `shop_email`, `branch_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 'Believe store', 'house 4,road 9/1,mirpur 12E dhaka', 'house 4,road 9/1,mirpur 12E dhaka', 10, 1, 10, 1, '01755560225', 'believestorebd@gmail.com', 1, 1, 1, 1, NULL, '2021-01-08 16:54:00', '2021-01-08 16:54:00'),
-(2, 3, 1, 'Fab&Hub', 'Mirpur 12E House No 10', 'Mirpur 12E House No 10', 380, 1, 380, 1, '01755560204', 'fabhub@gmail.com', 1, 1, 1, 1, NULL, '2021-01-08 16:55:05', '2021-01-08 16:55:05'),
-(3, 3, 1, 'Dreambaz', 'Mirpur Dohs', 'Mirpur Dohs', 12, 1, 12, 1, '01723019478', 'dreambaz@gmail.com', 1, 1, 1, 1, NULL, '2021-01-09 04:51:42', '2021-01-09 04:51:42'),
-(4, 10, 1, 'T-shirt Shop', 'House 01, Road -05, Chattagram', 'House 01, Road -05, Chattagram', 453, 43, 453, 43, '01988139009', 'tshirtshop@gmail.com', 1, 1, 1, 1, NULL, '2021-01-09 05:13:38', '2021-01-09 05:13:38');
+(6, 17, 1, 'RongBD', 'Mirpur 1', 'mirpur  1', 256, 1, 256, 1, '01711123858', 'alaminmd55556@gmail.com', 1, 1, 1, 1, NULL, '2021-02-12 02:55:49', '2021-02-12 02:55:49'),
+(7, 19, 1, 'Rong BD', 'Mirpur 1', 'Mirpur 1', 256, 1, 256, 1, '01704977777', 'rangbd@gmail.com', 1, 1, 1, 1, NULL, '2021-02-13 04:55:06', '2021-02-13 04:55:06'),
+(8, 19, 1, 'hut Bazar', 'Dhanmondi', 'dhanmondi', 1, 1, 1, 1, '01988139009', 'hatbazar@gmail.com', 1, 1, 1, 1, NULL, '2021-02-13 04:59:03', '2021-02-13 04:59:03'),
+(9, 20, 1, 'Believe Store', 'Uttaraq', 'uttara', 43, 1, 43, 1, '01988139002', 'believestore@gmail.com', 1, 1, 1, 1, NULL, '2021-02-15 05:10:20', '2021-02-15 05:10:20'),
+(10, 27, 1, 'SKM Mirpur Home', '60 fit, Barek Molla mor, Dhaka', '60 fit, Barek Molla mor, Dhaka', 256, 1, 256, 1, '01842013992', NULL, 1, 1, 1, 1, NULL, '2021-02-16 12:48:57', '2021-02-16 12:48:57'),
+(11, 31, 1, 'rondbd', 'Multiplan Red Crescent City,(Padma Vaban)', '1216 Dhaka, Dhaka Division, Bangladesh', 16, 1, 16, 1, '01704977777', NULL, 1, 1, 1, 1, NULL, '2021-02-17 06:29:55', '2021-02-17 06:29:55');
 
 -- --------------------------------------------------------
 
@@ -1908,7 +1971,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (83, '2021_01_18_142458_create_head_office_pay_to_branch_invoices_table', 10),
 (84, '2021_01_18_142515_create_head_office_pay_to_branch_invoice_details_table', 10),
 (85, '2021_01_18_142555_create_branch_pay_to_merchant_client_invoices_table', 11),
-(86, '2021_01_18_142612_create_branch_pay_to_merchant_client_invoice_details_table', 11);
+(86, '2021_01_18_142612_create_branch_pay_to_merchant_client_invoice_details_table', 11),
+(87, '2021_01_27_181005_create_order_pickup_delivery_canceling_reasons_table', 12),
+(88, '2021_01_27_181050_create_order_pickup_delivery_holding_reasons_table', 12),
+(89, '2021_01_27_183406_create_order_pickup_delivery_reschedules_table', 12),
+(90, '2021_01_27_214746_create_order_pickup_delivery_cancels_table', 13),
+(91, '2021_01_31_110750_create_instant_all_charge_received_statuses_table', 14),
+(92, '2021_02_02_211958_create_pay_to_branch_commission_invoices_table', 15),
+(93, '2021_02_02_212021_create_pay_to_branch_commission_invoice_details_table', 15);
 
 -- --------------------------------------------------------
 
@@ -1930,7 +2000,7 @@ CREATE TABLE `orders` (
   `weight_id` int(11) DEFAULT NULL,
   `collect_amount` decimal(20,2) DEFAULT NULL,
   `delivery_charge_type_id` int(11) NOT NULL DEFAULT 2,
-  `parcel_amount_payment_type_id` int(11) NOT NULL DEFAULT 1,
+  `parcel_amount_payment_type_id` int(11) NOT NULL DEFAULT 2,
   `service_charge_setting_id` int(11) DEFAULT NULL,
   `service_charge` decimal(20,2) DEFAULT NULL,
   `cod_charge` decimal(20,2) DEFAULT NULL,
@@ -1970,10 +2040,22 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `invoice_no`, `merchant_invoice`, `parcel_owner_type_id`, `merchant_id`, `general_customer_id`, `merchant_shop_id`, `creating_branch_id`, `creating_branch_type_id`, `creating_area_id`, `weight_id`, `collect_amount`, `delivery_charge_type_id`, `parcel_amount_payment_type_id`, `service_charge_setting_id`, `service_charge`, `cod_charge`, `others_charge`, `service_cod_payment_status_id`, `service_delivery_payment_status_id`, `parcel_amount_payment_status_id`, `product_amount`, `client_merchant_payable_amount`, `instant_all_charge_received_status_id`, `net_product_amount`, `net_amount`, `parcel_category_id`, `service_type_id`, `parcel_type_id`, `customer_id`, `destination_branch_id`, `destination_city_id`, `destination_area_id`, `order_status_id`, `final_success_cancel_status_id`, `order_status_changing_current_branch_id`, `office_collect_amount_from_delivery_man`, `partial`, `parcel_quantity`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(6, '202100001', '54554df', 1, 3, NULL, 1, 2, 4, 453, 1, '1000.00', 1, 1, 15, '115.00', '10.00', '0.00', 3, 3, 9, '800.00', '885.00', NULL, NULL, NULL, 1, 1, 1, 20, 3, 10, 452, 24, 1, 3, 1, 0, '1.00', 1, 1, 1, NULL, NULL, '2021-01-22 06:09:03', '2021-01-23 18:24:12'),
-(7, '202100002', NULL, 1, 3, NULL, 2, 2, 4, 453, 1, '1000.00', 1, 1, 15, '115.00', '10.00', '0.00', 3, 3, 3, '800.00', '885.00', NULL, NULL, NULL, 1, 1, 1, 20, 2, 43, 453, 18, 1, 2, 1, 0, '1.00', 1, 1, 1, NULL, NULL, '2021-01-22 06:10:33', '2021-01-22 06:49:32'),
-(8, '202100003', NULL, 1, 3, NULL, 4, 2, 4, 453, 1, '500.00', 1, 1, 15, '120.00', '5.00', '0.00', NULL, NULL, 3, '400.00', '375.00', NULL, NULL, NULL, 1, 1, 1, 20, 1, 1, 2, 18, 1, 1, 1, 0, '1.00', 1, 1, 1, NULL, NULL, '2021-01-22 06:11:48', '2021-01-22 09:00:05'),
-(9, '202100004', '54554df', 1, 3, NULL, 1, 1, 1, 1, 1, '600.00', 1, 1, 1, '55.00', '6.00', '0.00', NULL, NULL, 9, '400.00', '600.00', NULL, NULL, NULL, 1, 1, 1, 20, 1, 1, 2, 24, 1, 1, 1, 0, '1.00', 1, 1, 1, NULL, NULL, '2021-01-22 17:03:25', '2021-01-23 18:02:04');
+(1, '202100001', '100', 1, 20, NULL, 9, 1, 1, 1, 1, 1000.00, 1, 2, 1, 60.00, 10.00, 0.00, 6, 6, 9, NULL, 930.00, NULL, NULL, NULL, 1, 1, 1, 17, 1, 1, 256, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:37:10', '2021-02-15 12:14:33'),
+(2, '202100002', '101', 1, 20, NULL, 9, 1, 1, 1, 1, 2000.00, 1, 2, 15, 120.00, 20.00, 0.00, 3, 3, 9, 0.00, 1860.00, NULL, NULL, NULL, 1, 1, 1, 18, 6, 4, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:44:01', '2021-02-15 14:46:18'),
+(3, '202100003', '103', 1, 20, NULL, 9, 1, 1, 1, 1, 0.00, 1, 2, 1, 60.00, 0.00, 0.00, 6, 6, 9, NULL, -60.00, NULL, NULL, NULL, 1, 1, 1, 19, 1, 1, 256, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:44:47', '2021-02-15 12:14:33'),
+(4, '202100004', '121', 1, 20, NULL, 9, 1, 1, 1, 1, 0.00, 1, 2, 15, 120.00, 0.00, 0.00, 3, 3, 9, 0.00, -120.00, NULL, NULL, NULL, 1, 1, 1, 20, 6, 4, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:47:20', '2021-02-15 14:46:18'),
+(5, '202100005', '105', 1, 20, NULL, 9, 1, 1, 1, 1, 500.00, 1, 2, 1, 60.00, 5.00, 0.00, 6, 6, 9, NULL, 435.00, NULL, NULL, NULL, 1, 1, 1, 21, 1, 1, 12, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:49:03', '2021-02-15 12:14:33'),
+(6, '202100006', '121', 1, 20, NULL, 9, 1, 1, 1, 1, 500.00, 1, 2, 15, 120.00, 5.00, 0.00, 3, 3, 9, 0.00, 375.00, NULL, NULL, NULL, 1, 1, 1, 22, 6, 4, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:53:35', '2021-02-15 14:46:18'),
+(7, '202100007', '108', 1, 20, NULL, 9, 1, 1, 1, 1, 1000.00, 1, 2, 1, 60.00, 10.00, 0.00, 6, 6, 9, 0.00, 930.00, NULL, NULL, NULL, 1, 1, 1, 23, 1, 1, 256, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 05:55:10', '2021-02-15 12:14:33'),
+(8, '202100008', '121', 1, 20, NULL, 9, 1, 1, 1, 1, 1000.00, 1, 2, 15, 120.00, 10.00, 0.00, 3, 3, 5, 0.00, 870.00, NULL, NULL, NULL, 1, 1, 1, 24, 6, 33, 447, 18, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 12:24:19', '2021-02-15 12:36:54'),
+(9, '202100009', 'Create Admin, destinaiton Thakurgaon', 1, 20, NULL, 9, 1, 1, 1, 1, 1000.00, 1, 2, 15, 120.00, 10.00, 0.00, 3, 3, 9, 870.00, 870.00, NULL, NULL, NULL, 1, 1, 1, 25, 6, 33, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-15 14:47:50', '2021-02-15 14:56:57'),
+(10, '202100010', NULL, 1, 27, NULL, 10, 1, 1, 1, 1, 5000.00, 1, 2, 1, 60.00, 0.00, 0.00, 6, 6, 9, 3000.00, 4940.00, NULL, NULL, NULL, 1, 1, 1, 26, 1, 1, 380, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-16 12:51:18', '2021-02-16 13:39:56'),
+(11, '202100011', '121', 1, 27, NULL, 10, 1, 1, 1, 1, 0.00, 1, 2, 15, 120.00, 0.00, 0.00, 4, 4, 9, 0.00, -120.00, NULL, NULL, NULL, 1, 1, 1, 27, 6, 4, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 13:41:16'),
+(12, '202100012', NULL, 1, 27, NULL, 10, 1, 1, 1, 1, 500.00, 1, 2, 15, 120.00, 0.00, 0.00, 4, 4, 9, 0.00, 380.00, NULL, NULL, NULL, 1, 1, 1, 24, 6, 4, 447, 24, 1, 6, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-16 12:53:49', '2021-02-16 13:41:16'),
+(13, '202100013', NULL, 1, 20, NULL, 9, 1, 1, 1, 2, 560.00, 1, 2, 2, 60.00, 5.60, 0.00, 6, 6, 9, 560.00, 494.40, NULL, NULL, NULL, 1, 1, 1, 28, 1, 1, 1, 24, 1, 1, 1, 0, 1.00, 5, 1, 1, NULL, NULL, '2021-02-16 13:50:54', '2021-02-16 14:00:41'),
+(14, '202100014', NULL, 1, 31, NULL, 11, 1, 1, 1, 1, 0.00, 1, 2, 1, 60.00, 0.00, 0.00, NULL, NULL, NULL, 0.00, -60.00, NULL, NULL, NULL, 1, 1, 1, 29, 1, 1, 17, 1, NULL, 1, NULL, 0, 1.00, 1, 1, 1, NULL, NULL, '2021-02-17 09:21:16', '2021-02-17 09:21:16'),
+(15, '202100015', '123b123', 1, 31, NULL, 11, 1, 1, 1, 1, 670.00, 1, 2, 1, 60.00, 0.00, 0.00, NULL, NULL, NULL, 610.00, 610.00, NULL, NULL, NULL, 1, 1, 1, 30, 1, 1, 4, 1, NULL, 1, NULL, 0, 1.00, 1, 1, 1, NULL, NULL, '2021-02-17 09:24:49', '2021-02-17 09:24:49'),
+(16, '202100016', NULL, 1, 31, NULL, 11, 1, 1, 1, 1, 1250.00, 1, 2, 15, 120.00, 0.00, 0.00, NULL, NULL, NULL, NULL, 1130.00, NULL, NULL, NULL, 1, 1, 1, 31, 1, 1, 399, 1, NULL, 1, NULL, 0, 1.00, 1, 1, 1, NULL, NULL, '2021-02-17 09:28:54', '2021-02-17 09:28:54');
 
 -- --------------------------------------------------------
 
@@ -1983,7 +2065,7 @@ INSERT INTO `orders` (`id`, `invoice_no`, `merchant_invoice`, `parcel_owner_type
 
 CREATE TABLE `order_assigning_statuses` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
@@ -2009,7 +2091,8 @@ INSERT INTO `order_assigning_statuses` (`id`, `name`, `branch_id`, `status`, `is
 (8, 'Cancel by Customer', 1, 1, 1, 1, NULL, NULL, NULL, NULL),
 (9, 'Pickup Successfully', 1, 1, 1, 1, NULL, NULL, NULL, NULL),
 (10, 'Office Receive Hold Parcel ', 1, 1, 1, 1, NULL, NULL, NULL, NULL),
-(11, 'Office Receive Cancel Parcel', 1, 1, 1, 1, NULL, NULL, NULL, NULL);
+(11, 'Office Receive Cancel Parcel', 1, 1, 1, 1, NULL, NULL, NULL, NULL),
+(12, 'Pick Parcel From Office Successfully', 1, 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2040,15 +2123,52 @@ CREATE TABLE `order_assigns` (
 --
 
 INSERT INTO `order_assigns` (`id`, `manpower_id`, `order_id`, `order_processing_type_id`, `assigner_id`, `order_assigning_status_id`, `collection_status`, `branch_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(8, 7, 8, 1, 4, 9, 0, 2, 1, 1, 1, NULL, NULL, '2021-01-22 06:14:15', '2021-01-22 06:16:27'),
-(9, 7, 7, 1, 4, 9, 0, 2, 1, 1, 1, NULL, NULL, '2021-01-22 06:14:15', '2021-01-22 06:16:27'),
-(10, 7, 6, 1, 4, 9, 0, 2, 1, 1, 1, NULL, NULL, '2021-01-22 06:14:15', '2021-01-22 06:16:27'),
-(11, 7, 7, 2, 4, 7, 1, 2, 1, 1, 1, NULL, NULL, '2021-01-22 06:19:31', '2021-01-22 06:22:24'),
-(12, 6, 8, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-01-22 08:59:14', '2021-01-22 09:00:05'),
-(13, 8, 6, 2, 5, 7, 1, 3, 1, 1, 1, NULL, NULL, '2021-01-22 09:09:49', '2021-01-22 09:11:02'),
-(14, 9, 9, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-01-22 17:03:59', '2021-01-22 17:04:13'),
-(15, 6, 9, 2, 1, 10, 0, 1, 1, 1, 1, NULL, NULL, '2021-01-22 17:04:39', '2021-01-22 17:06:30'),
-(16, 6, 9, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-01-22 17:06:57', '2021-01-22 17:10:26');
+(107, 18, 1, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:37:10', '2021-02-15 06:06:51'),
+(108, 18, 1, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:37:10', '2021-02-15 06:20:23'),
+(109, 18, 2, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:44:01', '2021-02-15 06:06:51'),
+(110, 18, 3, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:44:47', '2021-02-15 06:06:51'),
+(111, 18, 3, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:44:47', '2021-02-15 06:20:23'),
+(112, 18, 4, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:47:20', '2021-02-15 06:06:51'),
+(113, 18, 5, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:49:03', '2021-02-15 06:06:51'),
+(114, 18, 5, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:49:03', '2021-02-15 06:20:23'),
+(115, 18, 6, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:53:35', '2021-02-15 06:06:51'),
+(116, 18, 7, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:55:10', '2021-02-15 06:06:51'),
+(117, 18, 7, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 05:55:10', '2021-02-15 06:20:23'),
+(118, 21, 1, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(119, 21, 2, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(120, 21, 3, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(121, 21, 4, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(122, 21, 5, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(123, 21, 6, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(124, 21, 7, 1, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(125, 23, 1, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 12:12:21'),
+(126, 23, 3, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 12:12:21'),
+(127, 23, 5, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 12:12:21'),
+(128, 23, 7, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 12:12:21'),
+(129, 24, 2, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:19:33'),
+(130, 24, 4, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:19:33'),
+(131, 24, 6, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:19:33'),
+(132, 24, 8, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-15 12:31:32', '2021-02-15 12:34:10'),
+(133, 23, 9, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-15 14:48:52', '2021-02-15 14:49:05'),
+(134, 24, 9, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-15 14:51:30', '2021-02-15 14:52:51'),
+(135, 18, 10, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:51:18', '2021-02-16 12:56:27'),
+(136, 23, 10, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:51:18', '2021-02-16 12:58:15'),
+(137, 18, 11, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 12:56:27'),
+(138, 24, 11, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 12:58:15'),
+(139, 18, 12, 1, 1, 9, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:53:49', '2021-02-16 12:56:27'),
+(140, 24, 12, 2, 1, 3, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:53:49', '2021-02-16 12:58:15'),
+(141, 23, 11, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 13:07:41'),
+(142, 23, 12, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 13:07:41'),
+(143, 23, 10, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 13:07:41'),
+(144, 24, 11, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-16 13:17:03', '2021-02-16 13:29:43'),
+(145, 24, 12, 2, 22, 7, 1, 6, 1, 1, 1, NULL, NULL, '2021-02-16 13:19:51', '2021-02-16 13:29:43'),
+(146, 21, 13, 2, 1, 7, 1, 1, 1, 1, 1, NULL, NULL, '2021-02-16 13:53:19', '2021-02-16 13:59:53'),
+(147, 18, 14, 1, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:21:16', '2021-02-17 09:21:16'),
+(148, 18, 14, 2, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:21:16', '2021-02-17 09:21:16'),
+(149, 18, 15, 1, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:24:49', '2021-02-17 09:24:49'),
+(150, 18, 15, 2, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:24:49', '2021-02-17 09:24:49'),
+(151, 18, 16, 1, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:28:54', '2021-02-17 09:28:54'),
+(152, 18, 16, 2, NULL, 1, 0, 1, 1, 1, 1, NULL, NULL, '2021-02-17 09:28:54', '2021-02-17 09:28:54');
 
 -- --------------------------------------------------------
 
@@ -2075,19 +2195,8 @@ CREATE TABLE `order_descriptions` (
 --
 
 INSERT INTO `order_descriptions` (`id`, `order_id`, `branch_id`, `parcel_description`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 'To Cth Merchant', 1, 1, 1, NULL, NULL, '2021-01-17 09:27:57', '2021-01-17 09:27:57'),
-(2, 2, 3, 'To Chattangong General Customer', 1, 1, 1, NULL, NULL, '2021-01-17 09:32:56', '2021-01-17 09:32:56'),
-(3, 3, 1, 'sadfdsfds', 1, 1, 1, NULL, NULL, '2021-01-17 10:09:25', '2021-01-17 10:09:25'),
-(4, 4, 1, 'dsfadasfds', 1, 1, 1, NULL, NULL, '2021-01-17 10:12:08', '2021-01-17 10:12:08'),
-(5, 5, 1, 'dfafsd', 1, 1, 1, NULL, NULL, '2021-01-17 16:29:37', '2021-01-17 16:29:37'),
-(6, 6, 2, 'dsfsdfsd', 1, 1, 1, NULL, NULL, '2021-01-18 06:46:01', '2021-01-18 06:46:01'),
-(7, 7, 2, 'dafdfsdfd', 1, 1, 1, NULL, NULL, '2021-01-18 07:02:10', '2021-01-18 07:02:10'),
-(8, 1, 2, 'sdasdsadsa', 1, 1, 1, NULL, NULL, '2021-01-22 05:13:20', '2021-01-22 05:13:20'),
-(9, 3, 2, 'asdfasdafdsd', 1, 1, 1, NULL, NULL, '2021-01-22 05:15:22', '2021-01-22 05:15:22'),
-(10, 4, 1, 'fsdfsd', 1, 1, 1, NULL, NULL, '2021-01-22 05:48:19', '2021-01-22 05:48:19'),
-(11, 5, 1, 'fdsds', 1, 1, 1, NULL, NULL, '2021-01-22 05:49:50', '2021-01-22 05:49:50'),
-(12, 6, 2, 'dgfsdgsdg', 1, 1, 1, NULL, NULL, '2021-01-22 06:09:03', '2021-01-22 06:09:03'),
-(13, 9, 1, 'dsfdsd', 1, 1, 1, NULL, NULL, '2021-01-22 17:03:25', '2021-01-22 17:03:25');
+(3, 9, 1, 'Create Admin, destinaiton Thakurgaon', 1, 1, 1, NULL, NULL, '2021-02-15 14:47:50', '2021-02-15 14:47:50'),
+(4, 11, 1, 'na', 1, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 12:52:14');
 
 -- --------------------------------------------------------
 
@@ -2122,11 +2231,13 @@ CREATE TABLE `order_destinations` (
 --
 
 INSERT INTO `order_destinations` (`id`, `order_id`, `branch_id`, `branch_type_id`, `order_receiving_sending_status_id`, `charge`, `receiving_commision`, `sending_commission`, `received_by`, `received_at`, `send_by`, `send_at`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(11, 5, 2, 4, 1, '0.00', '0.00', '0.00', NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:49:50', '2021-01-22 05:49:50'),
-(12, 6, 1, 4, 2, '0.00', '0.00', '0.00', 1, '2021-01-22 12:19:08', 4, '2021-01-22 12:18:07', 1, 1, 1, NULL, NULL, '2021-01-22 06:09:03', '2021-01-22 06:19:08'),
-(13, 6, 3, 4, 2, '0.00', '0.00', '0.00', 5, '2021-01-22 03:09:22', 1, '2021-01-22 03:08:20', 1, 1, 1, NULL, NULL, '2021-01-22 06:09:03', '2021-01-22 09:09:22'),
-(14, 8, 1, 4, 2, '0.00', '0.00', '0.00', 1, '2021-01-22 12:19:08', 4, '2021-01-22 12:18:07', 1, 1, 1, NULL, NULL, '2021-01-22 06:11:48', '2021-01-22 06:19:08'),
-(15, 8, 1, 1, 1, '0.00', '0.00', '0.00', NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:11:48', '2021-01-22 06:11:48');
+(15, 2, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-15 06:16:10', 1, '2021-02-15 12:36:24', 1, 1, 1, NULL, NULL, '2021-02-15 05:44:01', '2021-02-15 12:16:10'),
+(16, 4, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-15 06:16:10', 1, '2021-02-15 12:36:24', 1, 1, 1, NULL, NULL, '2021-02-15 05:47:20', '2021-02-15 12:16:10'),
+(17, 6, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-15 06:16:10', 1, '2021-02-15 12:36:24', 1, 1, 1, NULL, NULL, '2021-02-15 05:53:35', '2021-02-15 12:16:10'),
+(18, 8, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-15 06:29:10', 1, '2021-02-15 06:28:50', 1, 1, 1, NULL, NULL, '2021-02-15 12:24:19', '2021-02-15 12:29:10'),
+(19, 9, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-15 08:50:51', 1, '2021-02-15 08:49:21', 1, 1, 1, NULL, NULL, '2021-02-15 14:47:50', '2021-02-15 14:50:51'),
+(20, 11, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-16 07:13:25', 1, '2021-02-16 07:11:52', 1, 1, 1, NULL, NULL, '2021-02-16 12:52:14', '2021-02-16 13:13:25'),
+(21, 12, 6, 4, 2, 0.00, 0.00, 0.00, 22, '2021-02-16 07:13:25', 1, '2021-02-16 07:11:52', 1, 1, 1, NULL, NULL, '2021-02-16 12:53:49', '2021-02-16 13:13:25');
 
 -- --------------------------------------------------------
 
@@ -2145,6 +2256,111 @@ CREATE TABLE `order_notes` (
   `deleted_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_pickup_delivery_canceling_reasons`
+--
+
+CREATE TABLE `order_pickup_delivery_canceling_reasons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_pickup_delivery_canceling_reasons`
+--
+
+INSERT INTO `order_pickup_delivery_canceling_reasons` (`id`, `name`, `status`, `is_active`, `is_verified`, `deleted_at`, `branch_id`, `created_at`, `updated_at`) VALUES
+(1, 'Merchant / Client Cancel Order', 1, 1, 1, NULL, 1, NULL, NULL),
+(2, 'Client Cancel Order (Customer when delivery)', 1, 1, 1, NULL, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_pickup_delivery_cancels`
+--
+
+CREATE TABLE `order_pickup_delivery_cancels` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `manpower_id` int(11) DEFAULT NULL,
+  `order_pickup_delivery_canceling_reason_id` int(11) DEFAULT NULL,
+  `parcel_owner_type_id` int(11) DEFAULT NULL,
+  `order_processing_type_id` int(11) DEFAULT NULL,
+  `merchant_client_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_pickup_delivery_holding_reasons`
+--
+
+CREATE TABLE `order_pickup_delivery_holding_reasons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_pickup_delivery_holding_reasons`
+--
+
+INSERT INTO `order_pickup_delivery_holding_reasons` (`id`, `name`, `status`, `is_active`, `is_verified`, `deleted_at`, `branch_id`, `created_at`, `updated_at`) VALUES
+(1, 'Merchant / Client didn\'t receive phone', 1, 1, 1, NULL, 1, NULL, NULL),
+(2, 'Merchant / Client Out of Home', 1, 1, 1, NULL, 1, NULL, NULL),
+(3, 'Merchant/client changed date by phone call', 1, 1, 1, NULL, 1, NULL, NULL),
+(4, 'Client didn\'t receive phone (Customer when delivery)', 1, 1, 1, NULL, 1, NULL, NULL),
+(5, 'Client Out of Home (Customer when delivery)', 1, 1, 1, NULL, 1, NULL, NULL),
+(6, 'client changed date by phone call (Customer when delivery)', 1, 1, 1, NULL, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_pickup_delivery_reschedules`
+--
+
+CREATE TABLE `order_pickup_delivery_reschedules` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `manpower_id` int(11) DEFAULT NULL,
+  `order_pickup_delivery_holding_reason_id` int(11) DEFAULT NULL,
+  `parcel_owner_type_id` int(11) DEFAULT NULL,
+  `order_processing_type_id` int(11) DEFAULT NULL,
+  `merchant_client_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `next_schedule` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -2175,48 +2391,120 @@ CREATE TABLE `order_processing_histories` (
 --
 
 INSERT INTO `order_processing_histories` (`id`, `order_id`, `order_status_id`, `changing_status_branch_id`, `branch_id`, `created_by`, `status_changer_id`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:48:19', '2021-01-22 05:48:19'),
-(2, 5, 1, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:49:50', '2021-01-22 05:49:50'),
-(3, 5, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:50:43', '2021-01-22 05:50:43'),
-(4, 4, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:50:43', '2021-01-22 05:50:43'),
-(5, 4, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:51:11', '2021-01-22 05:51:11'),
-(6, 5, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:51:11', '2021-01-22 05:51:11'),
-(7, 5, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(8, 4, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(9, 4, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:55:11', '2021-01-22 05:55:11'),
-(10, 5, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 05:55:11', '2021-01-22 05:55:11'),
-(11, 6, 2, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:09:03', '2021-01-22 06:09:03'),
-(12, 7, 2, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:10:33', '2021-01-22 06:10:33'),
-(13, 8, 2, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:11:48', '2021-01-22 06:11:48'),
-(14, 8, 3, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:14:15', '2021-01-22 06:14:15'),
-(15, 7, 3, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:14:15', '2021-01-22 06:14:15'),
-(16, 6, 3, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:14:15', '2021-01-22 06:14:15'),
-(17, 6, 5, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(18, 7, 5, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(19, 8, 5, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(20, 6, 41, 1, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:18:07', '2021-01-22 06:18:07'),
-(21, 8, 41, 1, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:18:07', '2021-01-22 06:18:07'),
-(22, 8, 42, 1, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 06:19:08', '2021-01-22 06:19:08'),
-(23, 6, 42, 1, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 06:19:08', '2021-01-22 06:19:08'),
-(24, 7, 13, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:19:31', '2021-01-22 06:19:31'),
-(25, 7, 18, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:19:48', '2021-01-22 06:19:48'),
-(26, 8, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 08:59:14', '2021-01-22 08:59:14'),
-(27, 8, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 08:59:41', '2021-01-22 08:59:41'),
-(28, 6, 10, 3, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 09:08:20', '2021-01-22 09:08:20'),
-(29, 6, 11, 3, 3, 5, 5, 1, 1, 1, NULL, '2021-01-22 09:09:22', '2021-01-22 09:09:22'),
-(30, 6, 13, NULL, 3, 5, 5, 1, 1, 1, NULL, '2021-01-22 09:09:49', '2021-01-22 09:09:49'),
-(31, 6, 18, NULL, 3, 5, 5, 1, 1, 1, NULL, '2021-01-22 09:10:04', '2021-01-22 09:10:04'),
-(32, 9, 1, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:03:25', '2021-01-22 17:03:25'),
-(33, 9, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:03:59', '2021-01-22 17:03:59'),
-(34, 9, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:04:13', '2021-01-22 17:04:13'),
-(35, 9, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:04:39', '2021-01-22 17:04:39'),
-(36, 9, 19, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:05:08', '2021-01-22 17:05:08'),
-(37, 9, 12, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:06:30', '2021-01-22 17:06:30'),
-(38, 9, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:06:57', '2021-01-22 17:06:57'),
-(39, 9, 16, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:09:46', '2021-01-22 17:09:46'),
-(40, 9, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:10:05', '2021-01-22 17:10:05'),
-(42, 9, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-23 18:02:04', '2021-01-23 18:02:04'),
-(43, 6, 24, NULL, 2, 4, 4, 1, 1, 1, NULL, '2021-01-23 18:24:12', '2021-01-23 18:24:12');
+(97, 1, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:37:10', '2021-02-15 05:37:10'),
+(98, 2, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:44:01', '2021-02-15 05:44:01'),
+(99, 3, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:44:47', '2021-02-15 05:44:47'),
+(100, 4, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:47:20', '2021-02-15 05:47:20'),
+(101, 5, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:49:03', '2021-02-15 05:49:03'),
+(102, 6, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:53:35', '2021-02-15 05:53:35'),
+(103, 7, 1, NULL, 1, 20, 20, 1, 1, 1, NULL, '2021-02-15 05:55:10', '2021-02-15 05:55:10'),
+(104, 1, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(105, 2, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(106, 3, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(107, 4, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(108, 5, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(109, 6, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(110, 7, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:03:57', '2021-02-15 06:03:57'),
+(111, 1, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:50', '2021-02-15 06:06:50'),
+(112, 2, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(113, 3, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(114, 4, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(115, 5, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(116, 6, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(117, 7, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(118, 1, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(119, 3, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(120, 5, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(121, 7, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(122, 1, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:21:29', '2021-02-15 06:21:29'),
+(123, 3, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:21:34', '2021-02-15 06:21:34'),
+(124, 5, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:21:38', '2021-02-15 06:21:38'),
+(125, 7, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:21:42', '2021-02-15 06:21:42'),
+(126, 1, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:35:17', '2021-02-15 06:35:17'),
+(127, 7, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:35:24', '2021-02-15 06:35:24'),
+(128, 5, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:35:29', '2021-02-15 06:35:29'),
+(129, 3, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-15 06:35:34', '2021-02-15 06:35:34'),
+(130, 6, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:36:24', '2021-02-15 06:36:24'),
+(131, 4, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:36:24', '2021-02-15 06:36:24'),
+(132, 2, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 06:36:24', '2021-02-15 06:36:24'),
+(133, 1, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(134, 3, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(135, 5, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(136, 7, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(137, 1, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(138, 3, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(139, 5, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(140, 7, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:14:33', '2021-02-15 12:14:33'),
+(141, 6, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:16:10', '2021-02-15 12:16:10'),
+(142, 4, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:16:10', '2021-02-15 12:16:10'),
+(143, 2, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:16:10', '2021-02-15 12:16:10'),
+(144, 2, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(145, 4, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(146, 6, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(147, 6, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:18:01', '2021-02-15 12:18:01'),
+(148, 4, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:18:01', '2021-02-15 12:18:01'),
+(149, 2, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:18:01', '2021-02-15 12:18:01'),
+(150, 2, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(151, 4, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(152, 6, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(153, 8, 2, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:24:19', '2021-02-15 12:24:19'),
+(154, 8, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:28:38', '2021-02-15 12:28:38'),
+(155, 8, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:28:50', '2021-02-15 12:28:50'),
+(156, 8, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:29:10', '2021-02-15 12:29:10'),
+(157, 8, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:31:32', '2021-02-15 12:31:32'),
+(158, 8, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:32:56', '2021-02-15 12:32:56'),
+(159, 8, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:33:21', '2021-02-15 12:33:21'),
+(160, 2, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(161, 4, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(162, 6, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:46:18', '2021-02-15 14:46:18'),
+(163, 9, 2, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:47:50', '2021-02-15 14:47:50'),
+(164, 9, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:48:52', '2021-02-15 14:48:52'),
+(165, 9, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:49:05', '2021-02-15 14:49:05'),
+(166, 9, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:49:21', '2021-02-15 14:49:21'),
+(167, 9, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:50:51', '2021-02-15 14:50:51'),
+(168, 9, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:51:30', '2021-02-15 14:51:30'),
+(169, 9, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:51:49', '2021-02-15 14:51:49'),
+(170, 9, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:52:07', '2021-02-15 14:52:07'),
+(171, 9, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-15 14:56:57', '2021-02-15 14:56:57'),
+(172, 10, 1, NULL, 1, 27, 27, 1, 1, 1, NULL, '2021-02-16 12:51:18', '2021-02-16 12:51:18'),
+(173, 11, 1, NULL, 1, 27, 27, 1, 1, 1, NULL, '2021-02-16 12:52:14', '2021-02-16 12:52:14'),
+(174, 12, 1, NULL, 1, 27, 27, 1, 1, 1, NULL, '2021-02-16 12:53:49', '2021-02-16 12:53:49'),
+(175, 10, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(176, 12, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(177, 11, 5, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(178, 11, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(179, 12, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(180, 10, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(181, 11, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:00:08', '2021-02-16 13:00:08'),
+(182, 12, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:00:12', '2021-02-16 13:00:12'),
+(183, 10, 15, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:00:18', '2021-02-16 13:00:18'),
+(184, 11, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:01:01', '2021-02-16 13:01:01'),
+(185, 12, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:01:06', '2021-02-16 13:01:06'),
+(186, 10, 17, NULL, 1, 23, 23, 1, 1, 1, NULL, '2021-02-16 13:01:21', '2021-02-16 13:01:21'),
+(187, 12, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(188, 11, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(189, 10, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(190, 11, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:11:52', '2021-02-16 13:11:52'),
+(191, 12, 10, 6, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:11:52', '2021-02-16 13:11:52'),
+(192, 12, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:13:25', '2021-02-16 13:13:25'),
+(193, 11, 11, 6, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:13:25', '2021-02-16 13:13:25'),
+(194, 11, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:17:03', '2021-02-16 13:17:03'),
+(195, 12, 13, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:19:51', '2021-02-16 13:19:51'),
+(196, 12, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:28:57', '2021-02-16 13:28:57'),
+(197, 11, 17, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:28:57', '2021-02-16 13:28:57'),
+(198, 11, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:29:19', '2021-02-16 13:29:19'),
+(199, 12, 18, NULL, 6, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:29:19', '2021-02-16 13:29:19'),
+(200, 10, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(201, 11, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(202, 12, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:39:56', '2021-02-16 13:39:56'),
+(203, 13, 2, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:50:54', '2021-02-16 13:50:54'),
+(204, 13, 13, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:53:19', '2021-02-16 13:53:19'),
+(205, 13, 17, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:58:59', '2021-02-16 13:58:59'),
+(206, 13, 18, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:59:19', '2021-02-16 13:59:19'),
+(207, 13, 24, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-02-16 14:00:41', '2021-02-16 14:00:41'),
+(208, 14, 1, NULL, 1, 31, 31, 1, 1, 1, NULL, '2021-02-17 09:21:16', '2021-02-17 09:21:16'),
+(209, 15, 1, NULL, 1, 31, 31, 1, 1, 1, NULL, '2021-02-17 09:24:49', '2021-02-17 09:24:49'),
+(210, 16, 1, NULL, 1, 31, 31, 1, 1, 1, NULL, '2021-02-17 09:28:54', '2021-02-17 09:28:54');
 
 -- --------------------------------------------------------
 
@@ -2307,58 +2595,63 @@ CREATE TABLE `order_sms_sendings` (
 --
 
 INSERT INTO `order_sms_sendings` (`id`, `order_id`, `sending_method`, `sending_method_parameter`, `sms_note`, `sms_count`, `branch_id`, `sms_delivery_status`, `sms_payment_status`, `payment_received_by`, `paid_by`, `sms_content`, `sms_lenght`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 2, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 09:32:56', '2021-01-17 09:32:56'),
-(2, 1, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 09:42:02', '2021-01-17 09:42:02'),
-(3, 2, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:08:19', '2021-01-17 10:08:19'),
-(4, 3, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:10:09', '2021-01-17 10:10:09'),
-(5, 3, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:10:33', '2021-01-17 10:10:33'),
-(6, 4, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:12:51', '2021-01-17 10:12:51'),
-(7, 4, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:13:19', '2021-01-17 10:13:19'),
-(8, 4, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:13:19', '2021-01-17 10:13:19'),
-(9, 4, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 10:13:37', '2021-01-17 10:13:37'),
-(10, 5, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 16:33:36', '2021-01-17 16:33:36'),
-(11, 5, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 16:33:59', '2021-01-17 16:33:59'),
-(12, 5, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 16:33:59', '2021-01-17 16:33:59'),
-(13, 5, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-17 16:34:28', '2021-01-17 16:34:28'),
-(14, 3, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:23:30', '2021-01-22 05:23:30'),
-(15, 2, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:23:30', '2021-01-22 05:23:30'),
-(16, 1, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:23:30', '2021-01-22 05:23:30'),
-(17, 3, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(18, 3, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(19, 2, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(20, 2, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(21, 1, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(22, 1, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:33:10', '2021-01-22 05:33:10'),
-(23, 1, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:37:00', '2021-01-22 05:37:00'),
-(24, 2, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:37:00', '2021-01-22 05:37:00'),
-(25, 3, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:37:00', '2021-01-22 05:37:00'),
-(26, 4, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:51:11', '2021-01-22 05:51:11'),
-(27, 5, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:51:11', '2021-01-22 05:51:11'),
-(28, 5, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(29, 5, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(30, 4, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(31, 4, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:54:14', '2021-01-22 05:54:14'),
-(32, 4, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:55:11', '2021-01-22 05:55:11'),
-(33, 5, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 05:55:11', '2021-01-22 05:55:11'),
-(34, 6, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(35, 7, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(36, 8, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:16:27', '2021-01-22 06:16:27'),
-(37, 7, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:19:31', '2021-01-22 06:19:31'),
-(38, 7, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:19:31', '2021-01-22 06:19:31'),
-(39, 7, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 06:19:48', '2021-01-22 06:19:48'),
-(40, 8, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 08:59:14', '2021-01-22 08:59:14'),
-(41, 8, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 08:59:14', '2021-01-22 08:59:14'),
-(42, 8, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 08:59:41', '2021-01-22 08:59:41'),
-(43, 6, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 09:09:49', '2021-01-22 09:09:49'),
-(44, 6, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 09:09:49', '2021-01-22 09:09:49'),
-(45, 6, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 09:10:04', '2021-01-22 09:10:04'),
-(46, 9, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:04:13', '2021-01-22 17:04:13'),
-(47, 9, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:04:39', '2021-01-22 17:04:39'),
-(48, 9, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:04:39', '2021-01-22 17:04:39'),
-(49, 9, 'smsToMerchantWhenParcelHoldDelivery_HH', 'company_name,invoice_no', 'when Delivery Hold', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:05:08', '2021-01-22 17:05:08'),
-(50, 9, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:06:57', '2021-01-22 17:06:57'),
-(51, 9, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:06:57', '2021-01-22 17:06:57'),
-(52, 9, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-01-22 17:10:05', '2021-01-22 17:10:05');
+(55, 1, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(56, 2, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(57, 3, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(58, 4, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(59, 5, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(60, 6, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(61, 7, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:06:51', '2021-02-15 06:06:51'),
+(62, 1, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(63, 1, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(64, 3, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(65, 3, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(66, 5, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(67, 5, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(68, 7, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(69, 7, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 06:20:23', '2021-02-15 06:20:23'),
+(70, 1, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(71, 3, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(72, 5, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(73, 7, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:14:01', '2021-02-15 12:14:01'),
+(74, 2, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(75, 2, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(76, 4, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(77, 4, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(78, 6, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(79, 6, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:17:40', '2021-02-15 12:17:40'),
+(80, 2, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(81, 4, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(82, 6, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:19:20', '2021-02-15 12:19:20'),
+(83, 8, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:28:38', '2021-02-15 12:28:38'),
+(84, 8, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:31:32', '2021-02-15 12:31:32'),
+(85, 8, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:31:32', '2021-02-15 12:31:32'),
+(86, 8, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 12:33:21', '2021-02-15 12:33:21'),
+(87, 9, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 14:49:05', '2021-02-15 14:49:05'),
+(88, 9, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 14:51:30', '2021-02-15 14:51:30'),
+(89, 9, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 14:51:30', '2021-02-15 14:51:30'),
+(90, 9, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-15 14:52:07', '2021-02-15 14:52:07'),
+(91, 10, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(92, 12, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(93, 11, 'smsToCustomerWhenParcelBookedFromMerchant_HH', 'customer_name,invoice_no,company_name,collect_amount,delivery_charge_type_id', 'when parcel receive office', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:56:27', '2021-02-16 12:56:27'),
+(94, 11, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(95, 11, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(96, 12, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(97, 12, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(98, 10, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(99, 10, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:58:15', '2021-02-16 12:58:15'),
+(100, 12, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(101, 11, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(102, 10, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:09:14', '2021-02-16 13:09:14'),
+(103, 11, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:17:03', '2021-02-16 13:17:03'),
+(104, 11, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:17:03', '2021-02-16 13:17:03'),
+(105, 12, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:19:51', '2021-02-16 13:19:51'),
+(106, 12, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:19:51', '2021-02-16 13:19:51'),
+(107, 11, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:29:19', '2021-02-16 13:29:19'),
+(108, 12, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:29:19', '2021-02-16 13:29:19'),
+(109, 13, 'smsToMerchantWhenParcelAssigningToManpowerForDelivery_HH', 'company_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:53:19', '2021-02-16 13:53:19'),
+(110, 13, 'smsToCustomerWhenParcelAssigningToManpowerForDelivery_HH', 'customer_name,invoice_no,delivery_man_name,delivery_man_phone', 'when assign to delivery man', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:53:19', '2021-02-16 13:53:19'),
+(111, 13, 'smsToMerchantWhenParcelDeliverySuccessful_HH', 'company_name,invoice_no,collect_only_product_amount', 'when Parcel is Delivered', 1, 1, 0, 0, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2021-02-16 13:59:19', '2021-02-16 13:59:19');
 
 -- --------------------------------------------------------
 
@@ -2442,7 +2735,9 @@ INSERT INTO `order_statuses` (`id`, `order_status`, `bangla_status`, `active_sta
 (39, 'Processing To Return Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (40, 'Merchant/Client Received Cancel Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (41, 'Send to Head Office', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
-(42, 'Head Office Received Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
+(42, 'Head Office Received Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
+(43, 'Order Cancel by Merchant/Client when Pickup Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
+(44, 'Order Hold by Merchant / Client , when Pickup Parcel', NULL, 'english', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2706,6 +3001,74 @@ INSERT INTO `payment_methods` (`id`, `branch_id`, `name`, `status`, `is_active`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pay_to_branch_commission_invoices`
+--
+
+CREATE TABLE `pay_to_branch_commission_invoices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `payment_invoice_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `from_branch_id` int(11) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `payment_status_id` int(11) NOT NULL DEFAULT 1,
+  `payment_by` int(11) DEFAULT NULL,
+  `payment_at` datetime DEFAULT NULL,
+  `payment_received_by` int(11) DEFAULT NULL,
+  `received_branch_id` int(11) DEFAULT NULL,
+  `payment_received_at` datetime DEFAULT NULL,
+  `payment_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_note` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pay_to_branch_commission_invoices`
+--
+
+INSERT INTO `pay_to_branch_commission_invoices` (`id`, `payment_invoice_no`, `from_branch_id`, `payment_method_id`, `payment_status_id`, `payment_by`, `payment_at`, `payment_received_by`, `received_branch_id`, `payment_received_at`, `payment_description`, `payment_note`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(6, 'DACBD-BCPI2021160207404210', 1, NULL, 1, 1, '2021-02-16 07:41:16', NULL, 6, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, '2021-02-16 13:41:16', '2021-02-16 13:41:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pay_to_branch_commission_invoice_details`
+--
+
+CREATE TABLE `pay_to_branch_commission_invoice_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `pay_to_branch_commission_invoice_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `branch_commission_type_id` int(11) DEFAULT NULL,
+  `branch_commission_id` int(11) DEFAULT NULL,
+  `amount` decimal(20,2) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `payment_status_id` int(11) DEFAULT NULL,
+  `payment_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_verified` tinyint(4) NOT NULL DEFAULT 1,
+  `deleted_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pay_to_branch_commission_invoice_details`
+--
+
+INSERT INTO `pay_to_branch_commission_invoice_details` (`id`, `pay_to_branch_commission_invoice_id`, `order_id`, `branch_commission_type_id`, `branch_commission_id`, `amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(14, 6, 12, 3, 45, 24.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 13:41:16', '2021-02-16 13:41:16'),
+(15, 6, 11, 3, 46, 24.00, NULL, 1, 1, NULL, 1, 1, 1, NULL, '2021-02-16 13:41:16', '2021-02-16 13:41:16');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pay_to_head_office_invoices`
 --
 
@@ -2713,7 +3076,7 @@ CREATE TABLE `pay_to_head_office_invoices` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `payment_invoice_no` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_branch_id` int(11) DEFAULT NULL,
-  `payment_amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `payment_amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) NOT NULL DEFAULT 1,
   `payment_by` int(11) DEFAULT NULL,
@@ -2737,8 +3100,10 @@ CREATE TABLE `pay_to_head_office_invoices` (
 --
 
 INSERT INTO `pay_to_head_office_invoices` (`id`, `payment_invoice_no`, `from_branch_id`, `payment_amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `payment_at`, `payment_received_by`, `received_branch_id`, `payment_received_at`, `payment_description`, `payment_note`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(3, 'DACBD2021220112262068', 2, '935.00', NULL, 1, 4, '2021-01-22 12:26:39', 1, 1, '2021-01-22 12:49:32', NULL, NULL, 4, 1, 1, 1, NULL, '2021-01-22 06:26:39', '2021-01-22 06:49:32'),
-(6, 'DACBD2021220103380136', 3, '915.00', NULL, 1, 5, '2021-01-22 03:38:11', 1, 1, '2021-01-22 03:53:48', NULL, NULL, 5, 1, 1, 1, NULL, '2021-01-22 09:38:11', '2021-01-22 09:53:48');
+(3, 'DACBD2021150206202635', 6, NULL, NULL, 1, 22, '2021-02-15 06:20:32', 1, 1, '2021-02-15 06:20:48', NULL, NULL, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:48'),
+(4, 'DACBD2021150206360365', 6, NULL, NULL, 1, 22, '2021-02-15 06:36:08', 1, 1, '2021-02-15 06:36:54', NULL, NULL, 22, 1, 1, 1, NULL, '2021-02-15 12:36:08', '2021-02-15 12:36:54'),
+(5, 'DACBD2021150208532730', 6, NULL, NULL, 1, 22, '2021-02-15 08:53:42', 1, 1, '2021-02-15 08:55:30', NULL, NULL, 22, 1, 1, 1, NULL, '2021-02-15 14:53:42', '2021-02-15 14:55:30'),
+(6, 'DACBD2021160207295436', 6, NULL, NULL, 1, 22, '2021-02-16 07:30:01', 1, 1, '2021-02-16 07:30:23', NULL, NULL, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:23');
 
 -- --------------------------------------------------------
 
@@ -2753,7 +3118,7 @@ CREATE TABLE `pay_to_head_office_invoice_details` (
   `from_branch_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `receive_amount_type_id` int(11) DEFAULT NULL,
-  `amount` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(20,2) DEFAULT NULL,
   `payment_method_id` int(11) DEFAULT NULL,
   `payment_status_id` int(11) DEFAULT NULL,
   `payment_by` int(11) DEFAULT NULL,
@@ -2771,12 +3136,27 @@ CREATE TABLE `pay_to_head_office_invoice_details` (
 --
 
 INSERT INTO `pay_to_head_office_invoice_details` (`id`, `pay_to_head_office_invoice_id`, `receive_amount_history_id`, `from_branch_id`, `order_id`, `receive_amount_type_id`, `amount`, `payment_method_id`, `payment_status_id`, `payment_by`, `created_by`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 3, 8, 2, 6, 2, '10.00', NULL, 1, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:26:39', '2021-01-22 06:26:39'),
-(2, 3, 10, 2, 7, 1, '115.00', NULL, 1, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:26:39', '2021-01-22 06:26:39'),
-(3, 3, 9, 2, 7, 2, '10.00', NULL, 1, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:26:39', '2021-01-22 06:26:39'),
-(4, 3, 11, 2, 7, 4, '800.00', NULL, 1, 4, 4, 1, 1, 1, NULL, '2021-01-22 06:26:39', '2021-01-22 06:26:39'),
-(11, 6, 14, 3, 6, 1, '115.00', NULL, 1, 5, 5, 1, 1, 1, NULL, '2021-01-22 09:38:11', '2021-01-22 09:38:11'),
-(12, 6, 15, 3, 6, 4, '800.00', NULL, 1, 5, 5, 1, 1, 1, NULL, '2021-01-22 09:38:11', '2021-01-22 09:38:11');
+(7, 3, 41, 6, 2, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(8, 3, 42, 6, 2, 2, 20.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(9, 3, 43, 6, 2, 4, 1860.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(10, 3, 44, 6, 4, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(11, 3, 45, 6, 4, 2, 0.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(12, 3, 46, 6, 4, 4, -120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(13, 3, 47, 6, 6, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(14, 3, 48, 6, 6, 2, 5.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(15, 3, 49, 6, 6, 4, 375.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:20:32', '2021-02-15 12:20:32'),
+(16, 4, 50, 6, 8, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:36:08', '2021-02-15 12:36:08'),
+(17, 4, 51, 6, 8, 2, 10.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:36:08', '2021-02-15 12:36:08'),
+(18, 4, 52, 6, 8, 4, 870.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 12:36:08', '2021-02-15 12:36:08'),
+(19, 5, 53, 6, 9, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:53:42', '2021-02-15 14:53:42'),
+(20, 5, 54, 6, 9, 2, 10.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:53:42', '2021-02-15 14:53:42'),
+(21, 5, 55, 6, 9, 4, 870.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-15 14:53:42', '2021-02-15 14:53:42'),
+(22, 6, 65, 6, 11, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01'),
+(23, 6, 66, 6, 11, 2, 0.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01'),
+(24, 6, 67, 6, 11, 4, -120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01'),
+(25, 6, 68, 6, 12, 1, 120.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01'),
+(26, 6, 69, 6, 12, 2, 0.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01'),
+(27, 6, 70, 6, 12, 4, 380.00, NULL, 1, 22, 22, 1, 1, 1, NULL, '2021-02-16 13:30:01', '2021-02-16 13:30:01');
 
 -- --------------------------------------------------------
 
@@ -2816,17 +3196,63 @@ CREATE TABLE `receive_amount_histories` (
 --
 
 INSERT INTO `receive_amount_histories` (`id`, `order_id`, `parcel_owner_type_id`, `receive_amount_type_id`, `received_by`, `amount`, `received_from`, `received_from_user_role_id`, `creating_branch_id`, `received_amount_branch_id`, `creating_branch_type_id`, `received_branch_type_id`, `destination_branch_id`, `parcel_amount_payment_status_id`, `service_cod_payment_status_id`, `service_delivery_payment_status_id`, `activate_status_id`, `status`, `created_by`, `is_active`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(8, 6, 1, 2, 4, '10.00', 3, 4, 2, 2, 4, 4, 3, NULL, 3, NULL, 1, 1, 4, 1, 1, NULL, '2021-01-22 06:09:03', '2021-01-22 06:49:32'),
-(9, 7, 1, 2, 4, '10.00', 3, 4, 2, 2, 4, 4, 2, NULL, 3, NULL, 1, 1, 4, 1, 1, NULL, '2021-01-22 06:10:33', '2021-01-22 06:49:32'),
-(10, 7, 1, 1, 4, '115.00', 7, 5, 2, 2, 4, 4, 2, NULL, NULL, 3, 1, 1, 4, 1, 1, NULL, '2021-01-22 06:22:24', '2021-01-22 06:49:32'),
-(11, 7, 1, 4, 4, '800.00', 7, 5, 2, 2, 4, 4, 2, 5, NULL, NULL, 1, 1, 4, 1, 1, NULL, '2021-01-22 06:22:24', '2021-01-22 06:49:32'),
-(12, 8, 1, 1, 1, '120.00', 6, 5, 2, 1, 4, 1, 1, 3, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 09:00:05', '2021-01-22 09:00:05'),
-(13, 8, 1, 4, 1, '400.00', 6, 5, 2, 1, 4, 1, 1, 3, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-01-22 09:00:05', '2021-01-22 09:00:05'),
-(14, 6, 1, 1, 5, '115.00', 8, 5, 2, 3, 4, 4, 3, NULL, NULL, 3, 1, 1, 5, 1, 1, NULL, '2021-01-22 09:11:02', '2021-01-22 09:44:51'),
-(15, 6, 1, 4, 5, '800.00', 8, 5, 2, 3, 4, 4, 3, 5, NULL, NULL, 1, 1, 5, 1, 1, NULL, '2021-01-22 09:11:02', '2021-01-22 09:44:51'),
-(19, 6, 1, 4, NULL, '885.00', 1, 1, 2, 2, 4, 4, 3, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-01-22 12:14:05', '2021-01-23 18:24:12'),
-(20, 9, 1, 1, 1, '55.00', 6, 5, 1, 1, 1, 1, 1, 8, NULL, 1, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:10:26', '2021-01-22 17:10:26'),
-(21, 9, 1, 4, 1, '400.00', 6, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-01-22 17:10:26', '2021-01-23 18:02:04');
+(17, 8, 1, 1, 1, 60.00, 18, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-12 03:03:15', '2021-02-12 03:03:15'),
+(18, 8, 1, 2, 1, 60.00, 18, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-12 03:03:15', '2021-02-12 03:03:15'),
+(19, 8, 1, 4, 1, 5880.00, 18, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-12 03:03:15', '2021-02-12 03:03:57'),
+(20, 12, 1, 1, 1, 120.00, 18, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(21, 12, 1, 2, 1, 20.00, 18, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(22, 12, 1, 4, 1, 860.00, 18, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:23:40'),
+(23, 11, 1, 1, 1, 60.00, 18, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(24, 11, 1, 2, 1, 0.00, 18, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(25, 11, 1, 4, 1, -60.00, 18, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:23:40'),
+(26, 10, 1, 1, 1, 120.00, 18, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(27, 10, 1, 2, 1, 20.00, 18, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:21:13'),
+(28, 10, 1, 4, 1, 860.00, 18, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-13 05:21:13', '2021-02-13 05:23:40'),
+(29, 1, 1, 1, 1, 60.00, 23, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(30, 1, 1, 2, 1, 10.00, 23, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(31, 1, 1, 4, 1, 930.00, 23, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:14:33'),
+(32, 3, 1, 1, 1, 60.00, 23, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(33, 3, 1, 2, 1, 0.00, 23, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(34, 3, 1, 4, 1, -60.00, 23, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:14:33'),
+(35, 5, 1, 1, 1, 60.00, 23, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(36, 5, 1, 2, 1, 5.00, 23, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(37, 5, 1, 4, 1, 435.00, 23, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:14:33'),
+(38, 7, 1, 1, 1, 60.00, 23, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:21', '2021-02-15 12:12:21'),
+(39, 7, 1, 2, 1, 10.00, 23, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:22', '2021-02-15 12:12:22'),
+(40, 7, 1, 4, 1, 930.00, 23, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-15 12:12:22', '2021-02-15 12:14:33'),
+(41, 2, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(42, 2, 1, 2, 22, 20.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(43, 2, 1, 4, 22, 1860.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 14:46:18'),
+(44, 4, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(45, 4, 1, 2, 22, 0.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(46, 4, 1, 4, 22, -120.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 14:46:18'),
+(47, 6, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(48, 6, 1, 2, 22, 5.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 12:20:48'),
+(49, 6, 1, 4, 22, 375.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:19:33', '2021-02-15 14:46:18'),
+(50, 8, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:34:10', '2021-02-15 12:36:54'),
+(51, 8, 1, 2, 22, 10.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:34:10', '2021-02-15 12:36:54'),
+(52, 8, 1, 4, 22, 870.00, 24, 5, 1, 6, 1, 4, 6, 5, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 12:34:10', '2021-02-15 12:36:54'),
+(53, 9, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-15 14:52:51', '2021-02-15 14:55:30'),
+(54, 9, 1, 2, 22, 10.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 14:52:51', '2021-02-15 14:55:30'),
+(55, 9, 1, 4, 22, 870.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-15 14:52:51', '2021-02-15 14:56:57'),
+(56, 11, 1, 1, 1, 120.00, 23, 5, 1, 1, 1, 1, 6, NULL, NULL, 4, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:41:16'),
+(57, 11, 1, 2, 1, 0.00, 23, 5, 1, 1, 1, 1, 6, NULL, 4, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:41:16'),
+(58, 11, 1, 4, 1, -120.00, 23, 5, 1, 1, 1, 1, 6, 5, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(59, 12, 1, 1, 1, 120.00, 23, 5, 1, 1, 1, 1, 6, NULL, NULL, 4, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:41:16'),
+(60, 12, 1, 2, 1, 0.00, 23, 5, 1, 1, 1, 1, 6, NULL, 4, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:41:16'),
+(61, 12, 1, 4, 1, 380.00, 23, 5, 1, 1, 1, 1, 6, 5, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(62, 10, 1, 1, 1, 60.00, 23, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(63, 10, 1, 2, 1, 0.00, 23, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:07:41'),
+(64, 10, 1, 4, 1, 4940.00, 23, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:07:41', '2021-02-16 13:39:56'),
+(65, 11, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:30:23'),
+(66, 11, 1, 2, 22, 0.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:30:24'),
+(67, 11, 1, 4, 22, -120.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:39:56'),
+(68, 12, 1, 1, 22, 120.00, 24, 5, 1, 6, 1, 4, 6, NULL, NULL, 3, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:30:24'),
+(69, 12, 1, 2, 22, 0.00, 24, 5, 1, 6, 1, 4, 6, NULL, 3, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:30:24'),
+(70, 12, 1, 4, 22, 380.00, 24, 5, 1, 6, 1, 4, 6, 9, NULL, NULL, 1, 1, 22, 1, 1, NULL, '2021-02-16 13:29:43', '2021-02-16 13:39:56'),
+(71, 13, 1, 1, 1, 60.00, 21, 5, 1, 1, 1, 1, 1, NULL, NULL, 6, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:59:53', '2021-02-16 13:59:53'),
+(72, 13, 1, 2, 1, 5.60, 21, 5, 1, 1, 1, 1, 1, NULL, 6, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:59:53', '2021-02-16 13:59:53'),
+(73, 13, 1, 4, 1, 494.40, 21, 5, 1, 1, 1, 1, 1, 9, NULL, NULL, 1, 1, 1, 1, 1, NULL, '2021-02-16 13:59:53', '2021-02-16 14:00:41');
 
 -- --------------------------------------------------------
 
@@ -2917,7 +3343,8 @@ INSERT INTO `service_charge_payment_statuses` (`id`, `name`, `branch_id`, `statu
 (2, 'Branch send to head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (3, 'Head office received from branch', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (4, 'Head office send branch commission to branch', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
-(5, 'Branch received branch commssion from head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
+(5, 'Branch received branch commssion from head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
+(6, 'Head Office Receive commission of his own branch\r\n', NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2949,48 +3376,48 @@ CREATE TABLE `service_charge_settings` (
 --
 
 INSERT INTO `service_charge_settings` (`id`, `service_type_id`, `parcel_category_id`, `parcel_type_id`, `weight_id`, `service_city_type_id`, `charge`, `third_party_charge`, `return_charge`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 1, '60.00', '100.00', '100.00', 1, 1, 1, NULL, NULL, NULL, '0000-00-00 00:00:00'),
-(2, 1, 1, 1, 2, 1, '60.00', '60.00', '60.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:44:29'),
-(3, 1, 1, 1, 3, 1, '72.00', '72.00', '72.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:44:49'),
-(4, 1, 1, 1, 4, 1, '72.00', '72.00', '72.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:45:23'),
-(5, 1, 1, 1, 5, 1, '84.00', '84.00', '84.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:02'),
-(6, 1, 1, 1, 6, 1, '84.00', '84.00', '84.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:19'),
-(7, 1, 1, 1, 7, 1, '96.00', '96.00', '96.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:42'),
-(8, 1, 1, 1, 1, 2, '120.00', '120.00', '120.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:47:22'),
-(9, 1, 1, 1, 2, 2, '120.00', '120.00', '120.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:47:36'),
-(10, 1, 1, 1, 3, 2, '130.00', '130.00', '130.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:48:54'),
-(11, 1, 1, 1, 4, 2, '130.00', '130.00', '130.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:49:24'),
-(12, 1, 1, 1, 5, 2, '140.00', '140.00', '140.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:49:44'),
-(13, 1, 1, 1, 6, 2, '140.00', '140.00', '140.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:50:17'),
-(14, 1, 1, 1, 7, 2, '150.00', '150.00', '150.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:50:38'),
-(15, 1, 1, 1, 1, 3, '120.00', '120.00', '120.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:15:15'),
-(16, 1, 1, 1, 2, 3, '120.00', '120.00', '120.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:15:40'),
-(17, 1, 1, 1, 3, 3, '130.00', '130.00', '130.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:04'),
-(18, 1, 1, 1, 4, 3, '130.00', '130.00', '130.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:37'),
-(19, 1, 1, 1, 5, 3, '140.00', '140.00', '140.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:56'),
-(20, 1, 1, 1, 6, 3, '140.00', '140.00', '140.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:17:13'),
-(21, 1, 1, 1, 7, 3, '150.00', '150.00', '150.00', 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:17:54'),
-(22, 2, 1, 1, 1, 1, '60.00', '60.00', '60.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(23, 2, 1, 1, 2, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(24, 2, 1, 1, 3, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(25, 2, 1, 1, 4, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(26, 2, 1, 1, 5, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(27, 2, 1, 1, 6, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(28, 2, 1, 1, 7, 1, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(29, 2, 1, 1, 1, 2, '60.00', '60.00', '60.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(30, 2, 1, 1, 2, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(31, 2, 1, 1, 3, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(32, 2, 1, 1, 4, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(33, 2, 1, 1, 5, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(34, 2, 1, 1, 6, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(35, 2, 1, 1, 7, 2, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(36, 2, 1, 1, 1, 3, '60.00', '60.00', '60.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(37, 2, 1, 1, 2, 3, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(38, 2, 1, 1, 3, 3, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(39, 2, 1, 1, 4, 3, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(40, 2, 1, 1, 5, 3, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(41, 2, 1, 1, 6, 3, '60.00', '30.00', '0.00', 1, 1, 1, NULL, NULL, NULL, NULL),
-(42, 2, 1, 1, 7, 3, '60.00', '100.00', '100.00', 1, 1, 1, NULL, NULL, NULL, '2020-12-28 13:38:31');
+(1, 1, 1, 1, 1, 1, 60.00, 100.00, 100.00, 1, 1, 1, NULL, NULL, NULL, '0000-00-00 00:00:00'),
+(2, 1, 1, 1, 2, 1, 60.00, 60.00, 60.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:44:29'),
+(3, 1, 1, 1, 3, 1, 72.00, 72.00, 72.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:44:49'),
+(4, 1, 1, 1, 4, 1, 72.00, 72.00, 72.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:45:23'),
+(5, 1, 1, 1, 5, 1, 84.00, 84.00, 84.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:02'),
+(6, 1, 1, 1, 6, 1, 84.00, 84.00, 84.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:19'),
+(7, 1, 1, 1, 7, 1, 96.00, 96.00, 96.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:46:42'),
+(8, 1, 1, 1, 1, 2, 120.00, 120.00, 120.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:47:22'),
+(9, 1, 1, 1, 2, 2, 120.00, 120.00, 120.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:47:36'),
+(10, 1, 1, 1, 3, 2, 130.00, 130.00, 130.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:48:54'),
+(11, 1, 1, 1, 4, 2, 130.00, 130.00, 130.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:49:24'),
+(12, 1, 1, 1, 5, 2, 140.00, 140.00, 140.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:49:44'),
+(13, 1, 1, 1, 6, 2, 140.00, 140.00, 140.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:50:17'),
+(14, 1, 1, 1, 7, 2, 150.00, 150.00, 150.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:50:38'),
+(15, 1, 1, 1, 1, 3, 120.00, 120.00, 120.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:15:15'),
+(16, 1, 1, 1, 2, 3, 120.00, 120.00, 120.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:15:40'),
+(17, 1, 1, 1, 3, 3, 130.00, 130.00, 130.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:04'),
+(18, 1, 1, 1, 4, 3, 130.00, 130.00, 130.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:37'),
+(19, 1, 1, 1, 5, 3, 140.00, 140.00, 140.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:16:56'),
+(20, 1, 1, 1, 6, 3, 140.00, 140.00, 140.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:17:13'),
+(21, 1, 1, 1, 7, 3, 150.00, 150.00, 150.00, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:17:54'),
+(22, 2, 1, 1, 1, 1, 60.00, 60.00, 60.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(23, 2, 1, 1, 2, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(24, 2, 1, 1, 3, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(25, 2, 1, 1, 4, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(26, 2, 1, 1, 5, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(27, 2, 1, 1, 6, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(28, 2, 1, 1, 7, 1, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(29, 2, 1, 1, 1, 2, 60.00, 60.00, 60.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(30, 2, 1, 1, 2, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(31, 2, 1, 1, 3, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(32, 2, 1, 1, 4, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(33, 2, 1, 1, 5, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(34, 2, 1, 1, 6, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(35, 2, 1, 1, 7, 2, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(36, 2, 1, 1, 1, 3, 60.00, 60.00, 60.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(37, 2, 1, 1, 2, 3, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(38, 2, 1, 1, 3, 3, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(39, 2, 1, 1, 4, 3, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(40, 2, 1, 1, 5, 3, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(41, 2, 1, 1, 6, 3, 60.00, 30.00, 0.00, 1, 1, 1, NULL, NULL, NULL, NULL),
+(42, 2, 1, 1, 7, 3, 60.00, 100.00, 100.00, 1, 1, 1, NULL, NULL, NULL, '2020-12-28 13:38:31');
 
 -- --------------------------------------------------------
 
@@ -3047,7 +3474,8 @@ INSERT INTO `service_cod_payment_statuses` (`id`, `name`, `branch_id`, `status`,
 (2, 'Branch send to head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (3, 'Head office received from branch', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (4, 'Head office send branch commission to branch', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
-(5, 'Branch received branch commssion from head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
+(5, 'Branch received branch commssion from head office', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
+(6, 'Head Office Receive commission of his own branch', NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3121,6 +3549,8 @@ CREATE TABLE `settings` (
   `hotlinenumber` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `callcenter` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `website` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3130,8 +3560,8 @@ CREATE TABLE `settings` (
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`id`, `company_name`, `sologan`, `phone`, `email`, `address`, `hotlinenumber`, `callcenter`, `website`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'Dakbd Courier And Parcel Service', 'Easy to delivery', '01779325718', 'info@dakbd.com', 'Dhaka', '01779325718', '01779325718', 'www.dakbd.com', 'public/images/5ff4348d770ad.png', '2021-01-05 09:12:09', '2021-01-05 09:42:37');
+INSERT INTO `settings` (`id`, `company_name`, `sologan`, `phone`, `email`, `address`, `hotlinenumber`, `callcenter`, `website`, `facebook`, `instagram`, `logo`, `created_at`, `updated_at`) VALUES
+(1, 'Dakbd Courier', 'Easy to delivery', '01705466007', 'info@dakbd.com', 'Dhaka', '01705466007', '01705466007', 'www.dakbd.com', NULL, NULL, 'public/images/6025e6a88bf5e.jpg', '2021-01-05 09:12:09', '2021-02-12 02:23:36');
 
 -- --------------------------------------------------------
 
@@ -3168,13 +3598,18 @@ CREATE TABLE `sms_authenticates` (
 --
 
 INSERT INTO `sms_authenticates` (`id`, `sending_method`, `sending_method_parameter`, `sms_note`, `sms_from`, `user_id`, `sms_count`, `branch_id`, `sms_delivery_status`, `sms_payment_status`, `payment_received_by`, `paid_by`, `sms_content`, `sms_lenght`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '6749 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-08 17:24:44', '2021-01-08 17:24:44'),
-(2, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '5625 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-08 18:45:24', '2021-01-08 18:45:24'),
-(3, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '4742 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-09 04:10:22', '2021-01-09 04:10:22'),
-(4, NULL, NULL, '01988139009', 'login', 10, 1, NULL, 1, 0, NULL, NULL, '5127 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-09 05:12:31', '2021-01-09 05:12:31'),
-(5, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '6497 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-09 05:40:01', '2021-01-09 05:40:01'),
-(6, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '1226 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-09 06:01:38', '2021-01-09 06:01:38'),
-(7, NULL, NULL, '01755560225', 'login', 3, 1, NULL, 1, 0, NULL, NULL, '2194 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-01-10 11:05:46', '2021-01-10 11:05:46');
+(1, NULL, NULL, '01988139009', 'login', 17, 1, NULL, 1, 0, NULL, NULL, '5218 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-12 02:47:37', '2021-02-12 02:47:37'),
+(2, NULL, NULL, '01988139009', 'login', 17, 1, NULL, 1, 0, NULL, NULL, '1199 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-12 02:54:33', '2021-02-12 02:54:33'),
+(3, NULL, NULL, '01988139009', 'login', 17, 1, NULL, 1, 0, NULL, NULL, '8357 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-12 03:05:40', '2021-02-12 03:05:40'),
+(4, NULL, NULL, '01704977777', 'login', 19, 1, NULL, 1, 0, NULL, NULL, '5022 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-13 04:49:36', '2021-02-13 04:49:36'),
+(5, NULL, NULL, '01704977777', 'login', 19, 1, NULL, 1, 0, NULL, NULL, '2642 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-13 04:53:52', '2021-02-13 04:53:52'),
+(6, NULL, NULL, '01988139009', 'login', 20, 1, NULL, 1, 0, NULL, NULL, '3325 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-15 05:06:19', '2021-02-15 05:06:19'),
+(7, NULL, NULL, '01988139009', 'login', 20, 1, NULL, 1, 0, NULL, NULL, '8286 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-15 05:08:51', '2021-02-15 05:08:51'),
+(8, NULL, NULL, '01988139009', 'login', 20, 1, NULL, 1, 0, NULL, NULL, '7738 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-15 07:03:19', '2021-02-15 07:03:19'),
+(9, NULL, NULL, '01988139009', 'login', 20, 1, NULL, 1, 0, NULL, NULL, '7733 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-15 10:13:43', '2021-02-15 10:13:43'),
+(10, NULL, NULL, '01705466007', 'login', 27, 1, NULL, 1, 0, NULL, NULL, '1010 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-16 12:46:25', '2021-02-16 12:46:25'),
+(11, NULL, NULL, '01704977777', 'login', 31, 1, NULL, 1, 0, NULL, NULL, '6006 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-17 05:45:21', '2021-02-17 05:45:21'),
+(12, NULL, NULL, '01704977777', 'login', 31, 1, NULL, 1, 0, NULL, NULL, '4904 is your login code for Dakbd.com. Thank You.', NULL, 1, 1, 1, NULL, NULL, '2021-02-17 06:37:20', '2021-02-17 06:37:20');
 
 -- --------------------------------------------------------
 
@@ -3905,16 +4340,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `useruid`, `name`, `phone`, `login_otp`, `login_otp_expire_time`, `email`, `password`, `show_password`, `email_verified_at`, `branch_id`, `role_id`, `user_approval_status_id`, `login_status`, `verified_by`, `status`, `is_active`, `permission_power`, `is_verified`, `deleted_at`, `created_by`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '2021001', 'Super Admin', '01712794034', '3935', '11:14:44', 'superadmin@gmail.com', '$2y$12$tln1TvduZij2Ps3.uNXUCeUIW6p1Q6fPdTc.XuqnXwhOZiurrhqp6', '121', NULL, 1, 1, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2020-12-08 06:36:02', '2021-01-09 04:42:10'),
-(2, '2021002', 'Salauddin Islam Lablu', '01704977777', NULL, NULL, 'dakbd7@gmail.com', '$2y$10$q6W8jFQETx2srNSz9KIOjuTJX7f.eIxShTFo9geBjATrruFkOoM3.', '123', NULL, 1, 2, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:09:43', '2021-01-08 16:09:43'),
-(3, '2021003', 'Muhammad Rakib', '01755560225', NULL, '05:06:46', 'believestorebd@gmail.com', NULL, '01755560225', NULL, 1, 4, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 16:52:58', '2021-01-10 11:06:18'),
-(4, '2021004', 'Kazi Raihanul Islam', '01815450466', NULL, NULL, 'dreamlessarman@gmail.com', '$2y$10$7A4VFM3nkjYQIUfJt8liq.Es/RS8zj2fFqC73IzaZJEio6eiVY5IW', '123123', NULL, 2, 9, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:05:41', '2021-01-23 12:46:54'),
-(5, '2021005', 'Mohammed Sabirul Islam', '01842501005', NULL, NULL, 'sabirtazulislam@gmail.com', '$2y$10$GWUaC8SPF7il3HQ12VWry.IY22R1m9.LKWCNwCs3Wgh1bcT1N7nwq', '123123', NULL, 3, 9, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:07:18', '2021-01-17 09:26:18'),
-(6, '2021006', 'Opi Ahmed', '01720265692', NULL, NULL, 'mdopi185059@gmail.com', '$2y$10$nkLUlluksYZvE5e/D4P75uwq8RDZAG0kAV0xIHQQg8Cvj0KreT7wS', '123123', NULL, 1, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:10:22', '2021-01-08 17:10:22'),
-(7, '2021007', 'Rabu', '01920993474', NULL, NULL, 'robo126@gmail.com', '$2y$10$cnuNyi6J0OjIhevM9HN2bOL4C8IjqTM7BO/jYW5ljx6JMFNrueOmC', '123123', NULL, 2, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:11:56', '2021-01-08 17:11:56'),
-(8, '2021008', 'Rockybul islam', '01776649180', NULL, NULL, 'rockybulislam258@gmail.com', '$2y$10$.0FTmV.XDElfNDL/bBfpBeGKRW4sn0cuoOfTZi1i2c6ceamasl2LO', '123123', NULL, 3, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-08 17:12:45', '2021-01-08 17:12:45'),
-(9, '2021009', 'Md Ibrahim', '01723019477', NULL, NULL, 'ibrahim@gmail.com', '$2y$10$.Z8jxZxwx9NIedlpOBNaR.ayd50cES0Vq/vs/yjyiSQ41NhA6G/3q', '121', NULL, 1, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-09 04:46:13', '2021-01-09 04:46:13'),
-(10, '2021010', 'Nazrul Islam', '01988139009', NULL, '11:13:30', 'nazrul@gmail.com', NULL, '123123', NULL, 2, 4, 2, 0, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-01-09 05:03:49', '2021-01-09 05:39:25');
+(1, '2021001', 'Super Admin', '01712794034', '3935', '11:14:44', 'superadmin@gmail.com', '$2y$12$tln1TvduZij2Ps3.uNXUCeUIW6p1Q6fPdTc.XuqnXwhOZiurrhqp6', '121', NULL, 1, 1, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2020-12-08 06:36:02', '2021-02-15 05:12:56'),
+(20, '2021002', 'Md Sohel', '01988139009', NULL, '04:14:43', 'sohel@gmail.com', NULL, '123456789', NULL, 1, 4, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-15 05:03:19', '2021-02-15 10:13:57'),
+(21, '2021003', 'Delivery Man Uttara', '01723019475', NULL, NULL, 'deliveryman@gmail.com', '$2y$10$89QiPysTJOKP0cLjvfj8a.rEmnOs52gEO2ktpeereJrn7zIp.EFSC', '123456789', NULL, 1, 5, 2, 0, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-15 05:16:40', '2021-02-16 12:59:39'),
+(22, '2021004', 'Thakurgaon Agent', '01744608476', NULL, NULL, 'thakurgaon@gmail.com', '$2y$12$HhY0O/Br8FwTz3URkR9qrOUnvEnQPMHbooprLvPamTOo9Xm0GXKGG', '123456789', NULL, 6, 9, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-15 05:20:17', '2021-02-15 14:50:18'),
+(23, '2021005', 'Mirpur Delivery Man', '01744608475', NULL, NULL, 'mirpurdeliveryman@gmail.com', '$2y$10$gOaDm3OygJChij1nWqFyVuMR/eQLfCsKD2TAvq85kps14UidQCOku', '123456789', NULL, 1, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-15 05:22:32', '2021-02-15 05:22:32'),
+(24, '2021006', 'Rabbi', '01988139002', NULL, NULL, 'rabbi@gmail.com', '$2y$10$qqB/7o2B9EFrH4nZ8XdRzOzoOIzIeFIdOHgvadWTLCROR1DCKyEfO', '123456789', NULL, 6, 5, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-15 12:17:20', '2021-02-15 12:17:20'),
+(25, '2021007', 'Rahat', '01988139006', NULL, NULL, 'rahat121@gmail.com', '$2y$10$.omTtqsxFBxHbwvHF42.d.GknfdUPerX.XMthGElIde6obgj8WzqS', '123456789', NULL, 7, 9, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-16 12:21:48', '2021-02-16 12:21:48'),
+(26, '2021008', 'Rahim', '01916651188', NULL, NULL, 'rahim@gmail.com', '$2y$10$vLNWk66152VQUUA./S16K.JNKqzAVI.V8Psh/4r3DvvLJKhJITT8q', '123456789', NULL, 1, 4, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-16 12:27:46', '2021-02-16 12:27:46'),
+(27, '2021009', 'Misbah Uddin', '01705466007', NULL, '06:47:24', 'masumamzad99@gmail.com', NULL, '1234567', NULL, 1, 4, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-16 12:40:37', '2021-02-16 12:46:48'),
+(28, '2021010', 'ibrahim Admin', '01988139100', NULL, NULL, 'ibrahim111@gmail.com', '$2y$10$tOhJBx19UIxqKNC5qBaeHuwLq6iihZlbF2OWa.uIG5j4nBHW8qsHi', '123456', NULL, 1, 1, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-17 04:20:07', '2021-02-17 04:20:07'),
+(29, '2021011', 'rahat Admin', '01988139200', NULL, NULL, 'rahat111@gmail.com', '$2y$10$Ju1F/I.UY1YEZ91H8dtXf.2jG0FOxdgGsQtsisIkiMITUAB6TsLF6', '123456', NULL, 1, 1, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-17 04:21:21', '2021-02-17 04:21:21'),
+(30, '2021012', 'Esrat Admin', '01988139300', NULL, NULL, 'esrat121@gmail.com', '$2y$10$/.IOWqUR2OYr180/Ee21tOpaPoM.UgYgof5DYWKsr3nWT42WmpOw2', '123456', NULL, 1, 1, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-17 04:21:54', '2021-02-17 04:21:54'),
+(31, '2021013', 'lablu', '01704977777', NULL, '12:38:20', 'rongbd7@gmail.com', NULL, '123456789', NULL, 1, 4, 2, 1, NULL, 1, 1, 1, 1, NULL, NULL, NULL, '2021-02-17 05:43:33', '2021-02-17 06:37:44');
 
 -- --------------------------------------------------------
 
@@ -4132,13 +4570,13 @@ CREATE TABLE `weights` (
 --
 
 INSERT INTO `weights` (`id`, `name`, `calculation`, `status`, `is_active`, `is_verified`, `deleted_at`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, '500 gm', '60.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:21:06', '2020-12-09 04:21:06'),
-(2, '1 kg', '60.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:22:13', '2020-12-09 04:22:13'),
-(3, '1.5 kg', '72.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:22:31', '2020-12-09 04:22:31'),
-(4, '2 kg', '84.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:22:42', '2020-12-09 04:22:42'),
-(5, '2.5 kg', '96.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:22:56', '2020-12-09 04:22:56'),
-(6, '3 kg', '108.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:23:10', '2020-12-09 04:23:10'),
-(7, '3 kg Above', '150.00', 1, 1, 1, NULL, NULL, '2020-12-09 04:41:32', '2020-12-09 04:41:32');
+(1, '500 gm', 60.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:21:06', '2020-12-09 04:21:06'),
+(2, '1 kg', 60.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:22:13', '2020-12-09 04:22:13'),
+(3, '1.5 kg', 72.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:22:31', '2020-12-09 04:22:31'),
+(4, '2 kg', 84.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:22:42', '2020-12-09 04:22:42'),
+(5, '2.5 kg', 96.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:22:56', '2020-12-09 04:22:56'),
+(6, '3 kg', 108.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:23:10', '2020-12-09 04:23:10'),
+(7, '3 kg Above', 150.00, 1, 1, 1, NULL, NULL, '2020-12-09 04:41:32', '2020-12-09 04:41:32');
 
 --
 -- Indexes for dumped tables
@@ -4330,6 +4768,13 @@ ALTER TABLE `hub_detail_informations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `instant_all_charge_received_statuses`
+--
+ALTER TABLE `instant_all_charge_received_statuses`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `instant_all_charge_received_statuses_name_unique` (`name`);
+
+--
 -- Indexes for table `manpower_assign_to_areas`
 --
 ALTER TABLE `manpower_assign_to_areas`
@@ -4419,6 +4864,32 @@ ALTER TABLE `order_destinations`
 -- Indexes for table `order_notes`
 --
 ALTER TABLE `order_notes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_pickup_delivery_canceling_reasons`
+--
+ALTER TABLE `order_pickup_delivery_canceling_reasons`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `order_pickup_delivery_canceling_reasons_name_unique` (`name`);
+
+--
+-- Indexes for table `order_pickup_delivery_cancels`
+--
+ALTER TABLE `order_pickup_delivery_cancels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_pickup_delivery_holding_reasons`
+--
+ALTER TABLE `order_pickup_delivery_holding_reasons`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `order_pickup_delivery_holding_reasons_name_unique` (`name`);
+
+--
+-- Indexes for table `order_pickup_delivery_reschedules`
+--
+ALTER TABLE `order_pickup_delivery_reschedules`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4517,6 +4988,18 @@ ALTER TABLE `password_resets`
 ALTER TABLE `payment_methods`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `payment_methods_name_unique` (`name`);
+
+--
+-- Indexes for table `pay_to_branch_commission_invoices`
+--
+ALTER TABLE `pay_to_branch_commission_invoices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pay_to_branch_commission_invoice_details`
+--
+ALTER TABLE `pay_to_branch_commission_invoice_details`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pay_to_head_office_invoices`
@@ -4742,13 +5225,13 @@ ALTER TABLE `agent_detail_informations`
 -- AUTO_INCREMENT for table `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=455;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=457;
 
 --
 -- AUTO_INCREMENT for table `area_branch`
 --
 ALTER TABLE `area_branch`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `banks`
@@ -4766,19 +5249,19 @@ ALTER TABLE `bank_accounts`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `branch_commissions`
 --
 ALTER TABLE `branch_commissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `branch_commission_settings`
 --
 ALTER TABLE `branch_commission_settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `branch_commission_typies`
@@ -4790,13 +5273,13 @@ ALTER TABLE `branch_commission_typies`
 -- AUTO_INCREMENT for table `branch_pay_to_merchant_client_invoices`
 --
 ALTER TABLE `branch_pay_to_merchant_client_invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `branch_pay_to_merchant_client_invoice_details`
 --
 ALTER TABLE `branch_pay_to_merchant_client_invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `branch_profits`
@@ -4832,7 +5315,7 @@ ALTER TABLE `company_profits`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `delivery_men`
@@ -4874,19 +5357,19 @@ ALTER TABLE `final_success_cancel_statuses`
 -- AUTO_INCREMENT for table `general_customers`
 --
 ALTER TABLE `general_customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `head_office_pay_to_branch_invoices`
 --
 ALTER TABLE `head_office_pay_to_branch_invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `head_office_pay_to_branch_invoice_details`
 --
 ALTER TABLE `head_office_pay_to_branch_invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `hub_detail_informations`
@@ -4895,16 +5378,22 @@ ALTER TABLE `hub_detail_informations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `instant_all_charge_received_statuses`
+--
+ALTER TABLE `instant_all_charge_received_statuses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `manpower_assign_to_areas`
 --
 ALTER TABLE `manpower_assign_to_areas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `manpower_commission_settings`
 --
 ALTER TABLE `manpower_commission_settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `manpower_detail_informations`
@@ -4916,7 +5405,7 @@ ALTER TABLE `manpower_detail_informations`
 -- AUTO_INCREMENT for table `manpower_income_histories`
 --
 ALTER TABLE `manpower_income_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `manpower_typies`
@@ -4928,55 +5417,55 @@ ALTER TABLE `manpower_typies`
 -- AUTO_INCREMENT for table `merchants`
 --
 ALTER TABLE `merchants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `merchant_settings`
 --
 ALTER TABLE `merchant_settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `merchant_shops`
 --
 ALTER TABLE `merchant_shops`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `order_assigning_statuses`
 --
 ALTER TABLE `order_assigning_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `order_assigns`
 --
 ALTER TABLE `order_assigns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT for table `order_descriptions`
 --
 ALTER TABLE `order_descriptions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order_destinations`
 --
 ALTER TABLE `order_destinations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `order_notes`
@@ -4985,10 +5474,34 @@ ALTER TABLE `order_notes`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `order_pickup_delivery_canceling_reasons`
+--
+ALTER TABLE `order_pickup_delivery_canceling_reasons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `order_pickup_delivery_cancels`
+--
+ALTER TABLE `order_pickup_delivery_cancels`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_pickup_delivery_holding_reasons`
+--
+ALTER TABLE `order_pickup_delivery_holding_reasons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `order_pickup_delivery_reschedules`
+--
+ALTER TABLE `order_pickup_delivery_reschedules`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `order_processing_histories`
 --
 ALTER TABLE `order_processing_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT for table `order_processing_typies`
@@ -5006,13 +5519,13 @@ ALTER TABLE `order_receiving_sending_statuses`
 -- AUTO_INCREMENT for table `order_sms_sendings`
 --
 ALTER TABLE `order_sms_sendings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `order_statuses`
 --
 ALTER TABLE `order_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `order_third_parties`
@@ -5069,6 +5582,18 @@ ALTER TABLE `payment_methods`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `pay_to_branch_commission_invoices`
+--
+ALTER TABLE `pay_to_branch_commission_invoices`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `pay_to_branch_commission_invoice_details`
+--
+ALTER TABLE `pay_to_branch_commission_invoice_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `pay_to_head_office_invoices`
 --
 ALTER TABLE `pay_to_head_office_invoices`
@@ -5078,13 +5603,13 @@ ALTER TABLE `pay_to_head_office_invoices`
 -- AUTO_INCREMENT for table `pay_to_head_office_invoice_details`
 --
 ALTER TABLE `pay_to_head_office_invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `receive_amount_histories`
 --
 ALTER TABLE `receive_amount_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `receive_amount_typies`
@@ -5102,7 +5627,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `service_charge_payment_statuses`
 --
 ALTER TABLE `service_charge_payment_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `service_charge_settings`
@@ -5120,7 +5645,7 @@ ALTER TABLE `service_city_typies`
 -- AUTO_INCREMENT for table `service_cod_payment_statuses`
 --
 ALTER TABLE `service_cod_payment_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `service_delivery_payment_statuses`
@@ -5144,7 +5669,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `sms_authenticates`
 --
 ALTER TABLE `sms_authenticates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `sub_office_detail_informations`
@@ -5180,7 +5705,7 @@ ALTER TABLE `transport_services`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user_approval_statuses`
