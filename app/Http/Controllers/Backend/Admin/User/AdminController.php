@@ -66,7 +66,7 @@ class AdminController extends Controller
             $admin->show_password = $request->password;
             $admin->role_id = $request->role_id;
             $admin->branch_id= $request->branch_id;
-            $admin->user_approval_status_id = 1;
+            $admin->user_approval_status_id = 2;
             $admin->login_status = 1;
             $admin->save();
 

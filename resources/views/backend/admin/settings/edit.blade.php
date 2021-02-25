@@ -72,28 +72,28 @@
                                <div class="form-group">
                                   <label for="" class="col-md-12">Call Center number</label>
                                   <div class="col-md-12">
-                                    <input type="text" class="form-control" name="callcenter" value="{{ $setting->callcenter }}" placeholder="call center" required="">
+                                    <input type="text" class="form-control" name="callcenter" value="{{ $setting->callcenter }}" placeholder="call center" >
                                   </div>
                                </div> 
 
                                <div class="form-group">
                                   <label for="" class="col-md-12">Website</label>
                                   <div class="col-md-12">
-                                    <input type="text" class="form-control" name="website" value="{{ $setting->website }}" placeholder="website" required="">
+                                    <input type="text" class="form-control" name="website" value="{{ $setting->website }}" placeholder="website" >
                                   </div>
                                </div>
 
                                 <div class="form-group">
                                   <label for="" class="col-md-12">Facebook Link</label>
                                   <div class="col-md-12">
-                                    <input type="text" class="form-control" name="facebook" value="{{ $setting->facebook }}" placeholder="facebook" required="">
+                                    <input type="text" class="form-control" name="facebook" value="{{ $setting->facebook }}" placeholder="facebook">
                                   </div>
                                </div> 
 
                                <div class="form-group">
                                   <label for="" class="col-md-12">Instagram Link</label>
                                   <div class="col-md-12">
-                                    <input type="text" class="form-control" name="instagram" value="{{ $setting->instagram }}" placeholder="instagram" required="">
+                                    <input type="text" class="form-control" name="instagram" value="{{ $setting->instagram }}" placeholder="instagram"
                                   </div>
                                </div> 
 

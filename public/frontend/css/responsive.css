@@ -1,13 +1,24 @@
 @media all and (min-width: 1200px) {
     .container {
-       /* max-width: 1350px;*/
+        max-width: 1170px;
     }
 
 }
 
 @media all and (max-width: 1200px) {}
 
-@media all and (max-width: 1080px) {
+@media all and (max-width: 1080px) {}
+
+
+@media all and (max-width: 992px) {
+    .delivery-charge-section .card-group {
+        display: inherit;
+    }
+
+    .delivery-charge-section .card-group .card {
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
 
     .menu-icon {
         display: block;
@@ -17,44 +28,70 @@
         display: none;
     }
 
-}
-
-
-@media all and (max-width: 992px) {
-    .delivery-charge-section .card-group{
-        display: inherit;
+    .navbar {
+        padding: 8px 0;
     }
-    .delivery-charge-section .card-group .card{
-        border: 1px solid #ddd;
-        margin-bottom: 10px;
+
+    .list-inline {
+        text-align: center;
+    }
+
+    .list-inline li {
+        display: block;
+        border: none;
+        margin-bottom: 5px;
+    }
+        .log-reg {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
 @media all and (max-width: 768px) {
-    .header-top {
-        text-align: center;
-    }
-    .banner-left-txt{
+
+    .banner-left-txt {
         text-align: center;
         padding: 30px 0;
     }
-    .tracking{
-        width: 100%;
+
+
+    .theme-container {
+        max-width: 100%;
+        padding: 10px 30px;
+        padding-bottom: 5px;
     }
-    .banner-left-txt h5{
+
+    .logo-col {}
+
+
+
+    .search-padding1 {
+        padding-right: 15px;
+    }
+
+    .search-padding2 {
+        padding-left: 15px;
+    }
+
+    .log-reg a {
+        font-size: 14px;
+    }
+
+    .banner-left-txt h5 {
         font-size: 25px;
     }
-    
-    
-    
 
-    .ht-social {
-        margin-top: 5px;
-        float: none;
-    }
 }
 
-@media all and (max-width: 576px) {}
+@media all and (max-width: 576px) {
+    .banner-section {
+        height: 60vh;
+    }
+
+    .banner-left-txt {
+        margin-top: 50px;
+    }
+}
 
 
 @media all and (max-width: 480px) {}

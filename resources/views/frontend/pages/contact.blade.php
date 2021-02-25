@@ -78,13 +78,13 @@
                         <div class="contact-us-details mt-4 mt-md-0">
                             <div class="office-address mb-5">
                                 <p style="font-size: 16px;"><strong>Head Office:</strong></p>
-                                <p> <i class="fa fa-map-marker text-custom ad-icons ad-hotline mr-1"></i>  77/1, Khalpara Raod, (Near Subastu Tower), Uttar Badda. Dhaka - 1216 </p>
+                                <p> <i class="fa fa-map-marker text-custom ad-icons ad-hotline mr-1"></i>  Darus Salam, Dhaka, Bangladesh </p>
 
-                                <p><i class="fa fa-phone text-custom ad-icons ad-hotline mr-1"></i> Hotline - +8801991140407</p>
+                                <p><i class="fa fa-phone text-custom ad-icons ad-hotline mr-1"></i> Hotline - +8801704977777</p>
 
                               
 
-                                <p><i class="fa fa-envelope text-custom ad-icons ad-email mr-1"></i> Email -  hawladercourier@gmail.com</p>
+                                <p><i class="fa fa-envelope text-custom ad-icons ad-email mr-1"></i> Email -  dakbd7@gmail.com</p>
                             </div>
                             
                         </div>

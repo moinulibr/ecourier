@@ -23,6 +23,12 @@ class DashboardController extends Controller
      */
     public function index()
     { 
+    
+        $checkcount = Order::where('merchant_id',Auth::guard('merchant')->user()->id)->whereNull('deleted_at')->count();
+        
+        if($checkcount>0){
+        
+        
         $query = Order::query();
                 $query->where('merchant_id',Auth::guard('merchant')->user()->id)->whereNull('deleted_at');
         
@@ -61,6 +67,21 @@ class DashboardController extends Controller
         $data['unPaidAmount'] = $qq->sum('collect_amount');
         $data['payProcessing'] = $qq->sum('client_merchant_payable_amount');
         //----------------------------------------------------Payment-----------------------------
+        
+        
+        }else
+        {
+             $data['placedOrder'] = 0;
+             $data['delivered'] = 0;
+             $data['deliveredParcel'] = 0;
+             $data['canceledReturned'] = 0;
+             $data['returnedToBe'] = 0;
+             $data['totalSalesPaidAmount'] = 0;
+             $data['totalPaidCharge'] = 0;
+             $data['unPaidAmount'] = 0;
+             $data['payProcessing'] = 0;
+            
+        }
         return view('backend.merchant.layouts.partials.dashboard',$data);
     }
 

@@ -22,7 +22,7 @@
                  <div class="col-md-6 col-6 col-lg-6 col-xl-6">
                        <div class="form-group">
                            <label for="">Name <span class="text-danger">*</span></label>
-                           <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Enter Agent Name">
+                           <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Enter Merchant Name">
                           <div class="text-danger">{{ $errors->first('name') }}</div>
                        </div>
                  </div>
@@ -113,7 +113,7 @@
                                  <option  value=" ">Select  Payment Method</option>
                                  <option  value="1">Mobile Banking </option>
                                  <option  value="2">Bank</option>
-                                 <option  value="3">Cash</option>
+                                <!-- <option  value="3">Cash</option>-->
                             </select>
                            <div class="text-danger">{{ $errors->first('payment_type') }}</div>
 

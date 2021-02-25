@@ -618,6 +618,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
             Route::get('show/invoice/{id}','OrderController@showinvoice')->name('order.show.invoice');
 
+             //multiple invoice print: 11.02.2021
+            Route::get('multiple/invoice/slip/print','OrderController@multipleSlipOfInvoicePrint')->name('order.multipleSlipOfInvoicePrint');
+            /**
+
             /**
              * About Bar code
             */

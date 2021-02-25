@@ -7,12 +7,6 @@ body {
     background: #fdfdfd;
 }
 
-font-family: 'Lato',
-sans-serif;
-font-family: 'Open Sans',
-sans-serif;
-font-family: 'Ubuntu',
-sans-serif;
 
 :focus {
     outline: 0 !important;
@@ -55,38 +49,21 @@ sans-serif;
 }
 
 .td {
-    color: #f5ab35;
+    color: #0a61b8;
 }
-
 .bd {
-    background: #f5ab35;
-}
-.td2 {
-    color: #EB2127;
+    background: #0a61b8;
 }
 
-.bd2 {
-    background: #EB2127;
-}
 
 :root {
 
     --fu: 'Ubuntu', sans-serif;
 
     --fl: 'Lato', sans-serif;
+    
+    --td: #0a61b8 ;
 
-    --td2: #EB2127 ;
-    
-    --td: #f5ab35 ;
-
-    --bd2: #EB2127 ;
-    
-    --bd: #f5ab35 ;
-    
-    --tm: #32434e;
-    
-    --bm: #32434e;
-    
     --shadow : 0px 10px 20px -10px #ddd;
     
     --shadow-hover: 0px 10px  20px 0px #ddd;
@@ -97,10 +74,6 @@ sans-serif;
 
 }
 
-
-.tm{
-    color: #3c4c57;
-}
 
 .font-ubuntu {
     font-family: 'Ubuntu', sans-serif;
@@ -172,7 +145,7 @@ sans-serif;
     content: '';
     height: 2px;
     width: 90px;
-    background: var(--bd);
+    background: var(--td);
     display: block;
     margin: 0 auto;
     margin-top: 8px;

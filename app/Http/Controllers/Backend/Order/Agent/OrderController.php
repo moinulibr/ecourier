@@ -52,15 +52,68 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['orders'] = Order::where('creating_branch_id',Auth::guard('web')->user()->branch_id)
-                            ->orWhere('order_status_changing_current_branch_id',Auth::guard('web')->user()->branch_id)
-                            ->whereNull('deleted_at')
-                            ->latest()
-                            ->get();
+
+
+         $query = Order::query();
+
+        if($request->invoice_no){
+            $data['invoice_no'] = $request->invoice_no;
+            $query = $query->where('invoice_no',$request->invoice_no);
+        }
+
+        if($request->merchant_invoice){
+            $data['merchant_invoice'] = $request->merchant_invoice;
+            $query = $query->where('merchant_invoice',$request->merchant_invoice);
+        }
+        
+        if($request->customer_phone){
+            $data['customer_phone'] = $request->customer_phone;
+            $customer = Customer::where('customer_phone',$request->customer_phone)->first();
+            $query = $query->where('customer_id',$customer->id);
+        }
+
+
+
+        if($request->date_from && $request->date_to)
+        {
+
+            $date_from = $request->date_from;
+            $date_to   = $request->date_to;
+
+            $date_from  = date_create($request->date_from." 00:00:00");
+            $date_to    = date_create($request->date_to." 23:59:59");
+
+            $startDate  = date("Y-m-d",strtotime($date_from));
+            $endDate    = date("Y-m-d",strtotime($date_to));
+
+
+            if($request->order_date_search == 1)
+            {
+                $query = $query->whereBetween('created_at',[$startDate,$endDate]);                                                
+            }
+            elseif($request->order_date_search == 2)
+            {
+                $query = $query->whereBetween('updated_at',[$startDate,$endDate]);              
+            }
+             
+        }
+
+ 
+        $data['orders'] = $query->OrderBy('id','DESC')
+                                ->where('creating_branch_id',Auth::guard('web')->user()->branch_id)
+                                ->orWhere('order_status_changing_current_branch_id',Auth::guard('web')->user()->branch_id)
+                                ->whereNull('deleted_at')
+                                ->latest()
+                                ->get();
+
+
         return view('backend.order.agent.order.allorder',$data);
+
     }
+
+
 
     public function getmerchantshopajax(Request $request){
         $unionHtmlOption = "<option value=''>Select Merchant Shop</option>";
@@ -823,7 +876,26 @@ class OrderController extends Controller
 
 
 
+ /**Multiple Print Slip */
+    public function multipleSlipOfInvoicePrint(Request $request)
+    {
 
+        $input = $request->all();
+        $allorder = [];
+        if($input['ids'] != ''){
+            foreach ($input['ids'] as $key => $value) {
+                array_push($allorder, $input['ids'][$key]);
+
+            }
+        }
+        
+        $data['setting'] = Setting::find(1);
+        $data['orders'] = Order::whereIn('id',$allorder)->get();
+        return view('backend.order.agent.order.print.multiple_print.label',$data);
+
+       
+    }
+    /**Multiple Print Slip */
 
 
 

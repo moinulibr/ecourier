@@ -24,13 +24,53 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Total Percel</h4>
+                    <div class="card-title">
+                        <span class="badge badge-primary" data-toggle="modal" data-target="#printModal" style="cursor:pointer;">Print</span>
+                    </div>
+
+                    <form action="" method="get">
+                        <div class="row">
+                          
+                            <div class="col-12 col-md-2">
+                                <input type="text" name="invoice_no"  @if(isset($invoice_no))   value="{{ $invoice_no }}" @endif  placeholder="Tracking ID" class="form-control">
+                            </div> 
+                             
+                            <div class="col-12 col-md-2">
+                                <input type="text" name="customer_phone"  @if(isset($customer_phone))   value="{{ $customer_phone }}" @endif placeholder="Customer Phone" class="form-control">
+                            </div>
+
+                            <div class="col-12 col-md-2">
+                                <input type="text" name="date_from"   @if(isset($date_from))   value="{{ $date_from }}" @endif placeholder="Date From" class="form-control datepicker">
+                            </div>
+
+                            <div class="col-12 col-md-2">
+                                <input type="text" name="to_date"  @if(isset($to_date))   value="{{ $to_date }}" @endif  placeholder="Date To" class="form-control datepicker">
+                            </div>
+
+                            <div class="col-12 col-md-2">
+                                  <select name="order_date_search" id="" class="form-control">
+                                      <option @if(isset($order_date_search))  {{ $order_date_search == 1 ? 'selected' : '' }}  @endif value="1">Created Date</option>
+                                      <option @if(isset($order_date_search))  {{ $order_date_search == 2 ? 'selected' : '' }}  @endif value="2">Last Updated</option>
+                                  </select>
+                            </div>
+
+                            <div class="col-12 col-md-1">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Find</button>
+                            </div>
+
+
+                        </div>
+                    </form>
 
                     <hr>
                 <div class="table-responsive">
                     <table id="" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
+                                <th>
+                                    <input type="checkbox" value="all" name="check_all" class="check_all_class" />
+                                </th>
+
                                 <th>Parcel ID</th>
                                 <th>Sender info</th>
                                 <th>Customer info</th>
@@ -56,6 +96,9 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
+                                 <td>
+                                    <input type="checkbox" name="checked_id[]" value="" class="check_single_class" id="{{$order->id}}" />
+                                </td>
                                 <td>
                                     <a href="#" class="viewSingleDataByAjax"   data-id="{{ $order->id }}" >
                                     {{ $order->invoice_no }}
@@ -168,6 +211,32 @@
 </div>
 
 
+<!-- Modal -->
+<div id="printModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+            <div class="form-group">
+                <label>Select Status</label>
+                <select id="status_id" name="status_id"  class="form-control" >
+                    <option value="">Select Status</option>
+                    @foreach(getOrderStatus_HH() as $key => $data)
+                        <option value="{{$data['id']}}"> {{$data['name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" id="print_now_id" href="#">Print Now</a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 {{-- ----------------Fmor Modal randering---------------- --}}
 {{-- --- class="viewSingleDataByAjax"   data-id="{{ $order->id }}" --}}
 <!-- Modal -->
@@ -196,8 +265,83 @@
         //========invoice details==============
 
     </script>
+
+
+
+
+        <script>
+        
+        //check_all_class
+        //check_single_class
+        $(document).on('click','.check_all_class',function(){
+            if (this.checked == false)
+            {
+                $('.check_single_class').prop('checked', false).change(); 
+                $(".check_single_class").each(function () 
+                { 
+                    var id = $(this).attr('id');
+                    $(this).val('').change(); 
+                }); 
+            }else{
+                $('.check_single_class').prop("checked", true).change();
+
+                $(".check_single_class").each(function () 
+                { 
+                    var id = $(this).attr('id');
+                    $(this).val(id).change(); 
+                }); 
+            }
+        });
+            //=======================
+        $(document).on('click','.check_single_class',function(){
+            var id = $(this).attr('id');
+            if (this.checked == false)
+            {
+                $(this).prop('checked', false).change(); 
+                $(this).val('').change(); 
+            }else{
+                $(this).prop("checked", true).change();
+                $(this).val(id).change(); 
+            }
+            //=======================
+        });
+
+
+        /*----for print-----*/
+        $(document).on('click','#print_now_id',function(){
+            var ids = [];
+            $('.check_single_class').each(function(index,value){
+                ids[index] = $(this).val();
+            });
+            var url = "{{ route('agent.order.multipleSlipOfInvoicePrint') }}";
+            console.log(url);
+            $.ajax({
+                url: url,
+                data: {ids: ids},
+                type: "GET",
+                success: function(response){
+                   // console.log(response);
+                    $.print(response);
+                },
+            });
+        });
+        /*----for print-----*/
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
     @endsection
-    {{-- ----------------Fmor Modal randering End---------------- --}}
+    
 
 
 @endsection

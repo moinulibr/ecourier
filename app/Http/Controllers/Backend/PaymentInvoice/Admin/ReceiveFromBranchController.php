@@ -55,10 +55,7 @@ class ReceiveFromBranchController extends Controller
         ->get();
         return view('backend.payment_invoice.admin.receive_from_other_branch.view_list',$data);
     }
-    public function index()
-    {
-        //
-    }
+   
     public function receivingFromOtherBranchNow($id)
     {
         // Start transaction!
@@ -164,7 +161,15 @@ class ReceiveFromBranchController extends Controller
             {
                 $update->parcel_amount_payment_status_id = 5;//8
                 $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
-            }else{
+            }
+            else if($order_id->creating_branch_id == $branch_type_id->id && 
+                $order_id->destination_branch_id != $branch_type_id->id
+            )
+            {
+                $update->parcel_amount_payment_status_id = 8;//8
+                $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
+            }
+            else{
                  //Branch received from delivery man
                 $update->parcel_amount_payment_status_id = 5;
                 $this->updateOrderParcelCodServiceStatus($orderId,$receiveAmoutTypeId);
@@ -235,7 +240,14 @@ class ReceiveFromBranchController extends Controller
             {
                 //Branch received Amount And Preparing
                 $order_id->parcel_amount_payment_status_id =  5;//8
-            }else{
+            }
+             else if($order_id->creating_branch_id == $branch_type_id->id && 
+                $order_id->destination_branch_id != $branch_type_id->id
+            )
+            {
+                $order_id->parcel_amount_payment_status_id =  8;//8
+            }
+            else{
                  //Branch received from delivery man
                 $order_id->parcel_amount_payment_status_id =  5;
             }

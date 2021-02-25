@@ -74,7 +74,7 @@ class AgentController extends Controller
             $agent->show_password = $request->password;
             $agent->role_id  =  9;
             $agent->branch_id =$request->branch_id;
-            $agent->user_approval_status_id = 1;
+            $agent->user_approval_status_id = 2;
             $agent->login_status = 1;
             $agent->save();
 

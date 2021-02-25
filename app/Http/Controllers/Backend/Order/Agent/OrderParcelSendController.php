@@ -238,7 +238,7 @@ class OrderParcelSendController extends Controller
         $branch_id = Auth::guard('web')->user()->branch_id;
         $send_by = $request->sender_id;
         $from_date = $request->from_date;
-        $to_date = $request->to_date;
+        $to_date = $request->to_date; 
       
        if($request->from_date)
        {

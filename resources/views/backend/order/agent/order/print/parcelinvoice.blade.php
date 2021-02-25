@@ -142,6 +142,18 @@
 			width: 20%;
 		}
 
+		.conditionamount{
+			width: 58%;
+			float: left;
+		}
+
+		.conditionamount p{
+			text-align: center;
+			padding-top: 5px;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
 		.order_date {
 			width: 22%;
 			float: right;
@@ -298,8 +310,12 @@
 			</tr>
 			<tr>
 				<td>01</td>
-				<td> </td>
-				<td style="font-size: 15px; font-weight: bold;">Cash</td>
+				<td> {{ $order->orderDescriptions?$order->orderDescriptions->parcel_description:'' }} </td>
+				<td style="font-size: 15px; font-weight: bold;">
+					  <strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> 
+                        {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}
+                    </strong> 
+				</td>
 				<td>
 					{{ $order->service_charge + $order->cod_charge }} <br>
 					( {{ $order->service_charge  }} + {{ $order->cod_charge }} )
@@ -316,6 +332,9 @@
 		<div class="author_name center">
 			 <p class="margin">{{ Auth::guard('web')->user()->name }}</p>
 			<h5 class="before margin color" style="font-size: 15px;">Booking Offier</h5>
+		</div>
+		<div class="conditionamount">
+			<p>Cond. With VD Charge :- {{ $order->collect_amount }}/-</p>
 		</div>
 		<div class="order_date">
 			<p class="margin">{{ $order->created_at->format('D-m-Y') }}</p>
@@ -409,8 +428,12 @@
 			</tr>
 			<tr>
 				<td>01</td>
-				<td> </td>
-				<td style="font-size: 15px; font-weight: bold;">Cash</td>
+				<td> {{ $order->orderDescriptions?$order->orderDescriptions->parcel_description:'' }} </td>
+				<td style="font-size: 15px; font-weight: bold;"> 
+                    <strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> 
+                        {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}
+                    </strong> 
+				</td>
 				<td>
 					{{ $order->service_charge + $order->cod_charge }} <br>
 					( {{ $order->service_charge  }} + {{ $order->cod_charge }} )
@@ -427,6 +450,9 @@
 		<div class="author_name center">
 			 <p class="margin">{{ Auth::guard('web')->user()->name }}</p>
 			<h5 class="before margin color" style="font-size: 15px;">Booking Offier</h5>
+		</div>
+		<div class="conditionamount">
+			<p>Cond. With VD Charge :- {{ $order->collect_amount }}/-</p>
 		</div>
 		<div class="order_date">
 			<p class="margin">{{ $order->created_at->format('D-m-Y') }}</p>

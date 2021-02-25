@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Dakbd - Login</title>
+	<title>Login - {{ $websetting->company_name }}</title>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -62,7 +62,7 @@
 				<form method="POST" action="{{route(merchantLoginFormSubmitRoute_HH)}}" class="login100-form validate-form p-l-55 p-r-55 p-t-178">
                     @csrf
                     <span class="login100-form-title">
-						DakBD <br/>Sign In
+						Merchant<br/>Sign In
 					</span>
                     
                     @if (session('error'))
