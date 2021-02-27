@@ -34,8 +34,6 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
                                                         ->get();
         return view('backend.orderParcelOrAmountReceive.admin.receiveDeliveredParcelAmount.index',$data);
     }
-
-
     public function showParcelAmountOrderList(Request $request)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
@@ -72,11 +70,15 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
                         ->where('branch_id',$branch_id)
                         ->where('order_processing_type_id',2)
                         ->where('collection_status',0)
+                        ->whereNull("deleted_at")
                         ->get();
 
         return view('backend.orderParcelOrAmountReceive.admin.receiveDeliveredParcelAmount.list',$data);
     }
 
+
+
+    // store
     public function storeParcelAmountOrderList(Request $request)
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
@@ -92,6 +94,7 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
             //change order_assigning_status_id ,branch_id in the order_assign table
             foreach ($order_ids as $key => $order_id) {
                $this->parcelAmountReceiveOrderStatusIdAndInsertProcessingHistoryTable($order_id,$order_assigning_status_id,$manpower_id);
+               updateActiveStatusWhenReceivingAmount_HH($order_id,$active_status=1);
             }
             //change status id in the order table
             //order insert data in the processing table
@@ -115,27 +118,30 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
     {
         $branch_id = Auth::guard('web')->user()->branch_id;
         $data = Order_assign::where('order_id',$orderId)
+                    ->whereNull("deleted_at")
                     ->where('branch_id',$branch_id)
                     ->where('manpower_id',$manpower_id)
                     ->where('Order_processing_type_id',2)
                     ->where('collection_status',0)
                     ->where('order_assigning_status_id',$order_assigning_status_id)
                     ->first();
-        $data->collection_status = 1;
-        $data->save();
+        if($data)
+        {
+            $data->collection_status = 1;
+            $data->save();
+        }
 
-        //update order tabel
-        $order_id =  Order::where('id',$orderId)->first();
-        $order_id->parcel_amount_payment_status_id =  3;
-        $order_id->office_collect_amount_from_delivery_man =  1;
-        $order_id->save();
-        $this->insertOrderPaymentReceivingHistoryTable($order_id,$manpower_id);
+        //amount receive history
+        $this->insertOrderPaymentReceivingHistoryTable($orderId,$manpower_id);
 
         /*order manpower income commission */
         $created_by     = Auth::guard('web')->user()->id;
         $branch_id      = Auth::guard('web')->user()->branch_id;
-        manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(7,$orderId),$branch_id,$created_by);
-        manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(9,$orderId),$branch_id,$created_by);
+        getManpowerAssignedData_HH(7,$orderId)?manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(7,$orderId)):NULL;
+        getManpowerAssignedData_HH(9,$orderId)?manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(9,$orderId)):NULL;
+        //manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(7,$orderId),$branch_id,$created_by);
+        //manpowerCommissionAmountInsert_HH(getManpowerAssignedData_HH(9,$orderId),$branch_id,$created_by);
+        /*order manpower income commission */
         /*order manpower income commission */
 
         //$this->insertOrderProcessingHistoryTable($orderId,$changing_status_id = 29);
@@ -143,40 +149,60 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
     }
 
 
-    public function insertOrderPaymentReceivingHistoryTable($order_id,$manpower_id)
+    public function insertOrderPaymentReceivingHistoryTable($orderId,$manpower_id)
     {
+        $order_id =  Order::where('id',$orderId)->first();
         $cod_charge     = $order_id->cod_charge;
         $service_charge = $order_id->service_charge;
-        $product_amount = $order_id->product_amount;
+        $client_merchant_payable_amount = $order_id->client_merchant_payable_amount;
 
         if($order_id->parcel_amount_payment_type_id == 1)
         {
             $this->OrderPaymentReceivingHistory($order_id,1,$service_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,2,$cod_charge,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4,$client_merchant_payable_amount,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 2)
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 3)
         {
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 4)
         {
             $this->OrderPaymentReceivingHistory($order_id,2 ,$cod_charge,$manpower_id);
-            $this->OrderPaymentReceivingHistory($order_id,4 ,$product_amount,$manpower_id);
+            $this->OrderPaymentReceivingHistory($order_id,4 ,$client_merchant_payable_amount,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 4);
         }
         else if($order_id->parcel_amount_payment_type_id == 5)
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
         }
         else if($order_id->parcel_amount_payment_type_id == 6)
         {
             $this->OrderPaymentReceivingHistory($order_id,1 ,$service_charge,$manpower_id);
             $this->OrderPaymentReceivingHistory($order_id,2,$cod_charge,$manpower_id);
+
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 1);
+            $this->updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id = 2);
         }
         else if($order_id->parcel_amount_payment_type_id == 7)
         {
@@ -184,25 +210,69 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         }
         return true;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public function OrderPaymentReceivingHistory($order_id,$receive_amount_type_id,$amount,$manpower_id)
-    {   
+    {
         $branch_id = Auth::guard('web')->user()->branch_id;
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
         $parcel_amount_payment_status_id =  NULL;
         $service_delivery_payment_status_id = NULL;
         $service_cod_payment_status_id = NULL;
-        if($order_id->creating_branch_type_id == $order_id->destination_branch_id)
-        {
-            $parcel_amount_payment_status_id = 8;
-        }else{
-            $parcel_amount_payment_status_id = 3;
-        }
         if($receive_amount_type_id == 1)
         {
-            $service_delivery_payment_status_id = 1;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $service_delivery_payment_status_id = 6;//Head Office Receive commission of his own branch
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $service_delivery_payment_status_id = 3;
+            }else{
+                //Branch received from delivery man
+                $service_delivery_payment_status_id = 3;
+            }
         }
         else if($receive_amount_type_id == 2)
         {
-            $service_cod_payment_status_id = 1;
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $service_cod_payment_status_id = 6;//Head Office Receive commission of his own branch
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $service_cod_payment_status_id = 3;
+            }else{
+                //Branch received from delivery man
+                $service_cod_payment_status_id = 3;
+            }
+        }
+
+        else if($receive_amount_type_id == 4)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                $parcel_amount_payment_status_id = 8; //Branch received Amount And Preparing
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )
+            {
+                $parcel_amount_payment_status_id = 5;//8
+            }else{
+                 //Branch received from delivery man
+                $parcel_amount_payment_status_id = 5;
+            }
         }
         $orderProcessing =  new ReceiveAmountHistory();
         $orderProcessing->order_id                          = $order_id->id;
@@ -225,6 +295,78 @@ class OrderDeliveredParcelAmountReceiveController extends Controller
         return $orderProcessing;
     }
 
+
+
+    public function updateOrderParcelServiceCodStatus($orderId,$receive_amount_type_id)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
+
+        $order_id =  Order::where('id',$orderId)->first();
+        $order_id->office_collect_amount_from_delivery_man =  1;
+
+        if($receive_amount_type_id == 1)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )
+            {
+                $order_id->service_delivery_payment_status_id =  6;
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                //Branch received Amount And Preparing
+                $order_id->service_delivery_payment_status_id =  3;//
+            }else{
+                //Branch received from delivery man
+                $order_id->service_delivery_payment_status_id =  3;
+            }
+        }
+        else if($receive_amount_type_id == 2)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )
+            {
+                $order_id->service_cod_payment_status_id =  6;//8
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                //Branch received Amount And Preparing
+                $order_id->service_cod_payment_status_id =  3;//8
+            }else{
+                 //Branch received from delivery man
+                $order_id->service_cod_payment_status_id =  3;
+            }
+        }
+
+        else if($receive_amount_type_id == 4)
+        {
+            if($order_id->creating_branch_id == $branch_type_id->id &&
+                $order_id->destination_branch_id == $branch_type_id->id
+            )
+            {
+                $order_id->parcel_amount_payment_status_id =  8;//8
+            }
+            else if($order_id->destination_branch_id == $branch_type_id->id &&
+                $order_id->creating_branch_id != $branch_type_id->id
+            )//$branch_type_id->id == head offfice
+            {
+                //Branch received Amount And Preparing
+                $order_id->parcel_amount_payment_status_id =  5;//8
+            }else{
+                 //Branch received from delivery man
+                $order_id->parcel_amount_payment_status_id =  5;
+            }
+        }
+        //update order tabel
+        $order_id->save();
+        return $order_id;
+    }
 
 
     //not using this

@@ -82,16 +82,23 @@
                                 <div class="table-responsive dt-responsive" id="showResult">
                                     <table  class="table table-striped table-bordered nowrap">
                                         <thead>
-                                            <tr>
+                                           <tr>
                                                 <th>Sl.</th>
                                                 <th></th>
+                                                <th>Customer <br/> Name</th>
+                                                <th>Customer<br/>Phone</th>
+                                                <th>Customer<br/>Address</th>
+                                                <th>Condition<br/>Amount</th>
                                                 <th>Order No</th>
-                                                <th>Service <br/> Charge</th>
-                                                <th>COD <br/> Charge</th>
-                                                <th>Other <br/> Charge</th>
-                                                <th>Parcel <br/> Amount</th>
-                                                <th>Sub Total</th>
-                                                <th style="width:5%;"></th>
+                                                <th>Service <br/>Charge</th>
+                                                <th>COD <br/>Charge</th>
+                                                <th>Total <br/>Charge</th>
+                                                <th>Receiver <br/>Amount</th>
+                                                <th>Delivery <br/>Charge<br/>Bearer</th>
+                                                <th>Cash <br/> Collection</th>
+                                                <th style="width:5%;">Status</th>
+                                                <th>Condition<br/>Payment<br/>Status</th>
+                                              
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -133,6 +140,7 @@
             var get_checked_id  = $(this).attr('id');
             var get_amount  = parseInt($(this).data('amount'));
 
+                var ide = $(this).data('id');
             var maked_amount_id = 'amount_'+get_checked_id;
             var maked_del_id    = 'del_'+get_checked_id;
 
@@ -141,10 +149,12 @@
             var newAmount = parseInt(nanCheck($('#totalAmount').text()));
             if(checkedResult)
             {
+                $('#order_id_'+ide).val(ide);
                 $('#'+maked_amount_id).val(set_amount);
                 $('#'+maked_del_id).html(set_amount).css({'color':'black'});
                 newAmount += get_amount;
             }else{
+                $('#order_id_'+ide).val('');
                 $('#'+maked_amount_id).val('');
                 $('#'+maked_del_id).html('<del>'+set_amount +'</del>').css({'color':'red'});
 
@@ -180,18 +190,19 @@
         }
         function submit(amount)
         {
-            if(amount > 0 )
-            {
+            //if(amount > 0 )
+            //{
                 $('#submit').removeAttr('disabled','disabled');
-            }else{
-                $('#submit').attr('disabled','disabled');
-            }
+            //}else{
+                //$('#submit').attr('disabled','disabled');
+            //}
         }
         function tt()
         {
             $(".order_id_class").each(function() {
                 var amount = nanCheck($(this).data('amount'));
                 var id = $(this).attr('id');
+                var ide = $(this).data('id');
                 var checkedResult = 0;
                 if($(this).is(":checked"))
                 {
@@ -201,9 +212,11 @@
                 }
                 if(checkedResult)
                 {
+                     $('#order_id_'+ide).val(ide);
                     $('#amount_'+id).val(amount);
                 }
                 else{
+                    $('#order_id_'+ide).val('');
                     $('#amount_'+id).val('');
                 }
             });

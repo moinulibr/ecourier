@@ -4,13 +4,14 @@
 
     <meta charset="utf-8" />
     <title>
-    	Courier | @yield('title')
+    	@yield('title')  - {{ $websetting->company_name }}
+
     	@stack('title')
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="{{ $websetting->company_name }}" name="description" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="Themesbrand" name="author" />
+    <meta content="Md Abu Taleb" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('links/backend/01')}}/assets/images/favicon.ico">
 
@@ -41,7 +42,7 @@
 
 
 
-<body data-sidebar="light">
+<body data-sidebar="dark">
 
     <!-- <body data-layout="horizontal" data-topbar="colored"> -->
 

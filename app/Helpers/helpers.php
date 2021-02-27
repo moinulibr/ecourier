@@ -537,96 +537,95 @@
     | Order, Admin, Merchant Agent and others order creating calcuation
     |----------------
     */
-    function parcelAmountPaymentTypeCalculation_HH($inputs)//parcel_amount_payment_type_id
-    {
-        $parcel_amount_payment_type_id      =  $inputs['parcel_amount_payment_type_id'];
-        $collect_amount                     =  $inputs['collect_amount'];
-        $charge                             =  $inputs['charge'];
-        $cod_charge                         =  $inputs['cod_charge'];
-        $total_charge                       =  $inputs['total_charge'];
-        $collectable_amount_from_customer   =  $inputs['collectable_amount_from_customer'];
-        $collectable_amount_from_merchant   =  $inputs['collectable_amount_from_merchant'];
-        $total_payable_amount               =  $inputs['total_payable_amount'];
-        $payment_status_id                  =  $inputs['payment_status_id'];
-
-        $client_merchant_payable_amount = 0;
-        $service_cod_payment_status_id = NULL;
-        $service_delivery_payment_status_id = NULL;
-        $collect_amount = $collect_amount ;
-        if($parcel_amount_payment_type_id == 1)// product, delivery charge customer dibe.  cod chage client dibe so payment
+        function parcelAmountPaymentTypeCalculation_HH($inputs)//parcel_amount_payment_type_id
         {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            $parcel_amount_payment_type_id      =  $inputs['parcel_amount_payment_type_id'];
+            $collect_amount                     =  $inputs['collect_amount'];
+            $charge                             =  $inputs['charge'];
+            $cod_charge                         =  $inputs['cod_charge'];
+            $total_charge                       =  $inputs['total_charge'];
+            $collectable_amount_from_customer   =  $inputs['collectable_amount_from_customer'];
+            $collectable_amount_from_merchant   =  $inputs['collectable_amount_from_merchant'];
+            $total_payable_amount               =  $inputs['total_payable_amount'];
+            $payment_status_id                  =  $inputs['payment_status_id'];
+
+            $client_merchant_payable_amount     = 0;
+            $service_cod_payment_status_id      = NULL;
+            $service_delivery_payment_status_id = NULL;
+            $collect_amount = $collect_amount ;
+            if($parcel_amount_payment_type_id == 1)// product, delivery charge customer dibe.  cod chage client dibe so payment
             {
-                $client_merchant_payable_amount = $collect_amount - $charge;
-                $service_cod_payment_status_id = 1;
-            }else{
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount - $charge;
+                    $service_cod_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }
+            }
+            else if($parcel_amount_payment_type_id == 2) // product, delivery , cod charge customer dibe. so baki
+            {
                 $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
             }
-        }
-        else if($parcel_amount_payment_type_id == 2) // product, delivery , cod charge customer dibe. so baki
-        {
-            $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
-        }
-        else if($parcel_amount_payment_type_id == 3) // product price customer dibe. delivery,cod charge so baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 3) // product price customer dibe. delivery,cod charge so baki
             {
-                $client_merchant_payable_amount = $collect_amount;
-                $service_cod_payment_status_id = 1;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount     = $collect_amount;
+                    $service_cod_payment_status_id      = 1;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 4) // product price,cod customer dibe. delivery charge so baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 4) // product price,cod customer dibe. delivery charge so baki
             {
-                $client_merchant_payable_amount = $collect_amount - $cod_charge;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = $collect_amount -  ($charge + $cod_charge);
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount - $cod_charge;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount -  ($charge + $cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 5) // customer delivery charge so cod baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 5) // customer delivery charge so cod baki
             {
-                $client_merchant_payable_amount = 0;
-                $service_cod_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = 0;
+                    $service_cod_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge + $cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 6) // delivery,cod charge customer dibe. nothing baki
-        {
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 6) // delivery,cod charge customer dibe. nothing baki
             {
-                $client_merchant_payable_amount = 0;
-            }else{
-                $client_merchant_payable_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }
             }
-        }
-        else if($parcel_amount_payment_type_id == 7) // customer kisuei dibe na. delivery charge ,cod so baki
-        {
-            $collect_amount = 0;
-            if($payment_status_id == 2)//paid , 1=unpaid
+            else if($parcel_amount_payment_type_id == 7) // customer kisuei dibe na. delivery charge ,cod so baki
             {
-                $client_merchant_payable_amount = 0;
-                $service_cod_payment_status_id = 1;
-                $service_delivery_payment_status_id = 1;
-            }else{
-                $client_merchant_payable_amount = 0;
+                $collect_amount = 0;
+                if($payment_status_id == 2)//paid , 1=unpaid
+                {
+                    $client_merchant_payable_amount = 0;
+                    $service_cod_payment_status_id = 1;
+                    $service_delivery_payment_status_id = 1;
+                }else{
+                    $client_merchant_payable_amount = $collect_amount - ($charge+$cod_charge);
+                }
             }
+            $data['service_cod_payment_status_id'] = $service_cod_payment_status_id;
+            $data['service_delivery_payment_status_id'] = $service_delivery_payment_status_id;
+            $data['client_merchant_payable_amount'] = $client_merchant_payable_amount;
+            $data['collect_amount'] = $collect_amount;
+            return $data;
+            return "COD = " .$service_cod_payment_status_id .", Delivery Charge = ".$service_delivery_payment_status_id .", payable amount = ".$client_merchant_payable_amount;
         }
-        $data['service_cod_payment_status_id'] = $service_cod_payment_status_id;
-        $data['service_delivery_payment_status_id'] = $service_delivery_payment_status_id;
-        $data['client_merchant_payable_amount'] = $client_merchant_payable_amount;
-        $data['collect_amount'] = $collect_amount;
-        return $data;
-        return "COD = " .$service_cod_payment_status_id .", Delivery Charge = ".$service_delivery_payment_status_id .", payable amount = ".$client_merchant_payable_amount;
-    }
-
     /*
     |---------------
     | Order, Admin, Merchant Agent and others order creating calcuation
@@ -634,27 +633,27 @@
     */
 
     //order_processing_histories
-    function insertOrderProcessingHistory_HH($getData)
-    {
-        $order_id                   = $getData['order_id'];
-        $order_status_id            = $getData['order_status_id'];
-        $branch_id                  = $getData['branch_id'];
-        $created_by                 = $getData['created_by'];
-        $status_changer_id          = $getData['status_changer_id'];
-        $status                     = $getData['status'];
-        $changing_status_branch_id  = $getData['changed_branch_id'];
+        function insertOrderProcessingHistory_HH($getData)
+        {
+            $order_id                   = $getData['order_id'];
+            $order_status_id            = $getData['order_status_id'];
+            $branch_id                  = $getData['branch_id'];
+            $created_by                 = $getData['created_by'];
+            $status_changer_id          = $getData['status_changer_id'];
+            $status                     = $getData['status'];
+            $changing_status_branch_id  = $getData['changed_branch_id'];
 
-        $data =  new Order_processing_history();
-        $data->order_id                     = $order_id;
-        $data->order_status_id              = $order_status_id;
-        $data->changing_status_branch_id    = $changing_status_branch_id;
-        $data->branch_id                    = $branch_id;
-        $data->created_by                   = $created_by;
-        $data->status_changer_id            = $status_changer_id;
-        $data->status                       = $status;
-        $data->save();
-        return $data;
-    }
+            $data =  new Order_processing_history();
+            $data->order_id                     = $order_id;
+            $data->order_status_id              = $order_status_id;
+            $data->changing_status_branch_id    = $changing_status_branch_id;
+            $data->branch_id                    = $branch_id;
+            $data->created_by                   = $created_by;
+            $data->status_changer_id            = $status_changer_id;
+            //$data->status                       = $status;
+            $data->save();
+            return $data;
+        }
 
     function orderDestinationByOrderId_HH($order_id)
     {
@@ -706,64 +705,7 @@
             }
     }
 
-    function getManpowerAssignedAreaByManpowerId_HH($manpower_id)
-    {
-        $manpower = getManpowerByManpowerId_HH($manpower_id);
-
-    }
-
-    //manpower_assign_to_areas
-    function getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id)
-    {
-        $query = ManpowerAssignToArea::query();
-                    if($manpower_type_id < 3)
-                    {
-                        $query->where('manpower_type_id',$manpower_type_id);
-                    }
-                    $query->where('area_id',$area_id)
-                    ->first();
-    }
-
-    //order_assigns
-    function insertOrderAssign_HH($getData)
-    {
-        $order_id                   = $getData['order_id'];
-
-        $area_id                    = $getData['areaId'];
-        $manpower_type_id           = $getData['pickup'];
-        $assignedArea               = getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id);
-        $manpower_id                = $assignedArea?$assignedArea->manpower_id:NULL;
-
-        $order_processing_type_id   = $getData['order_processing_type_id'];
-        $assigner_id                = $getData['assigner_id'];
-        $order_assigning_status_id  = $getData['order_assigning_status_id'];
-        $collection_status          = $getData['collection_status'];
-        $branch_id                  = $getData['branch_id'];
-        $status                     = $getData['status'];
-        $created_by                 = $getData['created_by'];
-
-        if($manpower_id)
-        {
-            $data =  new Order_assign();
-            $data->manpower_id                  = $manpower_id;
-            $data->order_id                     = $order_id;
-            $data->order_processing_type_id     = $order_processing_type_id;
-            $data->assigner_id                  = $assigner_id;
-            $data->order_assigning_status_id    = $order_assigning_status_id;
-            $data->collection_status            = $collection_status;
-            $data->branch_id                    = $branch_id;
-            $data->status                       = $status;
-            $data->created_by                   = $created_by;
-            $data->status                       = $status;
-            $data->save();
-            return $data;
-        }
-        return true;
-    }
-
-
-
-
+   
 
 
     /*
@@ -969,33 +911,14 @@ Thanked By ".appUrl_HS();
             $customer->status        = 1;
             $customer->save();
             return $customer;
-            /*
-                $gen_customer = New General_customer();
-                $gen_customer->name = $request->name;
-                $gen_customer->phone= $request->phone;
-                $gen_customer->area_id       = $request->g_c_area_id;
-                $gen_customer->address       = $request->g_c_address;
-                $gen_customer->district_id   = $gen_customer_district_id;
-                $gen_customer->branch_id     = $creating_branch_id;
-                $gen_customer->status        = 1;
-                $gen_customer->save();
-            */
-            /*
-                $customerData['name']  = $request->name;
-                $customerData['phone'] = $request->phone;
-                $customerData['area_id']        = $request->g_c_area_id;
-                $customerData['district_id']    = $gen_customer_district_id;;
-                $customerData['branch_id']      = $creating_branch_id;
-                $customerData['address']        = $request->g_c_address;
-            */
         }
 
-
-
+        // Get Order By Order id, 
         function getOrderByOrderId_HH($order_id)
         {
             return Order::find($order_id);
         }
+
         function orderDetails_HH($order_id)
         {
             $order  =  getOrderByOrderId_HH($order_id);
@@ -1247,25 +1170,25 @@ Thanked By ".appUrl_HS();
 
     /*
     |------------------------------------------------------------------------------------------------------------------------
-    |   Order Status WhereIn
+    |   Order Status WhereIn , order assigning status, current status, changing status currentStatus
     |-------------------------------------------------------------------------------
     */
         function whereInCurrentStatusWhenAssigningParcelForAdmin_HH()
         {
-            return [1,2,3,4,5,42,12,13,16,17,27,28];
+            return [1,2,3,4,5,15,42,12,13,16,17,27,28];
         }
         function whereInChangingStatusWhenAssigningParcelForAdmin_HH()
         {
-            return [3,5,12,13,16,18,19,27,28,29];
+            return [3,5,12,13,16,17,18,19,27,28,29];
         }
 
         function whereInCurrentStatusWhenAssigningParcelForAgent_HH()
         {
-            return [2,3,4,5,11,12,13,16,17,27,28];
+            return [2,3,4,5,15,11,12,13,16,17,27,28];
         }
         function whereInChangingStatusWhenAssigningParcelForAgent_HH()
         {
-            return [3,5,12,13,16,18,19,27,28,29];
+            return [3,5,12,13,16,17,18,19,27,28,29];
         }
     /*
     |---------------------------------------------------------------------------------------
@@ -1286,115 +1209,144 @@ Thanked By ".appUrl_HS();
                                     ->first();
         }
         //---------------======================------------------=====================--------------
-        /**Branch Commission Set */
-        function getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($branch_id,$branch_commission_type_id)
-        {
-            $setting = branchCommissionSettings_HH($branch_id);
-            if(!$setting)return 0;
-            $data = [];
-            $data['commission_amount']     = 0;
-            $data['commission_type']       = 0;
-            $data['commission_setting_id'] = 0;
-            switch ($branch_commission_type_id) 
+            /**Branch Commission Set */
+            function getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($branch_id,$branch_commission_type_id)
             {
-                case "1":
-                    $data['commission_amount']     = $setting->create_and_pick_commission_amount;
-                    $data['commission_type']       = $setting->create_and_pick_commission_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->create_and_pick_commission_amount;
-                    break;
-                case "2":
-                    $data['commission_amount']     = $setting->create_pick_and_delivery_commision_amount;
-                    $data['commission_type']       = $setting->create_pick_and_delivery_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->create_pick_and_delivery_commision_amount;
-                    break;
-                case "3":
-                    $data['commission_amount']     = $setting->receive_and_delivery_commision_amount;
-                    $data['commission_type']       = $setting->receive_and_delivery_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->receive_and_delivery_commision_amount;
-                    break;
-                case "4":
-                    $data['commission_amount']     = $setting->receive_as_media_commision_amount;
-                    $data['commission_type']       = $setting->receive_as_media_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->receive_as_media_commision_amount;
-                    break;
-                case "5":
-                    $data['commission_amount']     = $setting->sending_as_media_commision_amount;
-                    $data['commission_type']       = $setting->sending_as_media_commision_type_id;
-                    $data['commission_setting_id'] = $setting->id;
-                    return $data;
-                    return $setting->sending_as_media_commision_amount;
-                    break;
-                default:
-                    return $data;
-            }
-        }
-
-        function insertingBranchCommission_HH($order,$myBranchId)
-        {
-            $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
-            $headBranch = $branch_type_id?$branch_type_id->id:1;
-            $creating_branch_id         = $order->creating_branch_id;
-            if($creating_branch_id != $headBranch)
-            {
-                //------------------------------------------
-                $destination_branch_id      = $order->destination_branch_id;
-                $branch_commission_type_id  = NULL;
-                $branch_type_id    = getBranchByBranchId_HH($myBranchId)->branch_type_id;
-                if($creating_branch_id  != $destination_branch_id)
+                $setting = branchCommissionSettings_HH($branch_id);
+                if(!$setting)return 0;
+                $data = [];
+                $data['commission_amount']     = 0;
+                $data['commission_type']       = 0;
+                $data['commission_setting_id'] = 0;
+                switch ($branch_commission_type_id) 
                 {
-                    $branch_commission_type_id = 1;  
-                }else{
-                    $branch_commission_type_id = 2; 
-                } 
-                $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
-                $commission_type                    = $data['commission_type'];
-                $commission_amount                  = $data['commission_amount'];
-                $branch_commission_setting_id       = $data['commission_setting_id'];
-                $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
-                $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
-                //------------------------------------------
-                $commission = new Branch_commission();
-                $commission->order_id                       = $order->id;  
-                $commission->branch_id                      = $myBranchId;  
-                $commission->branch_commission_setting_id   = $branch_commission_setting_id;  
-                $commission->branch_type_id                 = $branch_type_id;  
-                $commission->branch_commission_type_id      = $branch_commission_type_id;  
-                $commission->charge                         = $totalCharge;  
-                $commission->commission                     = $commissionAmount;  
-                $commission->active_status                  = 0;  
-                $commission->save();
-                return $commission;    
-            }return 1;
-        }
-
-        function branchCommissionCalculationAmount_HH($commissionType,$commissionAmount,$totalChargeAmount)
-        {
-            if($commissionType == 1)//parcent 
-            {
-                return $commissionAmount * $totalChargeAmount / 100;
-            }else{
-                return $commissionAmount;
+                    case "1":
+                        $data['commission_amount']     = $setting->create_and_pick_commission_amount;
+                        $data['commission_type']       = $setting->create_and_pick_commission_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->create_and_pick_commission_amount;
+                        break;
+                    case "2":
+                        $data['commission_amount']     = $setting->create_pick_and_delivery_commision_amount;
+                        $data['commission_type']       = $setting->create_pick_and_delivery_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->create_pick_and_delivery_commision_amount;
+                        break;
+                    case "3":
+                        $data['commission_amount']     = $setting->receive_and_delivery_commision_amount;
+                        $data['commission_type']       = $setting->receive_and_delivery_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->receive_and_delivery_commision_amount;
+                        break;
+                    case "4":
+                        $data['commission_amount']     = $setting->receive_as_media_commision_amount;
+                        $data['commission_type']       = $setting->receive_as_media_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->receive_as_media_commision_amount;
+                        break;
+                    case "5":
+                        $data['commission_amount']     = $setting->sending_as_media_commision_amount;
+                        $data['commission_type']       = $setting->sending_as_media_commision_type_id;
+                        $data['commission_setting_id'] = $setting->id;
+                        return $data;
+                        return $setting->sending_as_media_commision_amount;
+                        break;
+                    default:
+                        return $data;
+                }
             }
-        }
+            /**Branch Commission Get */
+            function getBranchCommissionByCommissionTypeId_HH($branch_commission_type_id)
+            {
+                switch ($branch_commission_type_id) 
+                {
+                    case "1":
+                        return "Create And Pickup Commission";
+                        break;
+                    case "2":
+                        return "Create Pickup and Delivery Commission";
+                        break;
+                    case "3":
+                        return "Receive And Delivery Commission";
+                        break;
+                    case "4":
+                        return "Receive As Media Commission";
+                        break;
+                    case "5":
+                        return "Sending As Media Commission";
+                        break;
+                    default:
+                        return $data;
+                }
+            }
 
-        /**total Service Charge */
-        function getOrderTotalServiceCharge_HH($order_id)
-        {
-            $order = getOrderByOrderId_HH($order_id);
-            $service_charge = $order->service_charge;
-            $cod_charge     = $order->cod_charge;
-            $others_charge  = $order->others_charge;
-            $total          = $service_charge + $cod_charge + $others_charge;
-            return  $total;
-        }
+            function insertingBranchCommission_HH($order,$myBranchId)
+            {
+                $branch_type_id = getBranchTypeByBranchTypeID_HH($branch_type_id = 1);
+                $headBranch = $branch_type_id?$branch_type_id->id:1;
+                $creating_branch_id         = $order->creating_branch_id;
+                if($creating_branch_id != $headBranch)
+                {
+                    //------------------------------------------
+                    $destination_branch_id      = $order->destination_branch_id;
+                    $branch_commission_type_id  = NULL;
+                    $branch_type_id    = getBranchByBranchId_HH($myBranchId)->branch_type_id;
+                    if($creating_branch_id  != $destination_branch_id)
+                    {
+                        $branch_commission_type_id = 1;  
+                    }else{
+                        $branch_commission_type_id = 2; 
+                    } 
+                    $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
+                    $commission_type                    = $data['commission_type'];
+                    $commission_amount                  = $data['commission_amount'];
+                    $branch_commission_setting_id       = $data['commission_setting_id'];
+                    $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
+                    $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
+                    //------------------------------------------
+                    $commission = new Branch_commission();
+                    $commission->order_id                       = $order->id;  
+                    $commission->branch_id                      = $myBranchId;  
+                    $commission->branch_commission_setting_id   = $branch_commission_setting_id;  
+                    $commission->branch_type_id                 = $branch_type_id;  
+                    $commission->branch_commission_type_id      = $branch_commission_type_id;  
+                    $commission->charge                         = $totalCharge;  
+                    $commission->commission                     = $commissionAmount;  
+                    $commission->active_status                  = 0;  
+                    $commission->save();
+                    return $commission;    
+                }return 1;
+            }
+
+            function branchCommissionCalculationAmount_HH($commissionType,$commissionAmount,$totalChargeAmount)
+            {
+                if($commissionType == 1)//parcent 
+                {
+                    return $commissionAmount * $totalChargeAmount / 100;
+                }else{
+                    return $commissionAmount;
+                }
+            }
+
+            /**total Service Charge */
+            function getOrderTotalServiceCharge_HH($order_id)
+            {
+                $order = getOrderByOrderId_HH($order_id);
+                $service_charge = $order->service_charge;
+                $cod_charge     = $order->cod_charge;
+                if(branchCommissionWithOrWithoutCodCharge_HS())
+                {
+                    //$others_charge  = $order->others_charge;
+                    $total  = $service_charge + $cod_charge ;//+ $others_charge; 
+                }else{
+                    $total          = $service_charge ;
+                }
+                return  $total;
+            }
         //---------------======================------------------=====================--------------
        
         /*inserting branch commission when receiving and sending*/
@@ -1406,6 +1358,8 @@ Thanked By ".appUrl_HS();
             $branch_type_id             = getBranchByBranchId_HH($myBranchId)->branch_type_id;
             if($myBranchId != $headBranchId)
             {
+                $existOrNot = checkBranchCommissionExistOrNot_HH($order->id,$myBranchId,$branch_commission_type_id);
+                if($existOrNot)return;
                 $data = getBranchCommissionSettingByBranchIdAndCommissionTypeId_HH($creating_branch_id,$branch_commission_type_id);
                 $commission_type                    = $data['commission_type'];
                 $commission_amount                  = $data['commission_amount'];
@@ -1413,6 +1367,7 @@ Thanked By ".appUrl_HS();
                 $totalCharge            = getOrderTotalServiceCharge_HH($order->id);
                 $commissionAmount       = branchCommissionCalculationAmount_HH($commission_type,$commission_amount,$totalCharge);
                 //------------------------------------------
+                
                 $commission = new Branch_commission();
                 $commission->order_id                       = $order->id;  
                 $commission->branch_id                      = $myBranchId;  
@@ -1426,7 +1381,13 @@ Thanked By ".appUrl_HS();
                 return $commission;    
             }return 1;
         }
-
+        function checkBranchCommissionExistOrNot_HH($order_id,$branch_id,$branch_commission_type_id)
+        {
+            return Branch_commission::where('branch_id',$branch_id)
+                            ->where('order_id',$order_id)
+                            ->where('branch_commission_type_id',$branch_commission_type_id)
+                            ->first();
+        }
         function orderReceivingCommissionTypeId_HH($order_id,$myBranchId)
         {
             $order                  = getOrderByOrderId_HH($order_id);
@@ -1464,8 +1425,88 @@ Thanked By ".appUrl_HS();
             return $branch_commission_type_id;
         }
         //---------------======================------------------=====================--------------
-        /**total Commission of a branch */
-      
+    /**total Commission of a branch */
+
+        function getManpowerAssignedAreaByManpowerId_HH($manpower_id)
+        {
+            $manpower = getManpowerByManpowerId_HH($manpower_id);
+    
+        }
+    
+        //manpower_assign_to_areas
+        //getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_not_id,$branch_id)
+        function getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_id,$branch_id)
+        {
+            $result = ManpowerAssignToArea::where('manpower_type_id','!=',$manpower_type_id)
+                        ->where('area_id',$area_id)
+                        ->where('branch_id',$branch_id)
+                        ->first();
+            if($result)
+            {
+                return $result;
+            }else{
+                $result = ManpowerAssignToArea::where('manpower_type_id','!=',$manpower_type_id)
+                        //->where('area_id',$area_id)
+                        ->where('branch_id',$branch_id)
+                        ->first();
+                return  $result;
+            }
+            return false;
+        }
+    
+
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                                           Auto Assigning Manpower , when order creating                 |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/
+    /*|*/  function autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id,$manpower_type_id,$created_by)
+    /*|*/   {
+    /*|*/      //getOrderByOrderId_HH($orderId); 
+    /*|*/      $creating_branch_id          = $order->creating_branch_id;
+    /*|*/      $destination_branch_id       = $order->destination_branch_id;
+    /*|*/      $order_processing_type_id    = $processing_type_id; 
+    /*|*/      $order_assigning_status_id   = 1;
+    /*|*/      if($order_processing_type_id == 1)
+    /*|*/      {
+    /*|*/           $branch_id                  = $creating_branch_id;
+    /*|*/           $area_id                    = $order->creating_area_id;
+    /*|*/           $manpower_type_not_id       = 2;
+    /*|*/      }
+    /*|*/      else{
+    /*|*/            $branch_id                 = $destination_branch_id;
+    /*|*/            $area_id                   = $order->destination_area_id;
+    /*|*/            $manpower_type_not_id      = 1;
+    /*|*/      }
+    /*|*/      $assignedArea   = getManpowerIdByAreaIdAndManpowerTypeId_HH($area_id,$manpower_type_not_id,$branch_id);
+    /*|*/      $manpower_id    = $assignedArea?$assignedArea->manpower_id:NULL;
+    /*|*/      if($manpower_id)
+    /*|*/      {
+    /*|*/          $data =  new Order_assign();
+    /*|*/          $data->manpower_id                  = $manpower_id;
+    /*|*/          $data->order_id                     = $order->id;
+    /*|*/          $data->order_processing_type_id     = $order_processing_type_id;
+    /*|*/          $data->assigner_id                  = NULL;
+    /*|*/          $data->order_assigning_status_id    = $order_assigning_status_id;
+    /*|*/          $data->collection_status            = 0;
+    /*|*/          $data->branch_id                    = $branch_id;
+    /*|*/          $data->status                       = 1;
+    /*|*/          $data->created_by                   = NULL;
+    /*|*/          $data->save();
+    /*|*/          return $data;
+    /*|*/      }
+    /*|*/      return true;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                                 Auto Assigning Manpower , when order creating                              |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
         /**Manpower Commission */
         function getManpowerAssignedData_HH($order_assigning_status_id,$order_id)
         {
@@ -1475,24 +1516,24 @@ Thanked By ".appUrl_HS();
                             ->whereNull('deleted_at')
                             ->first();
         }
-        function manpowerCommissionAmountInsert_HH($order,$branch_id,$created_by = NULL)
+        function manpowerCommissionAmountInsert_HH($order)//,$branch_id,$created_by = NULL
         {
-            $amount = 0;
+            $getAmount = 0;
             $totalAmount = 0;
             if($order->branch_id == 1)
             {
-                $amount = getOrderTotalServiceCharge_HH($order->order_id);
+                $getAmount = getOrderTotalServiceCharge_HH($order->order_id);
             }
             else{
-                $amount = specificOrderCommissionByBranchId_HH($order->order_id,$order->branch_id);  
+                $getAmount = specificOrderCommissionByBranchId_HH($order->order_id,$order->branch_id);  
             }
             if($order->order_processing_type_id == 1)
             {
-                $totalAmount = manpowerPickupCommissionAmount_HH($order->manpower_id,$order->branch_id,$amount);
+                $totalAmount = manpowerPickupCommissionAmount_HH($order->manpower_id,$order->branch_id,$getAmount);
             }
             else if($order->order_processing_type_id == 2)
             {
-                $totalAmount = manpowerDeliveryCommissionAmount_HH($order->manpower_id,$order->branch_id,$amount);
+                $totalAmount = manpowerDeliveryCommissionAmount_HH($order->manpower_id,$order->branch_id,$getAmount);
             }
 
             $data  =  new ManpowerIncomeHistory();
@@ -1500,9 +1541,9 @@ Thanked By ".appUrl_HS();
             $data->manpower_id              = $order->manpower_id;
             $data->order_processing_type_id = $order->order_processing_type_id;
             $data->amount                   = $totalAmount;
-            $data->branch_id                = $branch_id;
+            $data->branch_id                = $order->branch_id;
             $data->payment_status_id        = NULL;
-            $data->created_by               = $created_by;
+            //$data->created_by               = $created_by;
             $data->save();
             return $data; 
         }
@@ -1578,44 +1619,28 @@ Thanked By ".appUrl_HS();
     function receivedAmountTypeAmount_HH($order_id,$branch_id,$receive_amount_type_id)
     {
                 $q = ReceiveAmountHistory::query();
-                        $q->where('received_amount_branch_id',$branch_id);
-                        $q->where('order_id',$order_id);
-                        $q->select('order_id','receive_amount_type_id','amount',
-                        DB::raw('(select sum(amount) where activate_status_id = 1) as amount')
-                            //DB::raw('SUM(amount) as amount')
-                        );
-                        $q->where('receive_amount_type_id',$receive_amount_type_id);
-                        $q->where('activate_status_id',1);
-                      
-                            //->where('destination_branch_id','!=',$branch_id)
-                        if($receive_amount_type_id == 1)
-                        {
-                            $q->where('service_delivery_payment_status_id',1);
-                           /*  $result =  $q->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                        else if($receive_amount_type_id == 2)
-                        {
-                            $q->where('service_cod_payment_status_id',1);
-                            /* $result =  $q->latest()->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                        else if($receive_amount_type_id == 4)
-                        {
-                            $q->where('parcel_amount_payment_status_id',3);
-                            /* $result =  $q->latest()->first();
-                            return $result?$result->amount:00.00; */
-                        }
-                            /* ->orWhere(function ($query)
-                                {
-                                   return $query->orWhere('service_cod_payment_status_id',1)
-                                    ->orWhere('service_delivery_payment_status_id',1);
-                                })
-                            ->where('parcel_amount_payment_status_id',3)
-                            ->orWhere('service_cod_payment_status_id',1)
-                            ->orWhere('service_delivery_payment_status_id',1) */
-                            //$q->orderBy('order_id', 'ASC')
-                            //->orderBy('receive_amount_type_id', 'ASC')
+                    $q->where('received_amount_branch_id',$branch_id);
+                    $q->where('order_id',$order_id);
+                    $q->select('order_id','receive_amount_type_id','amount'
+                   // ,DB::raw('(select sum(amount) where activate_status_id = 1) as amount')
+                        //DB::raw('SUM(amount) as amount')
+                    );
+                    $q->where('receive_amount_type_id',$receive_amount_type_id);
+                    $q->where('activate_status_id',1);
+                  
+                    if($receive_amount_type_id == 1)
+                    {
+                        $q->where('service_delivery_payment_status_id',1);
+                    }
+                    else if($receive_amount_type_id == 2)
+                    {
+                        $q->where('service_cod_payment_status_id',1);
+                    }
+                    else if($receive_amount_type_id == 4)
+                    {
+                        $q->where('parcel_amount_payment_status_id',3);
+                    }
+                        
                return $result =  $q->sum('amount');
     }
 
@@ -1632,7 +1657,13 @@ Thanked By ".appUrl_HS();
                         
                return $result =  $q->sum('amount');
     }
-
+    function payToHeadOfficeTotalInvoiceAmount_HH($pay_to_head_office_invoice_id)
+    {
+        $q = PayToHeadOfficeInvoiceDetail::query();
+        $q->where('pay_to_head_office_invoice_id',$pay_to_head_office_invoice_id);
+                
+       return $result =  $q->sum('amount');
+    }
     function receiveFromOtherBranchInvoiceAmount_HH($order_id,$branch_id,$receive_amount_type_id,$pay_to_head_office_invoice_id)
     {
                 $q = PayToHeadOfficeInvoiceDetail::query();
@@ -1735,5 +1766,327 @@ Thanked By ".appUrl_HS();
     }
 
 
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                            Branch Commission active_status update , when received amount                |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/
+    /*|*/   function updateActiveStatusWhenReceivingAmount_HH($order_id,$active_status=1)
+    /*|*/   {
+    /*|*/          $data =  Branch_commission::where('order_id',$order_id)
+    /*|*/                           ->where('active_status',0)
+    /*|*/                           ->get();
+    /*|*/          if($data)
+    /*|*/          {
+    /*|*/               foreach ($data as $key => $value) 
+    /*|*/               {
+    /*|*/                   $value->active_status = $active_status;
+    /*|*/                   $value->save();
+    /*|*/               }
+    /*|*/          }
+    /*|*/           return $data;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Branch Commission active_status update , when received amount End               |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
 
 
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                           Payment Status     Service All Charge, Customer Payment or not status         |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/   //<strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}</strong>
+    /*|*/   function orderServiceChargeStatusByOrderId_HH($orderId)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($orderId);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/           $data['style'] =  "style=color:yellow;font-size:13px;background-color:red;";
+    /*|*/           $data['status'] =  "Un-paid";
+    /*|*/          if($service_cod_payment_status_id && $service_delivery_payment_status_id )
+    /*|*/          {
+    /*|*/            $data['style'] =  "style=color:yellow;font-size:14px;background-color:green;padding:2%";
+    /*|*/            $data['status'] =  "Paid";
+    /*|*/               //{
+    /*|*/                   //$value->active_status = $active_status;
+    /*|*/                   //$value->save();
+    /*|*/               //}
+    /*|*/          }
+    /*|*/         return $data;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Payment Status     Service All Charge, Customer Payment or not status End       |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                           Payment Status     Service All Charge, Customer Payment or not status         |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/   //<strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}</strong>
+    /*|*/   function orderParcelAmountPaymentStatusByOrderId_HH($orderId)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($orderId);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/           $data['style'] =  "style=color:yellow;font-size:9px;background-color:red;";
+    /*|*/           $data['status'] =  "Not Payable";
+    /*|*/          if($parcel_amount_payment_type_id < 5 )
+    /*|*/          {
+    /*|*/               if($parcel_amount_payment_status_id)
+    /*|*/               {
+    /*|*/                   $data['style'] =  "style=color:yellow;font-size:14px;background-color:green;padding:2%";
+    /*|*/                   $data['status'] =  "Paid";
+    /*|*/               }
+    /*|*/               else{
+    /*|*/                       $data['style'] =  "style=color:yellow;font-size:9px;background-color:red;";
+    /*|*/                       $data['status'] =  "Un-paid";
+    /*|*/                   }
+    /*|*/          }
+    /*|*/         return $data;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Payment Status     Service All Charge, Customer Payment or not status End       |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+        
+
+
+    
+
+    /*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|                            Delivery Charge Bearer                                                       |*|
+    |*|---------------------------------------------------------------------------------------------------------|*|
+    |*|---------------------------------------------------------------------------------------------------------|*/
+    /*|*/
+    /*|*/   function deliveryChargeBearerByOrderId_HH($order_id)
+    /*|*/   {
+    /*|*/       $order = getOrderByOrderId_HH($order_id);
+    /*|*/       $parcel_amount_payment_type_id          =  $order->parcel_amount_payment_type_id;
+    /*|*/       $service_cod_payment_status_id          =  $order->service_cod_payment_status_id;
+    /*|*/       $service_delivery_payment_status_id     =  $order->service_delivery_payment_status_id;
+    /*|*/       $parcel_amount_payment_status_id        =  $order->parcel_amount_payment_status_id;
+    /*|*/       $instant_all_charge_received_status_id  =  $order->instant_all_charge_received_status_id;
+    /*|*/          if($parcel_amount_payment_type_id == 1)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 2)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 3)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 4)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 5)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 6)
+    /*|*/          {
+    /*|*/              return "Receiver";
+    /*|*/          }
+    /*|*/          else if($parcel_amount_payment_type_id == 7)
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/          else
+    /*|*/          {
+    /*|*/              return "Sender";
+    /*|*/          }
+    /*|*/           return $order;
+    /*|*/   }
+    /*|*/
+    /*|--
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    |*|                            Delivery Charge Bearer End                                                        |*|
+    |*|------------------------------------------------------------------------------------------------------------|*|
+    */
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order For All Status 
+    |   status
+    | --------------------------------------------------------------------------
+    */
+    function getOrderStatusByOrderStatus_HH($status)
+    {
+        switch ($status) 
+        {
+            case "1":
+                return "PickUp Pending";
+                break;
+            case "2":
+                return "Picked Up";
+                break;
+            case "3":
+                return "Deleted";
+                break;
+            case "4":
+                return "Delivery In Progress";
+                break;
+            case "5":
+                return "Delivered";
+                break;
+            case "6":
+                return "Damaged";
+                break;
+            case "7":
+                return "Returning";
+                break;
+            case "8":
+                return "Returned";
+                break;
+            case "9":
+                return "Rejected";
+                break;
+            case "10":
+                return "Hold";
+                break;
+            default:
+                return "Pending";
+        }
+    }
+
+
+    /*
+        foreach(getOrderStatus_HH() as $key => $data)
+        {
+            echo $data['id']. "<br/>"; 
+            echo $data['name']. "<br/>"; 
+        }
+        return "yes";
+    */
+    function getOrderStatus_HH()
+    {
+        $data = [];
+        $data = [
+
+            1 =>[
+                'id' => 1,
+                "name" => "PickUp Pending"
+            ],
+            2 =>[
+                'id' => 2,
+                'name' => 'Picked Up'
+            ],
+            3 =>[
+                'id' => 3,
+                'name' => "Deleted"
+            ],
+            4 =>[
+                'id' => 4,
+                'name' => "Delivery In Progress"
+            ],
+            5 =>[
+                'id' => 5,
+                'name' => "Delivered"
+            ],
+            6 =>[
+                'id' => 6,
+                'name' => "Damaged"
+            ],
+            7 =>[
+                'id' => 7,
+                'name' => "Returning"
+            ],
+            8 =>[
+                'id' => 8,
+                'name' => "Returned"
+            ],
+            9 =>[
+                'id' => 9,
+                'name' => "Rejected"
+            ],
+            10 =>[
+                'id' => 10,
+                'name' => "Hold"
+            ],
+        ];
+        return $data;
+    }
+
+    function updateOrderStatusByOrderId_HH($order_id,$changing_status_id)
+    {
+        $order = getOrderByOrderId_HH($order_id);
+        $setStatus   = $order->status;
+        if($changing_status_id == 5)
+        {
+            $setStatus = 2;
+        } 
+        else if($changing_status_id > 5 && $changing_status_id < 18)
+        {
+            $setStatus = 4;
+        } 
+        else if($changing_status_id == 18)//Successfully Delivered
+        {
+            $setStatus = 5;
+        } 
+        else if($changing_status_id == 19)//Hold Delivery
+        {
+            $setStatus = 10;
+        }
+        else if($changing_status_id > 26 || $changing_status_id < 40)//Delivery Canceling
+        {
+            $setStatus = 7;
+        }
+        else if($changing_status_id == 40)//Delivery Canceled
+        {
+            $setStatus = 8;
+        }
+        else if($changing_status_id == 41 || $changing_status_id == 42)//Send to Head Office, Head Office Received Parcel
+        {
+            $setStatus = 4;
+        }
+        else if($changing_status_id == 43 )//Order Cancel by Merchant/Client when Pickup Parcel
+        {
+            $setStatus = 9;
+        }
+        else if($changing_status_id == 44)//Order Hold by Merchant / Client , when Pickup Parcel
+        {
+            $setStatus = 1;
+        }
+        $order->status = $setStatus;
+        $order->save();
+        return $order;
+    }
+
+    function insertOrupdateOrderStatusByOrderId_HH($order_id,$setStatus)
+    {
+        $order = getOrderByOrderId_HH($order_id);
+        $order->status = $setStatus;
+        $order->save();
+        return $order;
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Order For All Status 
+    | 
+    | --------------------------------------------------------------------------
+    */

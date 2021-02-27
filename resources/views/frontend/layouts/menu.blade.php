@@ -8,7 +8,7 @@
         <nav class="navbar">
             <div class="container">
                 <a class="navbar-brand align-self-center" href="{{ url('/') }}">
-                    <img src="{{ asset('public/frontend') }}/logo/logo.png" class="logo" alt="Logo">
+                    <img src="{{ asset($websetting->logo) }}" class="logo" alt="Logo">
                 </a>
 
                 <div class="menu-area ml-auto">
@@ -45,7 +45,7 @@
     <div class="mobile-menu">
         <div class="mm-logo" style="background: #fff; padding: 11px 18px;">
             <a href="{{ url('/') }}">
-                <img style="width: 55px;" src="logo/logo.png" alt="logo">
+                <img style="width: 55px;" src="{{ asset($websetting->logo) }}" alt="logo">
             </a>
             <div class="mm-cross-icon">
                 <i class="fa fa-times mm-ci"></i>

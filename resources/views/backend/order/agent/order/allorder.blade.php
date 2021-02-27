@@ -24,24 +24,35 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Total Percel</h4>
-
+                    <h4 class="card-title"></h4>
+                        <strong>Total Percel</strong>
+                        <span class="badge badge-primary" data-toggle="modal" data-target="#printModal" style="cursor:pointer;">Print</span>
                     <hr>
-                    <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
+                <div class="table-responsive">
+                    <table id="" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Serial</th>
-                                <th>Parcel ID</th>
-                                <th>Parcel Owner</th>
                                 <th>
-                                    Merchant Name <br> Shop Name
-                                    <br/>
-                                    General Customer
+                                    <input type="checkbox" value="all" name="check_all" class="check_all_class" />
                                 </th>
+                                <th>Parcel ID</th>
+                                <th>Sender info</th>
                                 <th>Customer info</th>
-                                <th>Area</th>
-                                <th>Service <br/>Charge</th>
-                                <th>Status</th>
+                                
+                                <th>Address <br> Destination Area </th>
+                                <th>Collection <br> Amount</th>
+                                <th>Charge</th>
+                                <th>COD Charge</th>
+                                <th>
+                                    <a data-toggle="modal" data-target="#myModal">Status</a>
+                                </th>
+                                <th>Order <br/>Tracking</th>
+                                <th>Customer <br/>
+                                    Service <br/>Charge<br/>Payment Status
+                                </th>
+                                <th>
+                                    Parcel <br/>Amount<br/>Payment Status
+                                </th>
                                 <th>Branch</th>
                                 <th>Action</th>
                             </tr>
@@ -49,35 +60,38 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <input type="checkbox" name="checked_id[]" value="" class="check_single_class" id="{{$order->id}}" />
+                                </td>
                                 <td>
                                     <a href="#" class="viewSingleDataByAjax"   data-id="{{ $order->id }}" >
                                     {{ $order->invoice_no }}
                                     </a>
                                 </td>
-                                <td>
-                                    @if ($order->parcel_owner_type_id == 1)
-                                    Merchant
-                                    @else
-                                    General Customer
-                                @endif
-                                </td>
+                                
                                 <td>
                                     {{ $order->generalCustomer?$order->generalCustomer->name:'' }}
-                                    {{ $order->merchant?$order->merchant->name:'' }} <br>
-                                     {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
+                                    {{ $order->generalCustomer?$order->generalCustomer->phone:'' }}
+                                    
                                 </td>
                                 <td>
+                                   
                                     {{ $order->customer->customer_name }} <br>
                                     {{ $order->customer->customer_phone }} <br>
-                                    {{ $order->customer->address }} <br>
+                                  
                                 </td>
                                 <td>
+                                    {{ $order->customer->address }} <br>
                                     {{ $order->area->area_name }} <br>
                                     {{ $order->district->name }}
                                 </td>
+                                <td> {{ $order->collect_amount }}  </td>
+                                <td> {{ $order->service_charge }}  </td>
+                                <td> {{ $order->cod_charge }}  </td>
                                 <td>
-                                    {{ $order->service_charge }}
+                                    <span style="">
+                                        {{ getOrderStatusByOrderStatus_HH($order->status) }}
+                                    </span>
                                 </td>
                                 <td>
                                     <span style="{{ orderStatusStyle_HH($order->order_status_id) }}">
@@ -85,6 +99,17 @@
                                     </span>
                                 </td>
 
+                                <td>
+                                    <strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    <strong {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
+                                </td>
+ 
                                 <td>
                                     {{ $order->orderBranch?$order->orderBranch->company_name:'' }}
                                 </td>
@@ -117,6 +142,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                 </div>
                 </div>
                 <!-- end card-body -->
             </div>
@@ -126,6 +152,53 @@
 
 
 
+<!-- Modal -->
+<div id="printModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+            <div class="form-group">
+                <label>Select Status</label>
+                <select id="status_id" name="status_id"  class="form-control" >
+                    <option value="">Select Status</option>
+                    @foreach(getOrderStatus_HH() as $key => $data)
+                        <option value="{{$data['id']}}"> {{$data['name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" id="print_now_id" href="#">Print Now</a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+       @foreach(getOrderStatus_HH() as $key => $data)
+            <button id="status_id" name="status_id" value="{{$data['id']}}"class="status_id_class btn btn-md" >
+                {{$data['name']}}
+            </button> <br/>
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 {{-- ----------------Fmor Modal randering---------------- --}}
 {{-- --- class="viewSingleDataByAjax"   data-id="{{ $order->id }}" --}}
@@ -134,6 +207,66 @@
 
     <div id="showSingleViewByAjax" data-url="{{ route('agent.showSingleViewByAjax')}}"></div>
     @section('ajaxdropdown')
+
+    <script>
+        
+        //check_all_class
+        //check_single_class
+        $(document).on('click','.check_all_class',function(){
+            if (this.checked == false)
+            {
+                $('.check_single_class').prop('checked', false).change(); 
+                $(".check_single_class").each(function () 
+                { 
+                    var id = $(this).attr('id');
+                    $(this).val('').change(); 
+                }); 
+            }else{
+                $('.check_single_class').prop("checked", true).change();
+
+                $(".check_single_class").each(function () 
+                { 
+                    var id = $(this).attr('id');
+                    $(this).val(id).change(); 
+                }); 
+            }
+        });
+            //=======================
+        $(document).on('click','.check_single_class',function(){
+            var id = $(this).attr('id');
+            if (this.checked == false)
+            {
+                $(this).prop('checked', false).change(); 
+                $(this).val('').change(); 
+            }else{
+                $(this).prop("checked", true).change();
+                $(this).val(id).change(); 
+            }
+            //=======================
+        });
+
+
+        /*----for print-----*/
+        $(document).on('click','#print_now_id',function(){
+            var ids = [];
+            $('.check_single_class').each(function(index,value){
+                ids[index] = $(this).val();
+            });
+            var url = "{{ route('agent.order.multipleSlipOfInvoicePrint') }}";
+            console.log(url);
+            $.ajax({
+                url: url,
+                data: {ids: ids},
+                type: "GET",
+                success: function(response){
+                   // console.log(response);
+                    $.print(response);
+                },
+            });
+        });
+        /*----for print-----*/
+    </script>
+
     <script>
         $(document).on('click','.viewSingleDataByAjax', function(e){
             e.preventDefault();

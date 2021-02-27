@@ -99,9 +99,9 @@
                                                             {{$item->payment_invoice_no}}
                                                         </a>    
                                                     </td>
-                                                    <td>{{$item->payment_amount}}</td>
+                                                    <td>{{  payToHeadOfficeTotalInvoiceAmount_HH($item->id)}}</td>
                                                     <td>{{date('Y-m-d h:i:s',strtotime($item->payment_at))}}</td>
-                                                    <td>{{$item->paymentBy->name}}</td>
+                                                      <td>{{$item->paymentBy->name}}</td>
                                                     <td>Status</td>
                                                     <td style="width:10%;">
                                                         <a href="{{route('agent.payToHeadOfficeListShowSingle',$item->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>View</a>

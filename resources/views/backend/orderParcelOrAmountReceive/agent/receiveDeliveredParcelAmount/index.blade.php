@@ -158,7 +158,7 @@
 
 @section('ajaxdropdown')
 
-    <script>
+      <script>
         $(document).on('change','.order_id_class',function(){
             var checkedResult = 0;
             if($(this).is(":checked"))
@@ -169,6 +169,7 @@
             }
            
             var get_checked_id  = $(this).attr('id');
+            var onlyId  = $(this).data('id');
             var get_amount  = parseInt($(this).data('amount'));
 
             var maked_amount_id = 'amount_'+get_checked_id;
@@ -179,10 +180,12 @@
             var newAmount = parseInt(nanCheck($('#totalAmount').text()));
             if(checkedResult)
             {
+                $('#order_id_'+onlyId).val(onlyId);
                 $('#'+maked_amount_id).val(set_amount);
                 $('#'+maked_del_id).html(set_amount).css({'color':'black'});
                 newAmount += get_amount;
             }else{
+                $('#order_id_'+onlyId).val('');
                 $('#'+maked_amount_id).val('');
                 $('#'+maked_del_id).html('<del>'+set_amount +'</del>').css({'color':'red'});
 
@@ -217,7 +220,7 @@
         function submit(amount)
         {
             var manpower_id = getValueFromSelectOption('manpower_id_class');
-            if(amount > 0 && manpower_id)
+            if(manpower_id)
             {
                 $('#submit').removeAttr('disabled','disabled');
             }else{
@@ -229,6 +232,7 @@
             $(".order_id_class").each(function() {
                 var amount = nanCheck($(this).data('amount'));
                 var id = $(this).attr('id');
+                var onlyId  = $(this).data('id');
                 var checkedResult = 0;
                 if($(this).is(":checked"))
                 {
@@ -238,9 +242,11 @@
                 }
                 if(checkedResult)
                 {
+                    $('#order_id_'+onlyId).val(onlyId);
                     $('#amount_'+id).val(amount);
                 }
                 else{
+                    $('#order_id_'+onlyId).val('');
                     $('#amount_'+id).val('');
                 }
             });

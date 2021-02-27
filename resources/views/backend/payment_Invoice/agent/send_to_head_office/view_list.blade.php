@@ -96,12 +96,14 @@
                                                     </td>
                                                     <td>
                                                         @php
-                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,1,$pay_to_head_office_invoice_id);
+                                                             $service =  payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,1,$pay_to_head_office_invoice_id);
+                                                                echo $service;
                                                         @endphp
                                                     </td>
                                                     <td>
                                                         @php
-                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,2,$pay_to_head_office_invoice_id);
+                                                            $cod =  payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,2,$pay_to_head_office_invoice_id);
+                                                         echo $cod;
                                                         @endphp
                                                     </td>
                                                     <td>
@@ -109,13 +111,14 @@
                                                     </td>
                                                     <td>
                                                         @php
-                                                            echo payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,4,$pay_to_head_office_invoice_id);
+                                                            $parcel = payToHeadOfficeInvoiceAmount_HH($order->order_id,$branch_id,4,$pay_to_head_office_invoice_id);
+                                                        echo $parcel;
                                                         @endphp
                                                     </td>
                                                     <td>
                                                         <span id="del_order_id_{{$order->order_id}}">
                                                             <span id="" class="total_before_action" >
-                                                            {{$order->total_amount}}
+                                                             {{$service+$cod+$parcel}}
                                                             </span>
                                                         </span>
                                                     </td>

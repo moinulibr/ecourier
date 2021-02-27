@@ -64,31 +64,21 @@
                     </form>
 
                     <hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+                    <div class="table-responsive">
                     <table class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>Created Date</th>
                                 <th>Parcel ID</th>
                                 <th>Shop Name</th>
-                                <th>Customer info</th>
-                                <th>Status</th>
-                                <th>Payment Info</th>
+                                <th style="width: 15%">Customer info</th>
+                                
+                                 <th>
+                                    <a data-toggle="modal" data-target="#myModal">Status</a>
+                                </th>
+                               
+                                <th style="width: 20%">Payment Info</th>
                                 <th>Payment Status</th>
                                 <th>Last Update</th>
                                 <th>Action</th>
@@ -108,8 +98,7 @@
                                 </td>
                                
                                 <td>
-                                    
-                                     {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
+                                    {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
                                 </td>
                                 <td>
                                     {{ $order->customer->customer_name }} <br>
@@ -117,19 +106,23 @@
                                     {{ $order->customer->address }} <br>
                                     {{ $order->area->area_name }} <br>
                                 </td>
-                                
-                                <td>
-                                    <span style="{{ orderStatusStyle_HH($order->order_status_id) }}">
-                                        {{ $order->orderStatus?$order->orderStatus->order_status:'' }}
+                                 <td>
+                                    <span style="">
+                                        {{ getOrderStatusByOrderStatus_HH($order->status) }}
                                     </span>
                                 </td>
+                                
                                 <td>
                                     Tk {{ $order->collect_amount }} Cash Collection <br>
-                                    Tk {{ $order->service_charge }} Charge
+                                    Tk {{ $order->service_charge }} Charge <br>
+                                    Tk {{ $order->cod_charge }} COD Charge
                                 </td>
                                 <td>
+                                    @if ($order->parcel_amount_payment_status_id >= 9)
                                     <p class="btn  btn-sm btn-success">Paid</p>
+                                    @else
                                     <p class="btn  btn-sm btn-danger">Unpaid</p>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $order->updated_at->format('M d, Y') }}
@@ -140,7 +133,7 @@
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-cogs"></i> <span class="caret"></span>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-right" role="menu"> 
+                                        <ul class="dropdown-menu dropdown-menu-right p-3" role="menu"> 
                                             <a class="viewSingleDataByAjax"   data-id="{{ $order->id }}" href="">
                                                 <li><i class="fa fa-eye"></i> View </li>
                                             </a>
@@ -157,6 +150,7 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
                 <!-- end card-body -->
             </div>
             <!-- end card -->
@@ -165,6 +159,28 @@
 
 
 
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+       @foreach(getOrderStatus_HH() as $key => $data)
+            <button id="status_id" name="status_id" value="{{$data['id']}}"class="status_id_class btn btn-md" >
+                {{$data['name']}}
+            </button> <br/>
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 {{-- ----------------Fmor Modal randering---------------- --}}

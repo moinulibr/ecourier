@@ -81,7 +81,20 @@
     }
 
 
-    
+    /*
+    |---------------------------------------------------
+    | branch commission with or without cod charge
+    |-------------------------------------
+    */ 
+        function branchCommissionWithOrWithoutCodCharge_HS()
+        {
+            return 0;
+        }
+    /*
+    |-------------------------------------
+    | branch commission with or without cod charge
+    |--------------------------------------------------
+    */
 
 
     /*
@@ -123,7 +136,7 @@
         }
         function smsPassword_HS()
         {
-            return "22882532@";
+            return "22882532@@";
         }
     /*
     |----------------------------------------------------------------------------

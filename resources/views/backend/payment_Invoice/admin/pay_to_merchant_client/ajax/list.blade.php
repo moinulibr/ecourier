@@ -5,9 +5,11 @@
  <table  class="table table-striped table-bordered nowrap">
     <thead>
         <tr>
-            <th>Sl.</th>
+            <th>Sl.</th> 
             <th></th>
             <th>Order No</th>
+            <th>Merchant/Client <br/>Name</th>
+            <th>Merchant/Client <br/>Phone</th>
             <th>Service <br/>Charge</th>
             <th>COD <br/>Charge</th>
             <th>Other<br/> Charge</th>
@@ -21,10 +23,33 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>
-                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->order_id}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}" value="{{$order->order_id}}"  />
+                <input checked type="checkbox" class="order_id_class" id="order_id_{{$order->order_id}}" data-id="{{$order->order_id}}" name="order_id[]"  data-amount="{{ totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}" value=""  />
                 <input type="hidden" class="total_amount_class" id="amount_order_id_{{$order->order_id}}"  name="order_id_amount[]" value="" />
             </td>
             <td>{{$order->orders?$order->orders->invoice_no:NULL}}</td>
+
+            <td>
+                @if ($order->parcel_owner_type_id == 1)
+                    {{ $order->orders->merchant?$order->orders->merchant->name:'' }} 
+                @endif
+                @if ($order->parcel_owner_type_id == 2)
+                    {{ $order->orders->generalCustomer?$order->orders->generalCustomer->name:'' }}
+                @endif
+
+            </td>
+            <td>
+                @if ($order->parcel_owner_type_id == 1)
+                     {{ $order->orders->merchant?$order->orders->merchant->phone:'' }} <br>
+                @endif
+                @if ($order->parcel_owner_type_id == 2)
+                    {{ $order->orders->generalCustomer?$order->orders->generalCustomer->phone:'' }}
+                @endif
+            </td>
+                {{--
+                    {{ $order->customer->customer_name }} <br>
+                    {{ $order->customer->customer_phone }} <br>
+                    {{ $order->customer->address }} <br>
+                ---}}
             <td>
                 {{$order->service_charge}}
             </td>
@@ -40,8 +65,8 @@
             <td>
                 <span id="del_order_id_{{$order->order_id}}">
                     <span id="" class="total_before_action" >
-                    {{totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}
-                        {{---$order->client_merchant_payable_amount--}}
+                    {{--  {{totalServiceChargePaymentStatusByOrderId_HH($order->order_id) }}  --}}
+                    {{ $order->client_merchant_payable_amount }}
                     </span>
                 </span>
             </td>
@@ -52,7 +77,7 @@
     </tbody>
     <tfooter>
         <tr>
-            <td colspan="6"></td>
+            <td colspan="8"></td>
             <td style="text-align:right">
                 <strong>Total</strong>
             </td>

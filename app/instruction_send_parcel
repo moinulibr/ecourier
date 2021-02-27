@@ -1,0 +1,36 @@
+                $orderChangeStatus = Order_destination::find($order);
+                $orderChangeStatus->order_receiving_sending_status_id = 3;
+                $orderChangeStatus->send_by = Auth::guard('web')->user()->id;
+                $orderChangeStatus->send_at = date('Y-m-d h:i:s');
+                $orderChangeStatus->save(); 
+ $this->updateOrderChangingCurrentBranchStatusId($orderChangeStatus->order_id,$order,$request->sending_to_branch_id[$key]);
+
+
+
+   public function updateOrderChangingCurrentBranchStatusId($order_id, $order_destination_id = NULL,$destination_branch_id = NULL)
+    {
+        $order_status_id = sendStatusIdBranchId_HH($destination_branch_id);
+        $order = Order::find($order_id);  
+        //$order->order_status_changing_current_branch_id = Auth::guard('web')->user()->branch_id;
+        $order->order_status_id =  $order_status_id;
+        $order->save();
+
+        $setData['order_id'] = $order->id;
+        $setData['order_status_id'] = $order_status_id;
+        $setData['branch_id'] = Auth::guard('web')->user()->branch_id;
+        $setData['created_by'] = Auth::guard('web')->user()->id;
+        $setData['status_changer_id'] = Auth::guard('web')->user()->id;
+        $setData['status'] = 1;
+        $setData['changed_branch_id']   = $destination_branch_id;
+
+        $data = insertOrderProcessingHistory_HH($setData);
+
+        /*Sending Commission branch Order */
+         $myBranchId = Auth::guard('web')->user()->branch_id;
+         $branch_commission_type_id = orderSendingCommissionTypeId_HH($order_id,$myBranchId);
+         insertingBranchCommissionWhenReceiveAndSend_HH($order,$myBranchId,$branch_commission_type_id);
+        /*Sending Commission branch Order */
+
+        return $data; 
+        
+    }

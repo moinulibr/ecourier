@@ -18,16 +18,16 @@
 
     </head>
 
-    <body class="authentication-bg" style="background-image: url(assets/images/auth-bg.png)">
+     <body class="authentication-bg" style="background-image: url({{ asset('public/links/backend/01/assets/images/auth-bg.png') }})">
 
         <div class="account-pages mt-5 mb-4 pt-sm-5">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <a href="index.html" class="mb-5 d-block auth-logo">
-                                <img src="assets/images/logo-dark.png" alt="" height="22" class="logo logo-dark">
-                                <img src="assets/images/logo-light.png" alt="" height="22" class="logo logo-light">
+                             <a href="{{ route('frontend') }}" class="mb-5 d-block auth-logo">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-dark">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-light">
                             </a>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <div class="card-body p-4"> 
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Dakbd.</p>
+                                    <p class="text-muted">Sign in to continue to {{$websetting->company_name }}.</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form method="POST" action="{{ route(showOfficialUsersLoginFormRoute_HH) }}">
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p> DakBD &copy; Copyright By SOFTECH BD</p>
+                            <p> {{$websetting->company_name }} &copy; Copyright By SOFTECH BD</p>
                         </div>
 
                     </div>

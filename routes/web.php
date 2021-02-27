@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,11 +13,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/clear', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
 
 /* fontend controller */
 Route::group(['namespace' => 'Frontend'],function(){
-    Route::get('/','FrontendController@index');
+    Route::get('/','FrontendController@index')->name('frontend');
     Route::get('/contact','FrontendController@contact')->name('contact');
     Route::get('/about','FrontendController@about')->name('about');
     Route::get('/privacy','FrontendController@privacy')->name('privacy');
@@ -189,6 +195,42 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
+
+         /*
+        |-----------------------------------
+        profile Management 
+        |-----------------------------------
+        */
+        
+        
+        Route::group(['prefix' => 'users/profile','namespace'=>'Backend\Profile'],function(){
+
+
+            Route::get('/show', "ProfileController@index")->name('user.profile');
+            Route::get('/edit','ProfileController@edit')->name('profile.edit');
+            Route::post('/update/{id}','ProfileController@update')->name('profile.update');
+
+
+            Route::get('/setting','ProfileController@setting')->name('user.setting');
+            Route::post('/password/{id}','ProfileController@changepassword')->name('user.password');
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         Route::group(['as' => 'admin','prefix' => 'division','namespace'=>'Area'],function(){
             Route::get('view','DivisionController@index')->name('division.index');
             Route::get('edit/{id}','DivisionController@edit')->name('division.edit');
@@ -299,7 +341,7 @@ Route::get('/home', 'HomeController@index')->name('home');
         });
 
 
-         // Man Power // Delivery Man
+        // Man Power // Delivery Man
         Route::group(['prefix' => 'deliveryman','namespace'=>'Backend\Admin\User'],function(){
             Route::get('view','DeliveryManController@index')->name('deliveryman.index');
             Route::post('store','DeliveryManController@store')->name('deliveryman.store');
@@ -371,6 +413,29 @@ Route::get('/home', 'HomeController@index')->name('home');
         });
 
 
+
+
+          Route::group(['prefix' => 'setting','namespace'=>'Backend\Admin\Setting'],function(){
+            Route::get('view','SettingController@edit')->name('setting.index');
+            Route::post('store','SettingController@store')->name('setting.store');
+            Route::post('update','SettingController@update')->name('setting.update');
+            Route::get('destroy/{id}','SettingController@destroy')->name('setting.destroy');
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
         /* Service Type */
         Route::group(['prefix' => 'servicetype','namespace'=>'Backend\Admin\Service'],function(){
             Route::get('view','ServiceTypeController@index')->name('service.type.index');
@@ -421,6 +486,9 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('view','OrderController@index')->name('order.index');
             Route::get('create','OrderController@create')->name('order.create');
             Route::post('store','OrderController@store')->name('order.store');
+            
+            Route::get('delete/order/{id}','OrderController@destroy')->name('admin.order.destroy');
+
 
             //ajax
             Route::get('if/order/existing','OrderController@ifOrderExisting')->name('ifOrderExisting');
@@ -524,11 +592,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
             Route::get('order/invoice/print/{id}','OrderController@printinvoice')->name('print.order.invoice');
 
-             //assigned Parcel Print
-             Route::get('assigned/manpower','OrderAssignController@index')->name('manpowerAssignedOrder');
-             Route::get('show/manpower/assigned/order/list','OrderAssignController@showManpowerOrderAssingedList')->name('showManpowerOrderAssingedList');
-             Route::get('print/manpower/assigned/order/list','OrderAssignController@printManpowerOrderAssingedList')->name('printManpowerOrderAssingedList');
-             Route::get('pdf/manpower/assigned/order/list','OrderAssignController@pdfDownloadManpowerOrderAssingedList')->name('pdfDownloadManpowerOrderAssingedList');
+            //assigned Parcel Print
+            Route::get('assigned/manpower','OrderAssignController@index')->name('manpowerAssignedOrder');
+            Route::get('show/manpower/assigned/order/list','OrderAssignController@showManpowerOrderAssingedList')->name('showManpowerOrderAssingedList');
+            Route::get('print/manpower/assigned/order/list','OrderAssignController@printManpowerOrderAssingedList')->name('printManpowerOrderAssingedList');
+            Route::get('pdf/manpower/assigned/order/list','OrderAssignController@pdfDownloadManpowerOrderAssingedList')->name('pdfDownloadManpowerOrderAssingedList');
             
             //Assign Parcel
             Route::get('assign/parcel','OrderAssigningStatusController@index')->name('assign.parcel');
@@ -542,6 +610,16 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('quick/assign/remove/cart','OrderAssigningStatusController@quickAssignParcelRemoveCart')->name('quickAssignParcelRemoveCart');
             Route::post('quick/assign/order/store','OrderAssigningStatusController@quickAssignParcelStoreFromCart')->name('quickAssignParcelStoreFromCart');
             
+            //order success and invoice
+            Route::get('success/{id}','OrderController@ordersuccess')->name('order.success');
+
+            Route::get('success/invoice/customer/copy/print','OrderController@successInvoicePrintCustomerCopyByAjaxPrintJs')->name('order.successInvoicePrintCustomerCopyByAjaxPrintJs');
+            Route::get('success/invoice/slip/print','OrderController@successInvoicePrintSlipByAjaxPrintJs')->name('order.successInvoicePrintSlipByAjaxPrintJs');
+           
+ 
+            Route::get('show/invoice/{id}','OrderController@showinvoice')->name('order.show.invoice');
+            //multiple invoice print: 11.02.2021
+            Route::get('multiple/invoice/slip/print','OrderController@multipleSlipOfInvoicePrint')->name('order.multipleSlipOfInvoicePrint');
             /**
              * About Bar code
             */
@@ -559,6 +637,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
              //Send To Another Branch 
             Route::get('send/parcel','OrderParcelSendController@index')->name('send.parcel');
+            Route::get('sending/parcel/list','OrderParcelSendController@sendingParcelList')->name('sending.parcelList');
+            Route::get('sending/parcel/list/ajax','OrderParcelSendController@sendingParcelListAjaxList')->name('sending.parcelListAjaxList');
+            Route::get('sending/parcel/list/view/by/ajax','OrderParcelSendController@sendingParcelListViewAjaxList')->name('sending.parcelListViewAjaxList');
 
             Route::get('send/quick/assign/order','OrderParcelSendController@quickAssignParcelAddCart')->name('send_quickAssignParcelAddCart');
             Route::get('send/quick/assign/exist/cart','OrderParcelSendController@quickAssignParcelExistCart')->name('send_quickAssignParcelExistCart');
@@ -591,7 +672,6 @@ Route::get('/home', 'HomeController@index')->name('home');
         |-----------------------------------------------------------
         */
 
-
         /*
         |-----------------------------------------------------------
         |  Receive From Another branch : Admin
@@ -623,6 +703,16 @@ Route::get('/home', 'HomeController@index')->name('home');
                 Route::post('parcel/amount/merchant/client/payment/create/store','BranchPayToMerchantClientController@payToMerchantClientCreateListStore')->name('payToMerchantClientCreateListStore');
                 /*======= Pay to Merchant/Client ==========*/
 
+
+                /*======= Pay to Branch Commission ==========*/
+                Route::get('paid/branch/commission/invoice','PayToBranchCommissionController@paidBranchCommissionInvoiceList')->name('paidBranchCommissionInvoiceList');
+                Route::get('paid/branch/commission/invoice/details/{id}','PayToBranchCommissionController@paidBranchCommissionInvoiceListDetails')->name('paidBranchCommissionInvoiceListDetails');
+                
+                Route::get('pay/to/branch/commission/invoice/create','PayToBranchCommissionController@paidBranchCommissionInvoiceCreate')->name('paidBranchCommissionInvoiceCreate');
+                Route::get('pay/to/branch/commission/invoice/create/list','PayToBranchCommissionController@payBranchCommissionCreateListByAjax')->name('payBranchCommissionCreateListByAjax');
+                Route::post('pay/to/branch/commission/invoice/create/list/store','PayToBranchCommissionController@payBranchCommissionCreateListByAjaxStore')->name('payBranchCommissionCreateListByAjaxStore');
+                /*======= Pay to Branch Commission ==========*/
+
             });
             /*For Admin*/
 
@@ -630,6 +720,9 @@ Route::get('/home', 'HomeController@index')->name('home');
                 /*======= Admin Branch Total Amount ==========*/
                 Route::get('current/balanch/account/of/my/branch','BranchCurrentAccountController@currentBalanchOfMyBranch')->name('currentBalanchOfMyBranch');
                 /*======= Admin Branch Total Amount ==========*/
+                /*======= Admin All Branch  Total Commission Amount ==========*/
+                Route::get('branch/commission/of/all/branch','BranchCurrentAccountController@branchCommissionOfMyBranch')->name('branchCommissionOfMyBranch');
+                /*======= Admin All Branch  Total Commission Amount ==========*/
             });
         /*
         |-----------------------------------------------------------
@@ -669,6 +762,12 @@ Route::get('/home', 'HomeController@index')->name('home');
                 Route::get('parcel/amount/merchant/client/payment/create/list','BranchPayToMerchantClientInvoiceController@payToMerchantClientCreateList')->name('payToMerchantClientCreateList');
                 Route::post('parcel/amount/merchant/client/payment/create/store','BranchPayToMerchantClientInvoiceController@payToMerchantClientCreateListStore')->name('payToMerchantClientCreateListStore');
                 /*======= Pay to Merchant/Client ==========*/
+                
+                /*======= Branch Commission ==========*/
+                Route::get('paid/branch/commission/invoice','ReceiveBranchCommissionController@paidBranchCommissionInvoiceList')->name('paidBranchCommissionInvoiceList');
+                Route::get('paid/branch/commission/invoice/details/{id}','ReceiveBranchCommissionController@paidBranchCommissionInvoiceListDetails')->name('paidBranchCommissionInvoiceListDetails');
+                
+                /*======= Branch Commission ==========*/
             });
              /*For Agent*/
         /*
@@ -676,6 +775,16 @@ Route::get('/home', 'HomeController@index')->name('home');
         |   Pay to HeadOffice Invoice From Agent
         |-----------------------------------------------------------
         */
+
+        Route::group(['as' => 'agent.','prefix' => 'agent','namespace'=>'Backend\Agent\Account'],function(){
+            /*======= Agent Branch Total Amount ==========*/
+            Route::get('current/balanch/account/of/my/branch','BranchCurrentAccountController@currentBalanchOfMyBranch')->name('currentBalanchOfMyBranch');
+            /*======= Agent Branch Total Amount ==========*/
+            /*======= Agent Branch  Total Commission Amount ==========*/
+            Route::get('branch/commission/of/my/branch','BranchCurrentAccountController@branchCommissionOfMyBranch')->name('branchCommissionOfMyBranch');
+            /*======= Agent Branch  Total Commission Amount ==========*/
+        });
+
 
 
 
@@ -704,28 +813,53 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('show/single/view/by/ajax/from/list','OrderController@showSingleViewByAjax')->name('showSingleViewByAjax');
 
 
-
-
-
             //ajax
             Route::get('geting/merchantShopAjax','OrderController@getmerchantshopajax')->name('getMerchantShopAjax');
             Route::get('if/order/existing','OrderController@ifOrderExisting')->name('ifOrderExisting');
             Route::get('making/delivery/charge','OrderController@makingDeliveryCharge')->name('makingDeliveryCharge');
 
+            //merchant payment invoice
             Route::get('payment/index','OrderController@paymentinvoice')->name('payments');
+            Route::get('payment/invoice/details/download/{id}','OrderController@paymentinvoiceDetails')->name('paymentinvoiceDetails');
         });
-
-
-
-
-
 
 
 /* ===================== END order Management  ================================*/
 
 
-/*
-        Merchant Shop Setting*/
+
+
+/* ===================== Order Management For Manpower ================================*/
+    // Man Power // Delivery Man
+    Route::group(['as'=>'manpower.','prefix' => 'manpower','namespace'=>'Backend\Order\Manpower'],function(){
+        Route::get('pending/order/request/list','OrderController@pendingOrderPickupRequestList')->name('pendingOrderPickupRequestList');
+        Route::post('accepting/pending/order/request','OrderController@acceptingPendingOrderPickupRequest')->name('acceptingPendingOrderPickupRequest');
+        Route::post('canceling/pending/order/request','OrderController@cancelingWithOptonPendingOrderPickupRequest')->name('cancelingWithOptonPendingOrderPickupRequest');
+
+        //pickup accepted list and details
+        Route::get('order/request/accepted/list','OrderController@orderPickupRequestAcceptedList')->name('orderPickupRequestAcceptedList');
+        Route::post('order/picking/parcel','OrderController@OrderPickingParcel')->name('OrderPickingParcel');
+        Route::post('order/holding/parcel','OrderController@OrderPickingTimeHoldingParcel')->name('OrderPickingTimeHoldingParcel');
+        Route::post('order/canceling/parcel','OrderController@OrderPickingTimeCancelingParcel')->name('OrderPickingTimeCancelingParcel');
+        
+        /**Order Delivery Request */
+        Route::get('delivery/pending/order/request/list','OrderController@pendingOrderDeliveryRequestList')->name('pendingOrderDeliveryRequestList');
+        Route::post('delivery/accepting/pending/order/request','OrderController@acceptingPendingOrderDeliveryRequest')->name('acceptingPendingOrderDeliveryRequest');
+        Route::post('delivery/canceling/pending/order/request','OrderController@cancelingWithOptonPendingOrderDeliveryRequest')->name('cancelingWithOptonPendingOrderDeliveryRequest');
+
+        //delivery accepted list and details
+        Route::get('delivery/order/request/accepted/list','OrderController@orderDeliveryRequestAcceptedList')->name('orderDeliveryRequestAcceptedList');
+        Route::post('delivery/order/picking/parcel','OrderController@OrderDeliveryingParcel')->name('OrderDeliveryingParcel');
+        Route::post('delivery/order/holding/parcel','OrderController@OrderDeliveryingTimeHoldingParcel')->name('OrderDeliveryingTimeHoldingParcel');
+        Route::post('delivery/order/canceling/parcel','OrderController@OrderDeliveryingTimeCancelingParcel')->name('OrderDeliveryingTimeCancelingParcel');
+    
+    });
+/* ===================== Order Management For Manpower  ================================*/
+
+
+
+
+    /*Merchant Shop Setting*/
 
 
        Route::group(['as'=>'merchant.','prefix' => 'merchant/shops','namespace'=>'Backend\Merchant\Setting','middleware'=>['merchant']],function(){
@@ -746,8 +880,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 /* = ================ Agent management ==================== */
-
-
 
          Route::group(['as'=>'agent.','prefix' => 'agent/stuff','namespace'=>'Backend\Agent','middleware'=>['agentadmin']],function(){
 

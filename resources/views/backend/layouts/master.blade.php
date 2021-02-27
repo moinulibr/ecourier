@@ -36,9 +36,13 @@
 
 
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
+
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" />
 
-
+       
+    <!-- JAVASCRIPT -->
+    <script src="{{asset('links/backend/01')}}/assets/libs/jquery/jquery.min.js"></script>
+     <script src="{{asset('links/backend/01')}}/assets/js/jquery.print.js"></script>
 
     @stack('css')
 </head>
@@ -103,8 +107,7 @@
    
  
 
-    <!-- JAVASCRIPT -->
-    <script src="{{asset('links/backend/01')}}/assets/libs/jquery/jquery.min.js"></script>
+
     <script src="{{asset('links/backend/01')}}/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('links/backend/01')}}/assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="{{asset('links/backend/01')}}/assets/libs/simplebar/simplebar.min.js"></script>

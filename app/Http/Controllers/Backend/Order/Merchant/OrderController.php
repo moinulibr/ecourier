@@ -44,7 +44,9 @@ use App\Model\Backend\Branch\Area_branch;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoice;
+use App\Model\Backend\PaymentInvoice\BranchPayToMerchantClientInvoiceDetail;
+use PDF;
 class OrderController extends Controller
 {
     /**
@@ -237,7 +239,7 @@ class OrderController extends Controller
             'weight_id' => 'required',
             'collect_amount' => 'required',
             'charge' => 'required',
-            //'description.*' => 'nullable|max:100',
+            //'description.*' => 'nullable|max:100', 
         ]);
      
         if($validator->fails())
@@ -245,22 +247,21 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
-        if($request->collect_amount > 0)
-        {
-            $client_merchant_payable_amount = $request->collect_amount;
-        }else{
-            $client_merchant_payable_amount = 0;
-        }
+        //------------------
+        $parcelAmountPayments = parcelAmountPaymentTypeCalculation_HH($request);
+        $service_cod_payment_status_id      = $parcelAmountPayments['service_cod_payment_status_id'];
+        $service_delivery_payment_status_id = $parcelAmountPayments['service_delivery_payment_status_id'];
+        $client_merchant_payable_amount     = $parcelAmountPayments['client_merchant_payable_amount'];
+        $collect_amount     = $parcelAmountPayments['collect_amount'];
+
+        
         $parcel_type_id             = $request->parcel_type_id;
         $creating_branch_id         = Auth::guard('merchant')->user()->branch_id;
         $creating_branch            = getBranchByBranchId_HH($creating_branch_id);
         $creating_branch_parent_id  = $creating_branch->parent_id;
         $creating_branch_type_id    = $creating_branch->branch_type_id;
         $creating_area_id           = $creating_branch->area_id;
-            //10.01.2021
-        //$creating_branch_type_id    = getBranchByBranchId_HH($creating_branch_id)->branch_type_id;
-        //$creating_area_id           = getBranchByBranchId_HH($creating_branch_id)->area_id;
-
+        
         // destination area,branch,district
         $destination_area_id    =  $request->area_id;
         // destination_branch_id , search area_branch table, where area_id
@@ -319,8 +320,7 @@ class OrderController extends Controller
             $order->parcel_owner_type_id    = 1;
             $order->merchant_id             = $request->merchant_id;
             $order->merchant_shop_id        = $request->merchant_shop_id;
-            //$order->creating_branch_id      = Auth::guard('merchant')->user()->branch_id;//$findmerchant_branch_id->branch_id;
-            //$order->creating_branch_type_id = getBranchByBranchId_HH(Auth::guard('merchant')->user()->branch_id)->branch_type_id;//$creating_branch_type_id;
+            
             $order->creating_branch_id      = $creating_branch_id;
             $order->creating_branch_type_id = $creating_branch_type_id;
             
@@ -329,14 +329,14 @@ class OrderController extends Controller
             $order->collect_amount          = $request->collect_amount?$request->collect_amount:0.0;
 
             $order->delivery_charge_type_id = 1;  //delivey_charge_typies 1=include 2.exclude
-            $order->parcel_amount_payment_type_id = 1; //
+            $order->parcel_amount_payment_type_id = 2; //
             $order->service_charge_setting_id = $request->service_charge_setting_id;
             $order->service_charge          = $request->charge;
             $order->cod_charge              = $request->cod_charge?$request->cod_charge:0.0;
             $order->others_charge           = 0;
 
 
-            $order->product_amount      = $request->product_amount;
+            $order->product_amount          = $request->product_amount;
             $order->client_merchant_payable_amount = $client_merchant_payable_amount;
 
             $order->parcel_category_id      = $request->parcel_category_id;
@@ -346,7 +346,7 @@ class OrderController extends Controller
             $order->destination_branch_id   = $destination_branch_id;
             $order->destination_city_id     = $destination_branch_type_id;
             $order->destination_area_id     = $request->area_id;
-            $order->order_status_id         = 2;
+            $order->order_status_id         = 1;
             $order->order_status_changing_current_branch_id = $order_status_changing_current_branch_id;
             $order->partial                 = 0;
             $order->parcel_quantity         = 1;
@@ -369,7 +369,7 @@ class OrderController extends Controller
                 $setData = [];
                 
                 $setData['order_id']            = $order->id;
-                $setData['order_status_id']     = 2;
+                $setData['order_status_id']     = 1;
                 $setData['branch_id']           = $creating_branch_id;
                 $setData['created_by']          = Auth::guard('merchant')->user()->id;
                 $setData['status_changer_id']   = Auth::guard('merchant')->user()->id;
@@ -377,18 +377,12 @@ class OrderController extends Controller
                 $setData['changed_branch_id']   = NULL;
                 insertOrderProcessingHistory_HH($setData);
 
-                // insert ..Order Auto Assign in order_assigns table
-                $setAssignData['order_id']                    = $order->id;
-                $setAssignData['areaId']                      = $creating_area_id;
-                $setAssignData['pickup']                      = 1; 
-                $setAssignData['order_processing_type_id']    = 1;
-                $setAssignData['assigner_id']                 = Auth::guard('merchant')->user()->id;
-                $setAssignData['order_assigning_status_id']   = 2;
-                $setAssignData['collection_status']           = 0;
-                $setAssignData['branch_id']                   = $creating_branch_id;
-                $setAssignData['created_by']                  = Auth::guard('merchant')->user()->id;
-                $setAssignData['status']                      = 1;
-                insertOrderAssign_HH($setAssignData);
+                /*---====---- Auto manpower Assign when order Creating---========----*/
+                $created_by         = Auth::guard('merchant')->user()->id;
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 1,$manpower_type_id=1,$created_by);
+                autoManpowerAssigningWhenOrderCreating_HH($order,$processing_type_id = 2,$manpower_type_id=2,$created_by);
+                /*---====---- Auto manpower Assign when order Creating---========----*/
+
                 
             // destination branch is 
             if($creating_branch_id != $destination_branch_id)
@@ -413,8 +407,8 @@ class OrderController extends Controller
                     "order_id" => $order->invoice_no,
             ];
 
-              $path = "public/qrcodes/qr_".$order->invoice_no.".svg";
-              QrCode::size(150)->generate(($order->invoice_no),$path);
+            $path = "public/qrcodes/qr_".$order->invoice_no.".svg";
+            QrCode::size(150)->generate(($order->invoice_no),$path);
            
 
             $notification = array(
@@ -526,8 +520,50 @@ class OrderController extends Controller
 
     public function paymentinvoice()
     {
-       return view('backend.merchant.invoices.view');
+        $myAuthId = Auth::guard('merchant')->user()->id;
+        $data['invoices'] = BranchPayToMerchantClientInvoice::where('parcel_owner_type_id',1)
+                                        ->where('pay_to_merchant_client_id',$myAuthId)
+                                        ->latest()
+                                        ->get();
+        /* $data['invoiceDetails'] = BranchPayToMerchantClientInvoiceDetail::where('parcel_owner_type_id',1)
+                                    ->where('pay_to_merchant_client_id',$myAuthId)
+                                    ->latest()
+                                    ->get(); */
+       return view('backend.merchant.invoices.view',$data);
     }
+
+
+
+    public function paymentinvoiceDetails($id)
+    {
+        $myAuthId = Auth::guard('merchant')->user()->id;
+        $orders = BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$id)
+                                        ->where('pay_to_merchant_client_id',$myAuthId)
+                                        ->latest()   
+                                     ->pluck('order_id');
+        
+        $colAmount =0;
+        if(count( $orders) > 0)
+        {
+           $colAmount = Order::whereIn('id',$orders)->whereNull('deleted_at')->sum('collect_amount');
+        }
+        $myAuthId = Auth::guard('merchant')->user()->id;
+        $data['invoices'] = BranchPayToMerchantClientInvoiceDetail::where('branch_pay_to_merchant_client_invoice_id',$id)
+                                        ->where('pay_to_merchant_client_id',$myAuthId)
+                                        ->latest()
+                                        ->get();
+        $data['totalCollectAmount']    = $colAmount;
+        $data['totalServiceCharge'] = $data['invoices']->sum('service_charge');
+        $data['totalCODCharge']     = $data['invoices']->sum('cod_charge');
+        $data['totalReturnCharge']  = $data['invoices']->sum('others_charge');
+        $data['total']  = $data['totalCollectAmount'] - ($data['totalServiceCharge'] + $data['totalCODCharge'] + $data['totalReturnCharge']);
+        //return view('backend.merchant.invoices.invoice_print',$data);
+       $pdf =  PDF::loadView('backend.merchant.invoices.invoice_print',$data);
+       //$p = $pdf->stream();
+        return $pdf->download('invoice.pdf');
+    }
+
+
 
 
     public function showSingleViewByAjax(Request $request)

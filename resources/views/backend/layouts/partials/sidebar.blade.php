@@ -4,19 +4,19 @@
             <div class="navbar-brand-box">
                 <a href="{{ route('home') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark-sm.png" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-dark.png" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="40">
                     </span>
                 </a>
 
                 <a href="{{ route('home') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light-sm.png" alt="" height="22">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="45">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('links/backend/01')}}/assets/images/logo-light.png" alt="" height="18">
+                        <img src="{{ asset($websetting->logo) }}" alt="" height="40">
                     </span>
                 </a>
             </div>
@@ -64,13 +64,7 @@
                                     <li><a href="{{ route('agent.index') }}">Agent</a></li>
                                     <li><a href="{{ route('deliveryman.index') }}">Delivery Man</a></li>
                                     <li><a href="{{ route('hub.index') }}">Hub User List</a></li>
-
-
-                                    <li><a href="#">Office Stuff</a></li>
                                     <li><a href="{{ route('sub.office.index')}}">Sub Office</a></li>
-                                    <li><a href="#">Sub Office Stuff</a></li>
-                                    <li><a href="#">Agent Delivery Man</a></li>
-                                    <li><a href="#">Affiliate/Merketer</a></li>
 
                                 </ul>
                             </li>
@@ -102,6 +96,8 @@
                                     <li><a href="{{route('admin.sendToOthersBranchFromAdmin')}}">Sent To <small>Other Branch</small></a></li>
                                     <li><a href="{{route('admin.payToMerchantClientIndex')}}">Merchant Paid Invoices</a></li>
                                     <li><a href="{{route('admin.payToMerchantClientCreate')}}">Pay To Merchant</a></li>
+                                    <li><a href="{{route('admin.paidBranchCommissionInvoiceList')}}"><small>Branch Commission</small></a></li>
+                                    <li><a href="{{route('admin.paidBranchCommissionInvoiceCreate')}}"><small>Pay To Branch (Commission)</small></a></li>
                                 </ul>
                             </li>
                             <li>
@@ -112,6 +108,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li>
                                         <a href="{{route('admin.currentBalanchOfMyBranch')}}">Current Balanch<small></small></a>
+                                         <a href="{{route('admin.branchCommissionOfMyBranch')}}">Branch Commission<small></small></a>
                                     </li>
                                     
                                 </ul>
@@ -130,7 +127,7 @@
                                     <li><a href="{{ route('weight.index') }}">Weight</a></li>
                                     <li><a href="{{ route('service.charge.setting.index') }}">Delivery Charge Setting </a></li>
                                     <li><a href="{{ route('parcel.category.index') }}">Parcel Categories</a></li>
-
+                                    <li><a href="{{ route('setting.index') }}">Web Setting</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -200,13 +197,24 @@
                                     <li><a href="{{ route('agent.order.create') }}">New Parcel</a></li>
                                     <li><a href="{{ route('agent.order.index') }}">All Parcel</a></li>
                                     <li><a href="{{ route('agent.assign.parcel') }}">Assign Parcel</a></li>
-                                    <li><a href="{{ route('agent.send.parcel') }}">Send Other Branch</a></li>
                                     <li><a href="{{ route('agent.receive.parcel') }}">Receive From Other</a></li>
                                     <li><a href="{{ route('agent.manpowerAssignedOrder') }}">Print Assigned Parcel </a></li>
                                     <li><a href="{{ route('agent.manPowerOrderDeliveredAmount') }}">Receive Delivered Amount </a></li>
                                     <li><a href="{{ route('agent.manPowerOrderCancelHoldParcel') }}">Receive<small> Cancel/Hold</small> Parcel </a></li>
                                 </ul>
                             </li>
+
+                            <li>
+                                <a href="javascript: void(0);"  >
+                                    <i data-feather="shopping-cart"></i>
+                                    <span class="menu-item" key="t-layouts">Transfer  Management</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('agent.send.parcel') }}">Send Other Branch</a></li>
+                                    <li><a href="{{ route('agent.sending.parcelList') }}">Sending Parcel List</a></li>
+                                </ul>
+                            </li>
+
                              <li>
                                 <a href="javascript: void(0);"  >
                                     <i data-feather="dollar-sign"></i>
@@ -218,6 +226,20 @@
                                     <li><a href="{{route('agent.headOfficeSendInvoiceList')}}">Receive From<small> Head Office</small></a></li>
                                       <li><a href="{{route('agent.payToMerchantClientIndex')}}">Merchant Paid Invoices</a></li>
                                     <li><a href="{{route('agent.payToMerchantClientCreate')}}">Pay To Merchant</a></li>
+                                     <li><a href="{{route('agent.paidBranchCommissionInvoiceList')}}"><small>Branch Commission List</small></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);"  >
+                                    <i data-feather="dollar-sign"></i>
+                                    <span class="menu-item" key="t-layouts">Balanch Management</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="{{route('agent.currentBalanchOfMyBranch')}}">Current Balanch<small></small></a>
+                                        <a href="{{route('agent.branchCommissionOfMyBranch')}}">Branch Commission<small></small></a>
+                                    </li>
+                                    
                                 </ul>
                             </li>
                             <li>

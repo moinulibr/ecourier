@@ -19,7 +19,7 @@ class OrderAssigningStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -44,12 +44,12 @@ class OrderAssigningStatusController extends Controller
      * For Bar code.....
     */
 
-    // add to cart 
+    // add to cart
     public function quickAssignParcelAddCart(Request $request)
     {
         $cartName = [];
         $invoice_no =  $request->invoice_no;
-      
+
         $currentStatusId =  $request->currentStatusId;
         $fromToAreaId =  $request->fromToAreaId;
 
@@ -152,10 +152,9 @@ class OrderAssigningStatusController extends Controller
             Session::flash('error','Please Select Order ID First');
             return back();
         }
-
         // Start transaction!
         DB::beginTransaction();
-        try 
+        try
         {
             $final_success_cancel_status_id = NULL;
             if($request->changing_status_id == 18)
@@ -169,11 +168,13 @@ class OrderAssigningStatusController extends Controller
             {
                 $orderChangeStatus                                  = Order::find($order);
                 $orderChangeStatus->order_status_id                 = $request->changing_status_id;
-                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id;
+                $orderChangeStatus->final_success_cancel_status_id  =  $final_success_cancel_status_id?$final_success_cancel_status_id:NULL;
                 $orderChangeStatus->save();
+                updateOrderStatusByOrderId_HH($order,$request->changing_status_id);
+                
                 $this->insertOtherTableAfterChangingStatusId($request->changing_status_id,$order,$request->manpower_id);
             }
-            
+
 
             session(['cartName' => []]);
             DB::commit();
@@ -211,7 +212,7 @@ class OrderAssigningStatusController extends Controller
                 $order_processing_type_id  = 1; // pickup
                 $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
                 if($assignedAlready)
-                { 
+                {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 3,$order_processing_type_id);
                 }
                 $this->insertAssingedManpower($manpower_id,$order_id,$order_assigning_status_id,$order_processing_type_id);
@@ -223,7 +224,7 @@ class OrderAssigningStatusController extends Controller
                 $order_processing_type_id  = 1; // pickup
                 $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
                 if($assignedAlready)
-                { 
+                {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 9,$order_processing_type_id);
                 }
                 //===sms permission and setting===
@@ -235,23 +236,27 @@ class OrderAssigningStatusController extends Controller
                 }
                 //===sms permission and setting===
             }
-            // preparing for deliery 
+            // preparing for deliery
             else if($changing_status_id == 12)
             {
-    
+
             }
             // Assign to delivery man
             else if($changing_status_id == 13)
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // pickup
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[1])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 3,$order_processing_type_id);
                 }
-                $this->insertAssingedManpower($manpower_id,$order_id,$order_assigning_status_id,$order_processing_type_id);
-                
+                $this->insertAssingedManpower($manpower_id,$order_id,$order_assigning_status_id=1,$order_processing_type_id);
+
 
                  //===sms permission and setting===
                 if(smsToMerchantWhenParcelAssigningToManpowerForDeliveryActivateStatus_HS())
@@ -273,22 +278,34 @@ class OrderAssigningStatusController extends Controller
               // on the way
             else if($changing_status_id == 16)
             {
-    
+
             }
             //Delivery Processing
             else if($changing_status_id == 17)
             {
-    
+                $order_processing_type_id  = 2;
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                    ->whereIn('order_assigning_status_id',[1])
+                    ->where('order_processing_type_id',$order_processing_type_id)
+                    ->first();
+                if($assignedAlready)
+                {
+                    $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 12,$order_processing_type_id);
+                }
             }
-    
+
             // Delivery Success
             else if($changing_status_id == 18)
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // Delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                                ->whereIn('order_assigning_status_id',[12,2])
+                                ->where('order_processing_type_id',$order_processing_type_id)
+                                ->first();
                 if($assignedAlready)
-                { 
+                {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 7,$order_processing_type_id);
                 }
                  //===sms permission and setting===
@@ -305,7 +322,11 @@ class OrderAssigningStatusController extends Controller
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 {
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 6,$order_processing_type_id);
@@ -322,21 +343,42 @@ class OrderAssigningStatusController extends Controller
             // Delviery Canceling
             else if($changing_status_id == 27)
             {
-    
+                $order_assigning_status_id = 2; // received/Accept
+                $order_processing_type_id  = 2; // delivery
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
+                if($assignedAlready)
+                {
+                    $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 8 ,$order_processing_type_id);
+                }
+                    //===sms permission and setting===
+                if(smsToMerchantWhenParcelHoldDeliveryActivateStatus_HS())
+                {
+                    //Sending SMS
+                    $note = "when Delivery Hold";
+                    insertSmsWhenOrderProcessing_HH($order_id,"smsToMerchantWhenParcelHoldDelivery_HH","company_name,invoice_no",$note);
+                } 
             }
-             // Delviery cancel
+                // Delviery cancel
             else if($changing_status_id == 28)
             {
                 $order_assigning_status_id = 2; // received/Accept
                 $order_processing_type_id  = 2; // delivery
-                $assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                //$assignedAlready =  $this->existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id);
+                $assignedAlready = Order_assign::where('order_id',$order_id)
+                            ->whereIn('order_assigning_status_id',[12,2])
+                            ->where('order_processing_type_id',$order_processing_type_id)
+                            ->first();
                 if($assignedAlready)
                 {
-                     // cancel
+                        // cancel
                     $this->updateAssingedManpower($assignedAlready->id,$order_assigning_status_id = 8,$order_processing_type_id);
                 }
 
-                 //===sms permission and setting===
+                    //===sms permission and setting===
                 if(smsToMerchantWhenParcelCancelDeliveryActivateStatus_HS())
                 {
                     //Sending SMS
@@ -345,11 +387,11 @@ class OrderAssigningStatusController extends Controller
                 }
                 //===sms permission and setting===
             }
-    
+
              // office receive cancel parcel
             else if($changing_status_id == 29)
             {
-                
+
             }
             return true;
     }
@@ -381,8 +423,8 @@ class OrderAssigningStatusController extends Controller
     public  function existingAssingedCheck($order_id,$order_assigning_status_id,$order_processing_type_id)
     {
         return $assign =  Order_assign::where('order_id',$order_id)
-                    ->where('order_assigning_status_id',$order_assigning_status_id)    
-                    ->where('order_processing_type_id',$order_processing_type_id)    
+                    //->where('order_assigning_status_id',$order_assigning_status_id)
+                    ->where('order_processing_type_id',$order_processing_type_id)
                     ->first();
     }
 

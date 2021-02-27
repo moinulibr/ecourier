@@ -17,6 +17,15 @@ use Auth;
 use Validator;
 use DB;
 use Session;
+
+
+
+use App\Model\Backend\Order\Order_processing_type;
+use App\Model\Backend\Order\Order_assigning_status;
+use Carbon\Carbon;
+use App\User;
+use PDF;
+
 class OrderParcelSendController extends Controller
 {
     /**
@@ -117,6 +126,8 @@ class OrderParcelSendController extends Controller
         return view('backend.order.agent.order_send.ajax.quick_assign');
     }
 
+
+
     //store from cart
     public function quickAssignParcelStoreFromCart(Request $request)
     {
@@ -209,6 +220,208 @@ class OrderParcelSendController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function sendingParcelList(Request $request)
+    {
+        $branch_id          = Auth::guard('web')->user()->branch_id;
+        $data['senders']    = User::where('branch_id',$branch_id)->get();//getAllManpowers_HH(); 
+
+        return view('backend.order.agent.order_send.order_sending_details.order_sending_list',$data);
+    }
+
+
+
+    
+
+    public function sendingParcelListAjaxList(Request $request)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $send_by = $request->sender_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+      
+       if($request->from_date)
+       {
+           $startDate  = date("Y-m-d",strtotime($from_date));
+       }else{
+            $startDate = date('Y-m-d');
+       }
+       if($request->to_date)
+       {
+            $endDate = date("Y-m-d",strtotime($to_date."+1 day"));
+       }else{
+            $end= date('d-m-Y');
+            $endDate = date("Y-m-d",strtotime($end."+1 day"));
+       }
+      
+        $query  = Order_destination::query();
+        if($send_by)
+        {
+            $query->where('order_destinations.send_by',$send_by);
+        }
+        $data['orders'] = $query->whereBetween('order_destinations.send_at',[$startDate,$endDate])
+                        ->join('orders','orders.id','=','order_destinations.order_id')
+                        ->select('order_destinations.*','orders.collect_amount',
+                            DB::raw('COUNT(order_destinations.id) as total'),
+                            DB::raw('SUM(orders.collect_amount) as total_collect_amount')  
+                            )
+                        ->where('order_destinations.order_receiving_sending_status_id',3)
+                        ->groupBy('order_destinations.send_at')
+                        ->latest()
+                        ->paginate(100);
+
+                        return view('backend.order.agent.order_send.order_sending_details.ajax.list',$data);                                        
+    }
+
+
+    
+    public function sendingParcelListViewAjaxList(Request $request)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $send_by = $request->sender_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+      
+       if($request->from_date)
+       {
+           $startDate  = date("Y-m-d",strtotime($from_date));
+       }else{
+            $startDate = date('Y-m-d');
+       }
+       if($request->to_date)
+       {
+            $endDate = date("Y-m-d",strtotime($to_date."+1 day"));
+       }else{
+            $end= date('d-m-Y');
+            $endDate = date("Y-m-d",strtotime($end."+1 day"));
+       }
+      
+        $query  = Order_destination::query();
+        if($send_by)
+        {
+            $query->where('order_destinations.send_by',$send_by);
+        }
+        $data['orders'] = $query->whereBetween('order_destinations.send_at',[$startDate,$endDate])
+                        ->where('order_destinations.order_receiving_sending_status_id',3)
+                        //->groupBy('order_destinations.send_at')
+                        ->latest()
+                        ->get();
+        return view('backend.order.agent.order_send.order_sending_details.ajax.view_details',$data);       
+        //->select('order_destinations.*','orders.collect_amount',
+       // DB::raw('COUNT(order_destinations.id) as total'),
+       // DB::raw('SUM(orders.collect_amount) as total_collect_amount')  
+        //)                                 
+    }
+
+
+
+    // print popup
+    public function printManpowerOrderAssingedList(Request $request)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $manpower_id = $request->manpower_id;
+        $order_assigning_status_id = $request->order_assigning_status_id;
+        $order_processing_type_id = $request->order_processing_type_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+      
+       if($request->from_date)
+       {
+           $startDate  = date("Y-m-d",strtotime($from_date));
+       }else{
+            $startDate = date('Y-m-d');
+       }
+       if($request->to_date)
+       {
+            $endDate = date("Y-m-d",strtotime($to_date."+1 day"));
+       }else{
+            $end= date('d-m-Y');
+            $endDate = date("Y-m-d",strtotime($end."+1 day"));
+       }
+      
+        $query  = Order_assign::query();
+        if($manpower_id)
+        {
+            $query->where('manpower_id',$manpower_id);
+        }
+        if($order_assigning_status_id)
+        {
+            $query->where('order_assigning_status_id',$order_assigning_status_id);
+        }
+        if($order_processing_type_id)
+        {
+            $query->where('order_processing_type_id',$order_processing_type_id);
+        }
+
+        $data['orders'] = $query->whereBetween('created_at',[$startDate,$endDate])
+                                ->where('branch_id',$branch_id)
+                                ->get();
+
+        ini_set('max_execution_time', 180); //3 minutes
+        return view('backend.order.agent.order_assigned_manpower.print_popup',$data);                                          
+        return view('backend.order.agent.order_assigned_manpower.list_print',$data);   
+    }
+
+    //pdf download
+    public function pdfDownloadManpowerOrderAssingedList(Request $request)
+    {
+        $branch_id = Auth::guard('web')->user()->branch_id;
+        $manpower_id = $request->manpower_id;
+        $order_assigning_status_id = $request->order_assigning_status_id;
+        $order_processing_type_id = $request->order_processing_type_id;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+      
+       if($request->from_date)
+       {
+           $startDate  = date("Y-m-d",strtotime($from_date));
+       }else{
+            $startDate = date('Y-m-d');
+       }
+       if($request->to_date)
+       {
+            $endDate = date("Y-m-d",strtotime($to_date."+1 day"));
+       }else{
+            $end= date('d-m-Y');
+            $endDate = date("Y-m-d",strtotime($end."+1 day"));
+       }
+      
+        $query  = Order_assign::query();
+        if($manpower_id)
+        {
+            $query->where('manpower_id',$manpower_id);
+        }
+        if($order_assigning_status_id)
+        {
+            $query->where('order_assigning_status_id',$order_assigning_status_id);
+        }
+        if($order_processing_type_id)
+        {
+            $query->where('order_processing_type_id',$order_processing_type_id);
+        }
+
+        $data['orders'] = $query->whereBetween('created_at',[$startDate,$endDate])
+                                ->where('branch_id',$branch_id)
+                                ->get();
+
+        ini_set('max_execution_time', 180); //3 minutes
+        $pdf =  PDF::loadView('backend.order.agent.order_assigned_manpower.list_print',$data);
+        return $pdf->download('Parcel Assigned Sheet .pdf');
+
+        return view('backend.order.agent.order_assigned_manpower.print_popup',$data);                                          
+        return view('backend.order.agent.order_assigned_manpower.list_print',$data);   
+        
+        /*
+            ini_set('max_execution_time', 180); //3 minutes
+            $page =  view('backend.order.agent.order_assigned_manpower.list_print',$data);
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($page); // $pdf->loadHTML('<h2>'.Hello, Preint This Section.'</h2>');
+            return $pdf->download('pdfDownload_FileName.pdf');
+            return $pdf->stream();
+        */
+    }
+
+
     public function store(Request $request)
     {
         //

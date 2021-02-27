@@ -25,7 +25,7 @@ class DeliveryManController extends Controller
      */
     public function index()
     {
-         $data['deliverymans'] = User::whereIn('role_id',[5])->get();
+         $data['deliverymans'] = User::whereIn('role_id',[5])->where('status',1)->get();
          $data['manpowerstypes']= ManpowerType::all();
          $data['districts'] = District::all();
          $data['branch_typies'] = Branch_type::get();
@@ -77,6 +77,7 @@ class DeliveryManController extends Controller
             $admin->show_password = $request->password;
             $admin->role_id =  5;
             $admin->branch_id= $request->branch_id;
+            $admin->user_approval_status_id = 1;
             $admin->login_status = 1;
             $admin->save();
 
@@ -161,9 +162,8 @@ class DeliveryManController extends Controller
     {
         $validators =  Validator::make($request->all(),[
                  'name' => 'required',
-                 'phone' => 'required',
-                 'email' => 'required',
-                 'role_id' => 'required',
+                 'phone' => 'required|unique:users,phone,'.$id,
+                 'email' => 'required|unique:users,email,'.$id,
                  'branch_id' => 'required',
 
         ]);
@@ -172,24 +172,27 @@ class DeliveryManController extends Controller
         }
         else{
 
-                $admin =  User::find($id);
-                $admin->name = $request->name;
-                $admin->phone = $request->phone;
-                $admin->email = $request->email;
-                $admin->password = bcrypt($request->password);
-                $admin->show_password = $request->password;
-                $admin->role_id = $request->role_id;
-                $admin->branch_id = $request->branch_id;
-                $admin->login_status = 1;
+                $deliveryman =  User::find($id);
+                $deliveryman->name = $request->name;
+                $deliveryman->phone = $request->phone;
+                $deliveryman->email = $request->email;
 
-                $admin->save();
+                if($request->password)
+                {
+                    $deliveryman->password = bcrypt($request->password);
+                    $deliveryman->show_password = $request->password;
+                }
+
+                $deliveryman->branch_id = $request->branch_id;
+               
+                $deliveryman->save();
 
                 $notification = array(
-                    'message' => 'Successfully add Admin!',
+                    'message' => 'Successfully Edit Delivery Man!',
                     'alert-type' => 'success'
                 );
 
-             return redirect()->route('admin.index')->with($notification);
+             return redirect()->route('deliveryman.index')->with($notification);
         }
 
     }
@@ -202,14 +205,18 @@ class DeliveryManController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        $deliveryman =  User::find($id);
+        $deliveryman->status =0;
+        $deliveryman->deleted_at =Carbon::now();
+        $deliveryman->save();
+
 
         $notification = array(
-            'message' => 'Successfully deleted Admin!',
-            'alert-type' => 'success'
+                'message' => 'Successfully deleted Delivery man!',
+                'alert-type' => 'success'
         );
 
-        return redirect()->route('admin.index')->with($notification);
+        return redirect()->route('deliveryman.index')->with($notification);
     }
 
 

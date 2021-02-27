@@ -18,7 +18,32 @@
         </div>
     </div>
     <!-- end page title -->
-
+    @if (session()->has('error'))
+    <div class="alert alert-danger">
+        @if(is_array(session('error')))
+            <ul>
+                @foreach (session('error') as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        @else
+            {{ session('error') }}
+        @endif
+    </div>
+    @endif
+    @if (session()->has('success'))
+    <div class="alert alert-success">
+        @if(is_array(session('success')))
+            <ul>
+                @foreach (session('success') as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        @else
+            {{ session('success') }}
+        @endif
+    </div>
+    @endif
  
     <div class="row">
         <div class="col-12">
@@ -27,58 +52,79 @@
                     <h4 class="card-title">Total Percel</h4>
                     
                     <hr>
-                    <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
+                  <div class="table-responsive">
+                    <table id="" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Serial</th>
+                                
                                 <th>Parcel ID</th>
-                                <th>Parcel Owner</th>
-                                <th>
-                                    Merchant Name <br> Shop Name
-                                    <br/>
-                                    General Customer
+                                <th>Sender Info</th>
+                                <th>Customer Info</th>
+                                <th>Address </br>  Area</th>
+                               
+                                 <th>Address <br> Destination Area </th>
+                                <th>Collection <br> Amount</th>
+                                <th>Charge</th>
+                                 <th>
+                                    <a data-toggle="modal" data-target="#myModal">Status</a>
                                 </th>
-                                <th>Customer info</th>
-                                <th>Area</th>
-                                <th>Status</th>
-                                <th>Branch</th>
+                                <th>Order <br/>Tracking</th>
+                                <th>Customer <br/>
+                                    Service <br/>Charge<br/>Payment Status
+                                </th>
+                                <th>
+                                    Parcel <br/>Amount<br/>Payment Status
+                                </th>
+                                <th>From Branch</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                
                                 <td>
                                     <a href="#" class="viewSingleDataByAjax"   data-id="{{ $order->id }}" >
                                         {{ $order->invoice_no }}
                                     </a>
                                 </td>
                                 <td>
-                                    @if ($order->parcel_owner_type_id == 1)
-                                        Merchant
-                                        @else
-                                        General Customer
-                                    @endif
-                                </td>
-                                <td>
                                     {{ $order->generalCustomer?$order->generalCustomer->name:'' }}
-                                    {{ $order->merchant?$order->merchant->name:'' }} <br>
-                                     {{ $order->merchantshop?$order->merchantshop->shop_name:'' }}
+                                    {{ $order->generalCustomer?$order->generalCustomer->phone:'' }}
+                                   
                                 </td>
                                 <td>
                                     {{ $order->customer->customer_name }} <br>
                                     {{ $order->customer->customer_phone }} <br>
-                                    {{ $order->customer->address }} <br>
+                                    
                                 </td>
                                 <td>
+                                    {{ $order->customer->address }} <br>
                                     {{ $order->area->area_name }} <br>
                                     {{ $order->district->name }}
+                                </td>
+                                <td> {{ $order->collect_amount }}  </td>
+                                <td> {{ $order->service_charge }}  </td>
+                                <td> {{ $order->cod_charge }}  </td>
+                                <td>
+                                    <span style="">
+                                        {{ getOrderStatusByOrderStatus_HH($order->status) }}
+                                    </span>
                                 </td>
                                 <td>
                                     <span style="{{ orderStatusStyle_HH($order->order_status_id) }}">
                                         {{ $order->orderStatus?$order->orderStatus->order_status:'' }}
                                     </span>
+                                </td>
+                                 <td>
+                                    <strong {{ orderServiceChargeStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderServiceChargeStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
+                                </td>
+                                <td>
+                                    <strong {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['style'] }}> 
+                                        {{ orderParcelAmountPaymentStatusByOrderId_HH($order->id)['status'] }}
+                                    </strong>
                                 </td>
                                 <td>
                                     {{ $order->orderBranch?$order->orderBranch->company_name:'' }}
@@ -102,7 +148,12 @@
                                             </li>
                                              
                                             <li> 
-                                                <a id="delete" href="" class="delete"><i class="fa fa-trash"></i> Delete</a>
+                                                <a id="delete" href="{{ route('admin.order.destroy', $order->id) }}" class="delete"><i class="fa fa-trash"></i> Delete</a>
+                                                {{--  <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="submit" value="Delete" class="btn btn-danger btn-block" onclick="return confirm('Are you sure to delete?')">       
+                                                </form>  --}}
                                            </li>
                                         </ul> 
                                     </div>
@@ -113,11 +164,40 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
                 <!-- end card-body -->
             </div>
             <!-- end card -->
         </div> <!-- end col -->
     </div> <!-- end row -->
+
+
+
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+       @foreach(getOrderStatus_HH() as $key => $data)
+            <button id="status_id" name="status_id" value="{{$data['id']}}"class="status_id_class btn btn-md" >
+                {{$data['name']}}
+            </button> <br/>
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 {{-- ----------------Fmor Modal randering---------------- --}}

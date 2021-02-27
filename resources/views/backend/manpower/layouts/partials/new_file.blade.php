@@ -1,5 +1,8 @@
 @extends('backend.manpower.layouts.master')
 
+@section('content')
+	<!-- start page title -->
+
 
 	<!-- start page title -->
     <div class="row">

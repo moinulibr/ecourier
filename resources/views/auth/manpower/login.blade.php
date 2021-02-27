@@ -1,73 +1,101 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="en">
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Delivery Man Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Courier Management Software" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{ asset($websetting->favicon) }}">
+          <!-- Bootstrap Css -->
+        <link href="{{asset('links/backend/01')}}/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+           <!-- Icons Css -->
+    <link href="{{asset('links/backend/01')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <!-- App Css-->
+    <link href="{{asset('links/backend/01')}}/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    </head>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route(manpowerLoginFormSubmitRoute_HH) }}">
-                        @csrf
+    <body class="authentication-bg" style="background-image: url({{ asset('public/links/backend/01/assets/images/auth-bg.png') }})">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        <div class="account-pages mt-5 mb-4 pt-sm-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <a href="{{ route('frontend') }}" class="mb-5 d-block auth-logo">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-dark">
+                                <img src="{{ asset($websetting->logo) }}" alt="" height="100px" class="logo logo-light">
+                            </a>
                         </div>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                           
+                            <div class="card-body p-4"> 
+                                <div class="text-center mt-2">
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                    <h5 class="text-primary">Welcome Back !</h5>
+                                    <p class="text-muted">Sign in to continue to {{$websetting->company_name }}.</p>
+                                </div>
+                                <div class="p-2 mt-4">
+                                    <form method="POST" action="{{ route(manpowerLoginFormSubmitRoute_HH) }}">
+                                        @csrf
+        
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Enter Email">
+                                        </div>
+                
+                                        <div class="form-group">
+                                            <div class="float-right">
+                                                <a href="" class="text-muted">Forgot password?</a>
+                                            </div>
+                                            <label for="userpassword">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" placeholder="Enter password">
+                                        </div>
+                
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="auth-remember-check">
+                                            <label class="custom-control-label" for="auth-remember-check">Remember me</label>
+                                        </div>
+                                        
+                                        <div class="mt-3 text-right">
+                                            <button class="btn btn-primary btn-block waves-effect waves-light" type="submit"><i class="icon-xs icon mr-1" data-feather="log-in"></i> Log In</button>
+                                        </div>
+                                        
+             
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                        <div class="mt-5 text-center">
+                            <p> {{$websetting->company_name }} &copy; Copyright By SOFTECH BD</p>
                         </div>
-                    </form>
+
+                    </div>
                 </div>
+                <!-- end row -->
             </div>
+            <!-- end container -->
         </div>
-    </div>
-</div>
-@endsection
+
+       <!-- JAVASCRIPT -->
+    <script src="{{asset('links/backend/01')}}/assets/libs/jquery/jquery.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/node-waves/waves.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
+    <script src="{{asset('links/backend/01')}}/assets/libs/feather-icons/feather.min.js"></script>
+
+        <script src="{{asset('links/backend/01')}}/assets/js/app.js"></script>
+
+    </body>
+</html>

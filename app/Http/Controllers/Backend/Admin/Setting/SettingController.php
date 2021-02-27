@@ -80,6 +80,7 @@ class SettingController extends Controller
              'email' => 'required',
              'callcenter' => 'required',
              'address' => 'required',
+             'website' => 'required',
 
         ]);
         if($validators->fails()){
@@ -97,6 +98,9 @@ class SettingController extends Controller
               $setting->address      = $request->address;
               $setting->hotlinenumber= $request->hotlinenumber;
               $setting->callcenter   = $request->callcenter;
+              $setting->website      = $request->website;
+              $setting->facebook     = $request->facebook;
+              $setting->instagram    = $request->instagram;
 
               $image = $request->logo;
 
@@ -109,6 +113,17 @@ class SettingController extends Controller
                         $image->move($filepath,$imagename);
                         $setting->logo  = $imagename;
                         
+                }
+
+                $favicon = $request->favicon;
+                 if($favicon){
+                        $uniqname = uniqid();
+                        $ext = strtolower($favicon->getClientOriginalExtension());
+                        $filepath = 'public/images/';
+                        $imagename = $filepath.$uniqname.'.'.$ext;
+                        @unlink($setting->favicon);
+                        $image->move($filepath,$imagename);
+                        $setting->favicon  = $imagename;  
                 }
 
  
